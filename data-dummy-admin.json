@@ -1,0 +1,39 @@
+{
+  "dashboard": {
+    "total_dana": "Rp. 100.000.000",
+    "jumlah_petani": "187",
+    "investor": "1023",
+    "dataChart": [
+      { "name": "Januari", "investor": 40, "proyek": 20 },
+      { "name": "Februari", "investor": 30, "proyek": 60 },
+      { "name": "Maret", "investor": 40, "proyek": 10 },
+      { "name": "April", "investor": 5, "proyek": 40 }
+    ]
+  },
+  "proyek": [
+    {
+      "id": "1",
+      "name": "Pertanian Tomat",
+      "dana_tekumpul": "Rp. 0",
+      "kebutuhan_dana": "Rp. 20.000.000",
+      "image": "https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8ZmFybWVyJTIwdG9tYXRvfGVufDB8fDB8fHww&auto=format&fit=crop&w=400&q=60",
+      "status": "Proyek Berjalan"
+    },
+    {
+      "id": "1",
+      "name": "Pertanian Padi",
+      "dana_tekumpul": "Rp. 300.000",
+      "kebutuhan_dana": "Rp. 30.000.000",
+      "image": "https://images.unsplash.com/photo-1475332831881-e80974377cb7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZmFybWVyJTIwZ2FuZHVtfGVufDB8fDB8fHww&auto=format&fit=crop&w=400&q=60",
+      "status": "Proyek Berjalan"
+    },
+    {
+      "id": "1",
+      "name": "Perkebunan Mangga",
+      "dana_tekumpul": "Rp. 1.000.000",
+      "kebutuhan_dana": "Rp. 40.000.000",
+      "image": "https://images.unsplash.com/photo-1553433342-c838ed72f431?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG1hbmdvJTIwZ2FyZGVufGVufDB8fDB8fHww&auto=format&fit=crop&w=400&q=60",
+      "status": "Proyek Berjalan"
+    }
+  ]
+}
