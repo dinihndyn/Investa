@@ -7,6 +7,9 @@ import Dashboard2 from './assets/dashboard-2.png';
 import { LineChartAdmin } from '../../../component/molecules/Admin/LineChartAdmin';
 import { CardProyek } from '../../../component/molecules/Admin/CardProyek';
 import axios from 'axios';
+import { getTokenInvesta } from '../../../utils/function';
+import { useAuthHeader } from 'react-auth-kit';
+import { API_URL } from '../../../utils/constant';
 
 const CardDashboard = ({ label, value, image }) => {
   return (
@@ -40,30 +43,29 @@ const dataChart = [
   { name: 'April', investor: 5, proyek: 40 }
 ];
 
+
+
 export const AdminDashboard = () => {
   const [dataProyek, setDataProyek] = useState([]);
   const [dataDashboard, setDataDashboard] = useState({});
+  const token = useAuthHeader()
   useEffect(() => {
-    const fetchDataCardProyek = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/proyek');
-        const jsonData = await response.json();
-        setDataProyek(jsonData)
+        console.log(token())
+        const result = await axios.get(
+          API_URL + `/pengajuan/getPengajuanSeluruhnya`,
+          null,
+          getTokenInvesta('Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2FkbWluL2FkbWlubG9naW4iLCJpYXQiOjE2ODY3MzY0NDksImV4cCI6MTY4Njc0MDA0OSwibmJmIjoxNjg2NzM2NDQ5LCJqdGkiOiJPSWdONEcya0NRRXU2TTk4Iiwic3ViIjoiMSIsInBydiI6ImRmODgzZGI5N2JkMDVlZjhmZjg1MDgyZDY4NmM0NWU4MzJlNTkzYTkifQ.Xs0WRDwworgYP1E67Dl2oAKl4fwfSwnU0VrLClkANc0')
+        );
+        setData(result);
+        console.log(data);
       } catch (error) {
-        console.log('Error:', error);
+        // Handle error
+        console.log(error);
       }
     };
-    const fetchDataCardDashboard = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/dashboard');
-        const jsonData = await response.json();
-        setDataDashboard(jsonData)
-      } catch (error) {
-        console.log('Error:', error);
-      }
-    };
-    fetchDataCardDashboard()
-    fetchDataCardProyek()
+    fetchData();
   }, [])
   return (
     <Layouts title="Admin Dashboard" bg='bg-[#FEE1A5]'>
@@ -71,12 +73,12 @@ export const AdminDashboard = () => {
         <Container>
           <div className='grid gap-4'>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 ">
-              <CardDashboard label="Total Dana" value={dataDashboard.total_dana} image={Dashboard1} />
-              <CardDashboard label="Jumlah Petani" value={dataDashboard.jumlah_petani} image={Dashboard2} />
-              <CardDashboard label="Investor" value={dataDashboard.investor} image={Dashboard2} />
+              <CardDashboard label="Total Dana" value="Rp. 10.000.000" image={Dashboard1} />
+              <CardDashboard label="Jumlah Petani" value="1200" image={Dashboard2} />
+              <CardDashboard label="Investor" value="10000" image={Dashboard2} />
             </div>
             <div>
-              <LineChartAdmin data={dataDashboard.dataChart} />
+              <LineChartAdmin data={dataChart} />
             </div>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-4 items-start'>
               {dataProyek.map((item, index) => (
@@ -89,3 +91,4 @@ export const AdminDashboard = () => {
     </Layouts>
   )
 }
+

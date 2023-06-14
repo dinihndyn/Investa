@@ -21,6 +21,11 @@ import { Persetujuan } from './pages/Admin/Persetujuan';
 import { FormInfoKunjungan } from './pages/FormInfoKunjungan';
 import { FormPemasukanPanen } from './pages/FormPemasukanPanen';
 import { FormPembayaran } from './pages/FormPembayaran';
+import { DetailPersetujuan } from './pages/Admin/DetailPersetujuan';
+import { PrivateRouteAdmin } from './utils/PrivateRouteAdmin';
+import { TrackingInvestor } from './pages/Admin/TrackingInvestor';
+import { TrackingProyek } from './pages/Admin/TrackingProyek';
+import { DetailTrackingProyek } from './pages/Admin/DetailTrackingProyek';
 
 function App() {
   const router = createBrowserRouter([
@@ -31,7 +36,7 @@ function App() {
           <Home />
         </PrivateRoute>
       ),
-      errorElement: <NotFound />,
+      errorEement: <NotFound />,
     },
     {
       path: '/admin/login',
@@ -39,15 +44,47 @@ function App() {
     },
     {
       path: '/admin',
-      element: <AdminDashboard />,
+      element: (
+        <PrivateRouteAdmin>
+          <AdminDashboard />
+        </PrivateRouteAdmin>
+      ),
     },
     {
       path: '/admin/dashboard',
-      element: <AdminDashboard />,
+      element: (
+        <PrivateRouteAdmin>
+          <AdminDashboard />
+        </PrivateRouteAdmin>
+      ),
     },
     {
       path: '/admin/persetujuan',
-      element: <Persetujuan />,
+      element: <Persetujuan />
+    },
+    {
+      path: '/admin/persetujuan/:id',
+      element: (
+        <DetailPersetujuan />
+      )
+    },
+    {
+      path: '/admin/tracking_investor',
+      element: (
+        <TrackingInvestor />
+      )
+    },
+    {
+      path: '/admin/tracking_proyek',
+      element: (
+        <TrackingProyek />
+      )
+    },
+    {
+      path: '/admin/tracking_proyek/:id',
+      element: (
+        <DetailTrackingProyek />
+      )
     },
     {
       path: '/login',

@@ -1,5 +1,7 @@
-export const API_URL = 'https://api-investa.agusdm.com/api';
-export const PUBLIC_URL = 'https://api-investa.agusdm.com/';
+export const API_URL = "http://localhost:8000/api";
+// export const API_URL = "https://api-investa.agusdm.com/api";
+export const PUBLIC_URL = "http://localhost:8000/";
+// export const PUBLIC_URL = "https://api-investa.agusdm.com/";
 
 export const dataCarousel = [
   {
