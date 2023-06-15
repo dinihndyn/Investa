@@ -25,14 +25,15 @@ const menu = [
   },
   {
     name: "Traking",
+    link: '/admin/traking_investor',
     submenu: [
       {
         name: 'Investor',
-        link: '/admin/traking/investor'
+        link: '/admin/tracking_investor'
       },
       {
         name: 'Proyek',
-        link: '/admin/traking/proyek'
+        link: '/admin/tracking_proyek'
       }
     ]
   },
