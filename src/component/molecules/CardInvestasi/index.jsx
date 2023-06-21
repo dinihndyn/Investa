@@ -15,6 +15,11 @@ export const CardInvestasi = ({
       <img
         src={PUBLIC_URL + img}
         alt="gambar"
+        onError={({ currentTarget }) => {
+          currentTarget.onerror = null; // prevents looping
+          currentTarget.src =
+            'https://climate.onep.go.th/wp-content/uploads/2020/01/default-image.jpg';
+        }}
         className="h-[200px] w-full object-cover rounded-lg shadow"
       />
       <div className=" bg-white flex flex-col gap-3 group transition-all">
@@ -51,7 +56,10 @@ export const CardInvestasi = ({
             </div>
             <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
               <div
-                className={`bg-investa-primary-50 w-full] mt-5 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full`}
+                style={{
+                  width: `${progress}%`,
+                }}
+                className={`bg-investa-primary-50  mt-5 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full`}
               >
                 {progress}%
               </div>

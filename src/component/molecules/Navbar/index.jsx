@@ -1,4 +1,9 @@
-import { useAuthHeader, useIsAuthenticated, useSignOut } from 'react-auth-kit';
+import {
+  useAuthHeader,
+  useAuthUser,
+  useIsAuthenticated,
+  useSignOut,
+} from 'react-auth-kit';
 import { NavbarItem } from '../../atom/NavbarItem';
 import { RiErrorWarningLine } from 'react-icons/ri';
 import { UserLoginNav } from '../../atom/UserLoginNav';
@@ -6,6 +11,7 @@ import axios from 'axios';
 import { getTokenInvesta } from '../../../utils/function';
 import { API_URL } from '../../../utils/constant';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export const Navbar = () => {
   const isAuthenticated = useIsAuthenticated();
@@ -27,15 +33,21 @@ export const Navbar = () => {
       }
     }
   };
+  const dataAuth = useAuthUser();
   useEffect(() => {
-    getMe();
+    if (
+      dataAuth()?.tipeAkun == 'Petani' ||
+      dataAuth()?.tipeAkun == 'Investor'
+    ) {
+      getMe();
+    }
   }, []);
 
   return (
     <div>
       <nav className="bg-white border-gray-200 dark:bg-gray-900 shadow-md  w-full">
         <div className="max-w-screen-xxl flex flex-wrap items-center justify-between mx-5 p-4">
-          <a href="https://flowbite.com/" className="flex items-center">
+          <a href="/" className="flex items-center">
             <img
               src="/assets/images/investa-logo.png"
               className="h-8 mr-3 "
@@ -66,7 +78,12 @@ export const Navbar = () => {
           </button>
           <div className="hidden w-full md:block md:w-auto" id="navbar-default">
             <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 items-center">
-              <NavbarItem to={'/'} label={'Ajukan Pinjaman'} />
+              {dataAuth()?.tipeAkun == 'Investor' ? (
+                <NavbarItem to={'/investor/proyek'} label={'Mulai Investasi'} />
+              ) : (
+                <NavbarItem to={'/'} label={'Ajukan Pinjaman'} />
+              )}
+
               <NavbarItem to={'/artikel'} label={'Artikel'} />
               <NavbarItem label={'Tentang Kami'} />
 
@@ -81,7 +98,34 @@ export const Navbar = () => {
                   97,29%
                 </a>
               </li>
-              {isAuthenticated() ? <UserLoginNav /> : null}
+              {isAuthenticated() ? (
+                <UserLoginNav />
+              ) : (
+                <>
+                  <div>
+                    <li>
+                      <Link
+                        to={'/login'}
+                        href="#"
+                        className="block border border-investa-primary-50 text-investa-primary-50 rounded-md py-2 pl-3 pr-4  hover:text-investa-warning-70 "
+                      >
+                        Masuk
+                      </Link>
+                    </li>
+                  </div>
+                  <div>
+                    <li>
+                      <Link
+                        to={'/register'}
+                        href="#"
+                        className="block py-2 pl-3 bg-investa-primary-50 text-white pr-4 rounded-md"
+                      >
+                        Daftar
+                      </Link>
+                    </li>
+                  </div>
+                </>
+              )}
             </ul>
           </div>
         </div>

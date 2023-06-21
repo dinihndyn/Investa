@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuthUser, useSignOut } from 'react-auth-kit';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { PUBLIC_URL } from '../../../utils/constant';
 
 export const UserLoginNav = () => {
@@ -48,7 +48,7 @@ export const UserLoginNav = () => {
                 href="#"
                 className="block px-4 py-5 text-end  dark:hover:bg-gray-600 dark:hover:text-white"
               >
-                Petani Tampan
+                {userData().name}
               </p>
               <img
                 src={PUBLIC_URL + 'image/' + userData().photo}
@@ -81,7 +81,11 @@ export const UserLoginNav = () => {
             </li>
             <li>
               <Link
-                to="/dashboard-petani"
+                to={
+                  userData().tipeAkun == 'Petani'
+                    ? '/dashboard-petani'
+                    : '/investor/dashboard'
+                }
                 className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
               >
                 Dashboard
@@ -92,9 +96,9 @@ export const UserLoginNav = () => {
                 type="button"
                 onClick={() => {
                   signOut();
-                  <Navigate to={'/login'} />;
+                  window.location.replace('/login');
                 }}
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                className="block w-full text-start px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
               >
                 Sign Out
               </button>
