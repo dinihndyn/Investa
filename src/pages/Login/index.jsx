@@ -8,10 +8,11 @@ import { useState } from 'react';
 import { fetchDataInvesta } from '../../utils/function';
 import { toast } from 'react-toastify';
 import { Button } from '../../component/atom/Button';
-import { useIsAuthenticated, useSignIn } from 'react-auth-kit';
+import { useAuthUser, useIsAuthenticated, useSignIn } from 'react-auth-kit';
 
 export const Login = () => {
   const isAuthenticated = useIsAuthenticated();
+  const dataUser = useAuthUser();
   const signIn = useSignIn();
   const [errorMsg, setErrorMsg] = useState({
     error: '',
@@ -25,14 +26,17 @@ export const Login = () => {
       try {
         const res = await fetchDataInvesta('auth/login', 'POST', values);
         toast.success('Selamat datang');
-        console.log(res);
         signIn({
           token: res.access_token,
           expiresIn: res.expires_in,
           tokenType: res.token_type,
           authState: res.user,
         });
-        <Navigate to={'/'} />;
+        if (res.user.tipeAkun == 'Admin') {
+          window.location.replace('/admin');
+        } else {
+          window.location.replace('/');
+        }
       } catch (error) {
         setErrorMsg(error.response.data);
       } finally {
@@ -41,6 +45,9 @@ export const Login = () => {
     },
   });
   if (isAuthenticated()) {
+    if (dataUser().tipeAkun == 'Admin') {
+      return <Navigate to="/admin" />;
+    }
     return <Navigate to="/" />;
   }
   return (

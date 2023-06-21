@@ -5,7 +5,7 @@ import { DetailForm } from './DetailForm';
 export const FormPembayaran = () => {
   return (
     <div>
-      <Layouts title={'Form Info Kunjungan'}>
+      <Layouts title={'Form Info Pembayaran'}>
         <Container>
           <DetailForm />
         </Container>

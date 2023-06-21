@@ -1,39 +1,99 @@
 {
-  "dashboard": {
-    "total_dana": "Rp. 100.000.000",
-    "jumlah_petani": "187",
-    "investor": "1023",
-    "dataChart": [
-      { "name": "Januari", "investor": 40, "proyek": 20 },
-      { "name": "Februari", "investor": 30, "proyek": 60 },
-      { "name": "Maret", "investor": 40, "proyek": 10 },
-      { "name": "April", "investor": 5, "proyek": 40 }
-    ]
-  },
-  "proyek": [
+  "id": 2,
+  "user_id": "d018bc59-1589-4add-a777-fa08d13d5967",
+  "pengajuan_name": "Pengajuan Proyek Lahan Cabai",
+  "start_date": "2023-06-10 00:00:00",
+  "end_date": "2023-06-20 00:00:00",
+  "komoditas": "Cabai",
+  "total_pengajuan": 31250,
+  "estimasi_pengembalian": "2023-12-30 00:00:00",
+  "tenor": "6 Bulan",
+  "imbal_hasil": null,
+  "harga_unit": null,
+  "total_pengembalian": null,
+  "metode_pelunasan": "BCA",
+  "resiko": null,
+  "dana_terkumpul": null,
+  "deskripsi": null,
+  "jumlah_unit": null,
+  "unit_tersedia": null,
+  "status": "Menunggu Konfirmasi",
+  "created_at": "2023-06-10T07:52:52.000000Z",
+  "updated_at": "2023-06-10T07:52:52.000000Z",
+  "day_left": "5 hari lagi.",
+  "message": "Investasi ini masih berlangsung. Tersisa 5 hari lagi.",
+  "files": [
     {
-      "id": "1",
-      "name": "Pertanian Tomat",
-      "dana_tekumpul": "Rp. 0",
-      "kebutuhan_dana": "Rp. 20.000.000",
-      "image": "https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8ZmFybWVyJTIwdG9tYXRvfGVufDB8fDB8fHww&auto=format&fit=crop&w=400&q=60",
-      "status": "Proyek Berjalan"
+      "id": 3,
+      "pengajuan_id": 2,
+      "alamat_gambar": "image/1686383572_form-kunjungan.png",
+      "created_at": "2023-06-10T07:52:52.000000Z",
+      "updated_at": "2023-06-10T07:52:52.000000Z"
     },
     {
-      "id": "1",
-      "name": "Pertanian Padi",
-      "dana_tekumpul": "Rp. 300.000",
-      "kebutuhan_dana": "Rp. 30.000.000",
-      "image": "https://images.unsplash.com/photo-1475332831881-e80974377cb7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZmFybWVyJTIwZ2FuZHVtfGVufDB8fDB8fHww&auto=format&fit=crop&w=400&q=60",
-      "status": "Proyek Berjalan"
-    },
-    {
-      "id": "1",
-      "name": "Perkebunan Mangga",
-      "dana_tekumpul": "Rp. 1.000.000",
-      "kebutuhan_dana": "Rp. 40.000.000",
-      "image": "https://images.unsplash.com/photo-1553433342-c838ed72f431?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG1hbmdvJTIwZ2FyZGVufGVufDB8fDB8fHww&auto=format&fit=crop&w=400&q=60",
-      "status": "Proyek Berjalan"
+      "id": 4,
+      "pengajuan_id": 2,
+      "alamat_gambar": "image/1686383572_form-masukan.png",
+      "created_at": "2023-06-10T07:52:52.000000Z",
+      "updated_at": "2023-06-10T07:52:52.000000Z"
     }
-  ]
+  ],
+  "kebutuhan": [
+    {
+      "id": 3,
+      "pengajuan_id": 2,
+      "nama": "Pubuk",
+      "jenis": "B1",
+      "jumlah": 10,
+      "harga": 1250,
+      "total": 12500,
+      "created_at": "2023-06-10T07:52:52.000000Z",
+      "updated_at": "2023-06-10T07:52:52.000000Z"
+    },
+    {
+      "id": 4,
+      "pengajuan_id": 2,
+      "nama": "Bibit",
+      "jenis": "B3",
+      "jumlah": 15,
+      "harga": 1250,
+      "total": 18750,
+      "created_at": "2023-06-10T07:52:52.000000Z",
+      "updated_at": "2023-06-10T07:52:52.000000Z"
+    }
+  ],
+  "user": {
+    "id": "d018bc59-1589-4add-a777-fa08d13d5967",
+    "name": "Xandra Bauer",
+    "email": "darma@gmail.com",
+    "alamat": "Laboris officia volu",
+    "phone": "08123456789",
+    "usia": "21",
+    "pengalaman": null,
+    "photo": "1686415562_46.png",
+    "tipeAkun": "Petani",
+    "saldo": null,
+    "email_verified_at": null,
+    "reset_password_token": null,
+    "reset_password_token_expiry": null,
+    "created_at": "2023-06-10T07:49:43.000000Z",
+    "updated_at": "2023-06-10T16:58:32.000000Z"
+  },
+  "info_tani": {
+    "id": 2,
+    "pengajuan_id": 2,
+    "pengalaman_tani": "12 Tahun",
+    "kelompok_tani": null,
+    "nama_kelompok": null,
+    "jumlah_anggota": null,
+    "status_lahan": "Lahan Pribadi",
+    "luas_lahan": "1000",
+    "provinsi": "Jawa Timur",
+    "kota": "Nganjuk",
+    "kecamatan": "Nganjuk",
+    "kode_pos": "82121",
+    "alamat": "Telkom Univ",
+    "created_at": "2023-06-10T07:52:52.000000Z",
+    "updated_at": "2023-06-10T07:52:52.000000Z"
+  }
 }

@@ -1,10 +1,10 @@
-import axios from 'axios';
-import { API_URL } from './constant';
-import toRupiah from '@develoka/angka-rupiah-js';
+import axios from "axios";
+import { API_URL } from "./constant";
+import toRupiah from "@develoka/angka-rupiah-js";
 
 export const fetchDataInvesta = async (
   endpoint,
-  method = 'GET',
+  method = "GET",
   data = null,
   headers
 ) => {
@@ -17,7 +17,7 @@ export const fetchDataInvesta = async (
     });
     return response.data;
   } catch (error) {
-    console.error('API Error:', error);
+    console.error("API Error:", error);
     throw error;
   }
 };
@@ -33,17 +33,17 @@ export const getTokenInvesta = (token) => {
 };
 
 export const toRupiahInvesta = (num) => {
-  return toRupiah(num, { dot: ',', floatingPoint: 0 });
+  return toRupiah(num, { dot: ",", floatingPoint: 0 });
 };
 
 export const getPercentageInvesta = (part, full) => {
-  return (part / full) * 100;
+  return (parseInt(part || 0) / parseInt(full || 0)) * 100 || 0;
 };
 
 export const dateFormatInvesta = (date) => {
   let date_string = date;
   let date_object = new Date(date_string);
-  let options = { day: 'numeric', month: 'long', year: 'numeric' };
-  let formatted_date = date_object.toLocaleDateString('id-ID', options);
+  let options = { day: "numeric", month: "long", year: "numeric" };
+  let formatted_date = date_object.toLocaleDateString("id-ID", options);
   return formatted_date;
 };

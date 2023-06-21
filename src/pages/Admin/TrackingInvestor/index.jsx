@@ -1,80 +1,98 @@
-import React, { useEffect, useState } from 'react'
-import { Layouts } from '../../../component/molecules/Layouts'
-import { Sidebar } from '../../../component/molecules/Admin/Sidebar'
-import { Container } from '../../../component/atom/Container/Container'
-import { API_URL } from '../../../utils/constant'
-import RowTable from './RowTable'
+import { useEffect, useState } from 'react';
+import { Layouts } from '../../../component/molecules/Layouts';
+import { Sidebar } from '../../../component/molecules/Admin/Sidebar';
+import { Container } from '../../../component/atom/Container/Container';
+import { API_URL, PUBLIC_URL } from '../../../utils/constant';
+import RowTable from './RowTable';
+import axios from 'axios';
+import {
+  dateFormatInvesta,
+  getTokenInvesta,
+  toRupiahInvesta,
+} from '../../../utils/function';
+import { useAuthHeader } from 'react-auth-kit';
 
 export const TrackingInvestor = () => {
   const [listInvestor, setListInvestor] = useState([]);
-  useEffect(() => {
-    (async () => {
-      try {
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2FkbWluL2FkbWlubG9naW4iLCJpYXQiOjE2ODY3NTg2ODQsImV4cCI6MTY4Njc2MjI4NCwibmJmIjoxNjg2NzU4Njg0LCJqdGkiOiI1aUFMR2tCSmx2RXRMN1ZtIiwic3ViIjoiMSIsInBydiI6ImRmODgzZGI5N2JkMDVlZjhmZjg1MDgyZDY4NmM0NWU4MzJlNTkzYTkifQ.wmzeESaLV42jcRn8gh-wr15CggB4JKf-23x4F7Bncyk");
+  const token = useAuthHeader();
 
-        var requestOptions = {
-          method: 'GET',
-          headers: myHeaders,
-          redirect: 'follow'
-        };
-        const resutlAPI = await fetch(API_URL + "/tracking/getInvestor", requestOptions);
-        const resultData = await resutlAPI.json()
-        console.log(resultData)
-        if (!resultData.error) {
-          setListInvestor(resultData)
-        }
-        console.log(listInvestor)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios.get(
+          API_URL + `/tracking/getInvestor`,
+          getTokenInvesta(token())
+        );
+        setListInvestor(result.data.investasi);
       } catch (error) {
-        console.log(error)
+        // Handle error
+        console.log(error);
       }
-    })()
-  }, [])
+    };
+    fetchData();
+    console.log('List ', listInvestor);
+  }, []);
   return (
     <Layouts title="Tracking Investor">
       <Sidebar>
         <Container>
-          <h1 className='font-bold text-xl mb-3'>Permintaan Persetujuan Akun</h1>
-          <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead class="text-sm uppercase bg-white dark:bg-gray-900 dark:text-gray-400">
+          <h1 className="font-bold text-xl mb-3">Investor</h1>
+          <div className="relative overflow-x-auto overflow-y-scroll shadow-md sm:rounded-lg">
+            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+              <thead className="text-sm uppercase bg-white dark:bg-gray-900 dark:text-gray-400">
                 <tr>
-                  <th scope="col" class="px-6 py-3">
-                  </th>
-                  <th scope="col" class="px-6 py-3 text-uppercase">
+                  <th scope="col" className="px-6 py-3"></th>
+                  <th scope="col" className="px-6 py-3 text-uppercase">
                     Nama
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     Proyek
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     Dana Invest
                   </th>
-                  <th scope="col" class="px-6 py-3">
-                    Taggal
+                  <th scope="col" className="px-6 py-3">
+                    Tanggal
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     Tenor
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {
-                  (listInvestor.length > 0) ? (
-                    listInvestor.map((item, index) => {
-                      <RowTable key={index} danaInvest="12.000.000" img="https://placehold.co/100" name="Dinda" proyek="Cabai" tanggal="23/06/2023" tenor="6" />
-                    })
-                  ) : (
-                    <tr className='py-6'>
-                      <td colSpan="6" className='text-center py-6 font-medium text-base' >Belum ada investor</td>
-                    </tr>
-                  )
-                }
+                {listInvestor.length > 0 ? (
+                  listInvestor.map((item, index) => {
+                    return (
+                      <RowTable
+                        key={index}
+                        danaInvest={toRupiahInvesta(item.amount)}
+                        img={
+                          item.user.photo == null
+                            ? 'https://climate.onep.go.th/wp-content/uploads/2020/01/default-image.jpg'
+                            : PUBLIC_URL + 'image/' + item.user.photo
+                        }
+                        name={item.user.name}
+                        proyek={item.pengajuan.pengajuan_name}
+                        tanggal={dateFormatInvesta(item.pengajuan.created_at)}
+                        tenor="6"
+                      />
+                    );
+                  })
+                ) : (
+                  <tr className="py-6">
+                    <td
+                      colSpan="6"
+                      className="text-center py-6 font-medium text-base"
+                    >
+                      Belum ada investor
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
         </Container>
       </Sidebar>
     </Layouts>
-  )
-}
+  );
+};

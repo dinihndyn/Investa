@@ -13,11 +13,13 @@ import { toast } from 'react-toastify';
 import { useAuthHeader } from 'react-auth-kit';
 import { useNavigate } from 'react-router-dom';
 import { Spiner } from '../../component/atom/Spiner';
+import { useState } from 'react';
 
 export const FormPinjamanPetani = () => {
   const { next, prev, current } = useSteps();
   const getToken = useAuthHeader();
   const navigate = useNavigate();
+  const [file, setFile] = useState();
 
   const formik = useFormik({
     initialValues: {
@@ -81,6 +83,7 @@ export const FormPinjamanPetani = () => {
     };
 
     reader.readAsDataURL(file); // Membaca file sebagai URL data
+    setFile(URL.createObjectURL(event.target.files[0]));
   };
 
   return (
@@ -112,7 +115,7 @@ export const FormPinjamanPetani = () => {
             />
             <SecondForm formik={formik} handleChange={formik.handleChange} />
             <InformasiPencairan />
-            <Rekap formik={formik} />
+            <Rekap formik={formik} file={file} />
           </Steps>
         </div>
         <div className="my-5 flex justify-between">

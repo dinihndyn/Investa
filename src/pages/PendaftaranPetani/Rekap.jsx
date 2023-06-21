@@ -1,6 +1,6 @@
 import { toRupiahInvesta } from '../../utils/function';
 
-export const Rekap = ({ formik }) => {
+export const Rekap = ({ formik, file }) => {
   const totalHarga = formik.values.kebutuhan.reduce((total, item) => {
     return total + item.jumlah * item.harga;
   }, 0);
@@ -20,7 +20,7 @@ export const Rekap = ({ formik }) => {
           <p>Foto Proyek Pinjaman</p>
           <div className="mb-3">
             <img
-              src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg"
+              src={file}
               alt="img"
               className="h-[200px] rounded-lg object-cover w-full"
             />

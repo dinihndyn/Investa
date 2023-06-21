@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button } from '../../component/atom/Button';
 import axios from 'axios';
-import { dateFormatInvesta } from '../../utils/function';
+import { dateFormatInvesta, toRupiahInvesta } from '../../utils/function';
 import { Link, useParams } from 'react-router-dom';
 import { useAuthHeader } from 'react-auth-kit';
 import { useFormik } from 'formik';
@@ -27,15 +27,13 @@ export const DetailForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      tanggal: '',
-      nama_petugas: '',
-      tujuan: '',
+      pilih_pembayaran: '',
       photo: '',
     },
     onSubmit: async (values, actions) => {
       try {
         await axios.post(
-          API_URL + `/pengajuan/${params.id}/addInfoKunjungan`,
+          API_URL + `/pengajuan/${params.id}/addInfoPengembalianPetani`,
           values,
           {
             headers: {
@@ -59,7 +57,7 @@ export const DetailForm = () => {
   const getData = async () => {
     try {
       const res = await axios.get(
-        `${API_URL}/pengajuan/${params.id}/getInfoKunjungan`,
+        `${API_URL}/pengajuan/${params.id}/getInfoPengembalian`,
         {
           headers: { Authorization: `${getToken()}` },
         }
@@ -82,28 +80,12 @@ export const DetailForm = () => {
             <Button
               fit
               linkTo={`/proyek/${params.id}/form-transaksi`}
-              label={'Form Transaksi'}
+              label={'Tracking Proyek'}
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3">
-            <div>
+            <div className={data.length >= 1 ? 'hidden' : 'block'}>
               <form onSubmit={formik.handleSubmit}>
-                <div className="flex flex-col gap-2 mb-5">
-                  <label
-                    htmlFor="#"
-                    className=" col-span-2 text-md whitespace-nowrap font-bold "
-                  >
-                    Jumlah Pembayaran
-                  </label>
-                  <input
-                    required
-                    name="jumlah_pembayaran"
-                    onChange={formik.handleChange}
-                    placeholder="Masukan tanggal..."
-                    type="date"
-                    className="w-full  bg-white rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
-                  />
-                </div>
                 <div className="flex flex-col gap-2 mb-3">
                   <label
                     htmlFor="#"
@@ -114,21 +96,18 @@ export const DetailForm = () => {
                   <select
                     name="pilih_pembayaran"
                     id="komoditas"
+                    onChange={formik.handleChange}
                     className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
                   >
                     <option value="" selected disabled hidden>
-                      Pilih Pembayaran
+                      Pilih Pembayaran...
                     </option>
-                    <option value="BCA">BCA</option>
-                    <option value="BNI">BNI</option>
-                    <option value="Lainnya">Lainnya</option>
+                    <option value="Pengembalian Dana oleh Petani">
+                      Transfer Bank
+                    </option>
                   </select>
                 </div>
-                <div className="mb-5">
-                  <p>Nama Bank : BCA</p>
-                  <p>Nama Rekening : Denis Gresan</p>
-                  <p>Nomor Rekening : 351-81-232</p>
-                </div>
+
                 <div className="flex flex-col gap-2 mb-5">
                   <label
                     htmlFor="#"
@@ -145,22 +124,7 @@ export const DetailForm = () => {
                     className="w-full capitalize bg-white rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
                   />
                 </div>
-                <div className="flex flex-col gap-2 mb-5">
-                  <label
-                    htmlFor="#"
-                    className=" col-span-2 text-md whitespace-nowrap font-bold "
-                  >
-                    Tujuan Kunjungan
-                  </label>
-                  <input
-                    required
-                    placeholder="Masukan tujuan kunjungan..."
-                    onChange={formik.handleChange}
-                    name="tujuan"
-                    type="text"
-                    className="w-full capitalize bg-white rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
-                  />
-                </div>
+
                 <div className="mt-5 flex justify-between">
                   <button
                     type={formik.isSubmitting ? 'button' : 'submit'}
@@ -177,9 +141,13 @@ export const DetailForm = () => {
                 </div>
               </form>
             </div>
-            <div className="px-10 col-span-2">
+            <div
+              className={`px-10 ${
+                data.length >= 1 ? 'col-span-3' : 'col-span-2'
+              }`}
+            >
               <h1 className="text-xl font-bold text-investa-primary-50 mb-5">
-                Riwayat Kunjungan
+                Riwayat Pengembalian
               </h1>
               <div>
                 <div className="relative overflow-x-auto">
@@ -190,10 +158,10 @@ export const DetailForm = () => {
                           Tanggal
                         </th>
                         <th scope="col" className="px-6 py-3">
-                          Deksripsi
+                          Deskripsi
                         </th>
                         <th scope="col" className="px-6 py-3">
-                          Jumlah
+                          Jumlah Pembayaran
                         </th>
                         <th scope="col" className="px-6 py-3">
                           Status
@@ -211,7 +179,7 @@ export const DetailForm = () => {
                           </td>
                         </tr>
                       ) : (
-                        data.map((item, index) => {
+                        data.toReversed().map((item, index) => {
                           return (
                             <tr
                               key={index}
@@ -221,31 +189,38 @@ export const DetailForm = () => {
                                 scope="row"
                                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                               >
-                                {dateFormatInvesta(item.tanggal)}
+                                {dateFormatInvesta(item.created_at)}
                               </th>
-                              <td className="px-6 py-4">{item.nama_petugas}</td>
-                              <td className="px-6 py-4">{item.tujuan}</td>
                               <td className="px-6 py-4">
-                                <a
-                                  target="_blank"
-                                  className="cursor-zoom-in"
-                                  href={PUBLIC_URL + 'image/' + item.photo}
-                                  rel="noreferrer"
-                                >
-                                  <img
-                                    src={PUBLIC_URL + 'image/' + item.photo}
-                                    alt="photo"
-                                    className="rounded-lg w-10 h-10 object-cover"
-                                  />
-                                </a>
+                                {item.pilih_pembayaran}
                               </td>
+                              <td className="px-6 py-4">
+                                {toRupiahInvesta(item.jumlah_pembayaran)}
+                              </td>
+                              <td className="px-6 py-4">{item.status}</td>
                             </tr>
                           );
                         })
                       )}
-                      {}
                     </tbody>
                   </table>
+                </div>
+                <div className="flex justify-between items-center">
+                  <div className="flex justify-end">
+                    <Button
+                      fit
+                      linkTo={`/proyek/${params.id}/form-transaksi`}
+                      label={'Kembali'}
+                    />
+                  </div>
+                  <a
+                    target="_blank"
+                    href={PUBLIC_URL + 'image/' + data[0]?.photo}
+                    rel="noreferrer"
+                    className=" bg-investa-primary-30 rounded-md p-3 mt-5"
+                  >
+                    Print Bukti Pengembalian
+                  </a>
                 </div>
               </div>
             </div>

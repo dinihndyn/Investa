@@ -55,6 +55,11 @@ export const Detail = () => {
             src={PUBLIC_URL + data.files[0].alamat_gambar}
             alt="foto"
             className="h-[200px] w-full object-cover rounded-lg"
+            onError={({ currentTarget }) => {
+              currentTarget.onerror = null; // prevents looping
+              currentTarget.src =
+                'https://climate.onep.go.th/wp-content/uploads/2020/01/default-image.jpg';
+            }}
           />
           <p className="mt-5 flex flex-row gap-2">
             <span className="font-bold whitespace-nowrap">Lokasi :</span>
@@ -154,7 +159,7 @@ export const Detail = () => {
         <div className="flex justify-end">
           <div>
             <Button
-              label={'Form Transaksi'}
+              label={'Tracking Proyek'}
               linkTo={`/proyek/${params.id}/form-transaksi`}
             />
           </div>

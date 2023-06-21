@@ -359,7 +359,7 @@ export const SecondForm = ({ handleChange, formik }) => {
             </option>
             {kecamatan?.map((item) => {
               return (
-                <option value={item.id} key={item.id}>
+                <option value={item.nama} key={item.id}>
                   {item.nama}
                 </option>
               );

@@ -278,7 +278,7 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
             </p>
           </div>
           <div>
-            <p className="mt-3">Kg</p>
+            <p className="mt-3">gr</p>
           </div>
           <div>
             <input
@@ -361,7 +361,7 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
             </p>
           </div>
           <div>
-            <p className="mt-3">Kg</p>
+            <p className="mt-3">L</p>
           </div>
           <div>
             <input
@@ -444,7 +444,7 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
             </p>
           </div>
           <div>
-            <p className="mt-3">Kg</p>
+            <p className="mt-3">Pcs</p>
           </div>
           <div>
             <input

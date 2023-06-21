@@ -33,7 +33,7 @@ export const FormTransaksiChild = () => {
   }, []);
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-5">Form Transaksi</h1>
+      <h1 className="text-2xl font-bold mb-5">Form Pencairan</h1>
       <div className="bg-investa-netral-30 p-5">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <div className="col-span-2">
@@ -41,7 +41,7 @@ export const FormTransaksiChild = () => {
               <CardFormTransaksi
                 img={FormKunjungan}
                 href={`/proyek/${params.id}/form-transaksi/pinjaman`}
-                label={'Form Pinjaman'}
+                label={'Form Pencairan Pinjaman'}
                 status={data?.status}
               />
               <CardFormTransaksi

@@ -76,13 +76,13 @@ export const DetailForm = () => {
   return (
     <div>
       <div>
-        <h1 className="text-2xl font-bold mb-5">Form Pemasukan/Panen</h1>
+        <h1 className="text-2xl font-bold mb-5">Form Kunjungan</h1>
         <div className="bg-investa-netral-30 rounded-lg p-5">
           <div className="flex justify-end">
             <Button
               fit
               linkTo={`/proyek/${params.id}/form-transaksi`}
-              label={'Form Transaksi'}
+              label={'Tracking Proyek'}
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3">
@@ -113,7 +113,7 @@ export const DetailForm = () => {
                   </label>
                   <input
                     required
-                    placeholder="Masukan nama produk..."
+                    placeholder="Masukan nama petugas..."
                     onChange={formik.handleChange}
                     name="nama_petugas"
                     type="text"
@@ -153,18 +153,18 @@ export const DetailForm = () => {
                   />
                 </div>
                 <div className="mt-5 flex justify-between">
-                  <button
-                    type={formik.isSubmitting ? 'button' : 'submit'}
-                    className="px-4  rounded-lg py-1 text-white bg-investa-primary-50"
-                  >
-                    {formik.isSubmitting ? <Spiner /> : 'Simpan'}
-                  </button>
                   <Link
                     to={`/proyek/${params.id}/form-transaksi`}
                     className="px-4  rounded-lg py-1 text-investa-primary-50 border border-investa-primary-50 bg-white"
                   >
                     Batal
                   </Link>
+                  <button
+                    type={formik.isSubmitting ? 'button' : 'submit'}
+                    className="px-4  rounded-lg py-1 text-white bg-investa-primary-50"
+                  >
+                    {formik.isSubmitting ? <Spiner /> : 'Simpan'}
+                  </button>
                 </div>
               </form>
             </div>
@@ -202,7 +202,7 @@ export const DetailForm = () => {
                           </td>
                         </tr>
                       ) : (
-                        data.map((item, index) => {
+                        data.toReversed().map((item, index) => {
                           return (
                             <tr
                               key={index}
@@ -240,6 +240,13 @@ export const DetailForm = () => {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="flex justify-start mt-5">
+            <Button
+              fit
+              linkTo={`/proyek/${params.id}/form-transaksi`}
+              label={'Kembali'}
+            />
           </div>
         </div>
       </div>

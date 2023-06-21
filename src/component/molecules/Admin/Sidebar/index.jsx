@@ -1,8 +1,13 @@
 import { AiTwotoneSetting } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, Navigate } from 'react-router-dom';
 import { MenuDropdown } from '../MenuDropdown';
+import axios from 'axios';
+import { API_URL } from '../../../../utils/constant';
+import { getTokenInvesta } from '../../../../utils/function';
+import { useAuthHeader, useAuthUser, useSignOut } from 'react-auth-kit';
+import { useEffect } from 'react';
 
 const AdminInfo = () => {
   return <div className='flex justify-start items-center pl-5 py-5'>
@@ -86,7 +91,10 @@ const menu = [
   }
 ]
 
-export const Sidebar = ({ children }) => {
+export const Sidebar = ({ children, withLogo }) => {
+  const token = useAuthHeader();
+  const logout = useSignOut();
+
   return (
     <>
       <div className="flex md:hidden flex-col items-center gap-1 px-10 bg-investa-primary-10 justify-center py-3 mb-5">
@@ -122,9 +130,18 @@ export const Sidebar = ({ children }) => {
           </div>
         </button>
       </div>
-      <div className={` min-h-[80vh] transition-all  flex relative`}>
+      <div className={`${withLogo ? "min-h-[100vh]" : 'min-h-[80vh]'}  transition-all  flex relative`}>
         <div className="w-[350px] border-r-2 border-r-investa-primary-30 hidden md:block bg-white  ">
-          <div className="flex flex-col ">
+          <div className="flex flex-col">
+            <div className={'flex flex-wrap items-center justify-center mx-5 p-4 py-10 ' + (withLogo ? "" : 'hidden')}>
+              <a href="/" className="flex items-center">
+                <img
+                  src="/assets/images/investa-logo.png"
+                  className="h-8 mr-3 "
+                  alt="investa-logo"
+                />
+              </a>
+            </div>
             <AdminInfo />
             {
               menu.map((item, index) => {
