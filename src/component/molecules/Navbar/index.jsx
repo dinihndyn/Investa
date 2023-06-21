@@ -11,13 +11,14 @@ import axios from 'axios';
 import { getTokenInvesta } from '../../../utils/function';
 import { API_URL } from '../../../utils/constant';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Navbar = () => {
   const isAuthenticated = useIsAuthenticated();
   window.scrollTo(0, 0);
   const token = useAuthHeader();
   const logout = useSignOut();
+  const navigate = useNavigate();
 
   const getMe = async () => {
     try {
@@ -30,6 +31,7 @@ export const Navbar = () => {
     } catch (error) {
       if (error.response.status == 401) {
         logout();
+        navigate('/login');
       }
     }
   };

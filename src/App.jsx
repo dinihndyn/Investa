@@ -36,6 +36,21 @@ import { InvestorDeposit } from './pages/_InvestorPage/Deposit';
 import { InvestorDetailProyek } from './pages/_InvestorPage/DetailProyek';
 import FormTransaksiPinjaman from './pages/Admin/FormTransaksiPinjaman';
 import FormTransaksiPengembalian from './pages/Admin/FormTransaksiPengembalian';
+import PencairanInvestor from './pages/Admin/PencairanInvestor';
+import PencairanPetani from './pages/Admin/PencairanPetani';
+import { ManagementAkun } from './pages/Admin/ManagementAkun';
+import Articles from './pages/Admin/Articles';
+import { ArticleInput } from './pages/Admin/ArticleInput';
+import ArticleEdit from './pages/Admin/ArticleEdit';
+import { DetailProyekInvestorListNew } from './pages/_InvestorPage/Investasi/DetailProyekInvestorListNew';
+import { FormInvestor } from './pages/_InvestorPage/Form';
+import { FormInfoPinjaman } from './pages/_InvestorPage/Form/FormInfoPinjaman';
+import { FormPemasukanPanenInvestor } from './pages/_InvestorPage/Form/FormPemasukanPanen';
+import { FormKunjunganPanenInvestor } from './pages/_InvestorPage/Form/FormKunjunganPanenInvestor';
+import { FormPengembalianDanaInvestor } from './pages/_InvestorPage/Form/FormPengembalianDanaInvestor';
+import { FormTransaksiPembayaran } from './pages/Admin/FormTransaksiPembayaran';
+import FormTransaksiKunjungan from './pages/Admin/FormTransaksiKunjungan';
+import { FormTransaksiPetani } from './pages/FormTransaksi';
 
 function App() {
   const router = createBrowserRouter([
@@ -78,35 +93,131 @@ function App() {
     },
     {
       path: '/admin/persetujuan/:id',
-      element: <DetailPersetujuan />,
+      element: (
+        <PrivateRouteAdmin allowedRoles={ROLES.ADMIN}>
+          <DetailPersetujuan />
+        </PrivateRouteAdmin>
+      ),
     },
     {
       path: '/admin/persetujuan_lanjutan/:id',
-      element: <DetailPersetujuanLanjutan />,
+      element: (
+        <PrivateRouteAdmin allowedRoles={ROLES.ADMIN}>
+          <DetailPersetujuanLanjutan />
+        </PrivateRouteAdmin>
+      ),
     },
     {
       path: '/admin/tracking_investor',
-      element: <TrackingInvestor />,
+      element: (
+        <PrivateRouteAdmin allowedRoles={ROLES.ADMIN}>
+          <TrackingInvestor />
+        </PrivateRouteAdmin>
+      ),
     },
     {
       path: '/admin/tracking_proyek',
-      element: <TrackingProyek />,
+      element: (
+        <PrivateRouteAdmin allowedRoles={ROLES.ADMIN}>
+          <TrackingProyek />
+        </PrivateRouteAdmin>
+      ),
     },
     {
       path: '/admin/tracking_proyek/:id',
-      element: <DetailTrackingProyek />,
+      element: (
+        <PrivateRouteAdmin allowedRoles={ROLES.ADMIN}>
+          <DetailTrackingProyek />
+        </PrivateRouteAdmin>
+      ),
     },
     {
       path: '/admin/tracking_proyek/:id/form',
-      element: <FormTransaksi />,
+      element: (
+        <PrivateRouteAdmin allowedRoles={ROLES.ADMIN}>
+          <FormTransaksi />
+        </PrivateRouteAdmin>
+      ),
     },
     {
       path: '/admin/tracking_proyek/:id/form-transaksi/pinjaman',
-      element: <FormTransaksiPinjaman />,
+      element: (
+        <PrivateRouteAdmin allowedRoles={ROLES.ADMIN}>
+          <FormTransaksiPinjaman />
+        </PrivateRouteAdmin>
+      ),
     },
     {
       path: '/admin/tracking_proyek/:id/form-transaksi/pengembalian',
-      element: <FormTransaksiPengembalian />,
+      element: (
+        <PrivateRouteAdmin allowedRoles={ROLES.ADMIN}>
+          <FormTransaksiPengembalian />
+        </PrivateRouteAdmin>
+      ),
+    },
+    {
+      path: '/admin/tracking_proyek/:id/form-transaksi/kunjungan',
+      element: (
+        <PrivateRouteAdmin allowedRoles={ROLES.ADMIN}>
+          <FormTransaksiKunjungan />
+        </PrivateRouteAdmin>
+      ),
+    },
+    {
+      path: '/admin/tracking_proyek/:id/form-transaksi/pembayaran',
+      element: (
+        <PrivateRouteAdmin allowedRoles={ROLES.ADMIN}>
+          <FormTransaksiPembayaran />
+        </PrivateRouteAdmin>
+      ),
+    },
+    {
+      path: '/admin/pencairan_investor',
+      element: (
+        <PrivateRouteAdmin allowedRoles={ROLES.ADMIN}>
+          <PencairanInvestor />
+        </PrivateRouteAdmin>
+      ),
+    },
+    {
+      path: '/admin/pencairan_petani',
+      element: (
+        <PrivateRouteAdmin allowedRoles={ROLES.ADMIN}>
+          <PencairanPetani />
+        </PrivateRouteAdmin>
+      ),
+    },
+    {
+      path: '/admin/akun_investor',
+      element: (
+        <PrivateRouteAdmin allowedRoles={ROLES.ADMIN}>
+          <ManagementAkun akun="investor" />
+        </PrivateRouteAdmin>
+      ),
+    },
+    {
+      path: '/admin/akun_petani',
+      element: (
+        <PrivateRouteAdmin allowedRoles={ROLES.ADMIN}>
+          <ManagementAkun akun="petani" />
+        </PrivateRouteAdmin>
+      ),
+    },
+    {
+      path: '/admin/artikel/list',
+      element: <Articles />,
+    },
+    {
+      path: '/admin/artikel/input',
+      element: <ArticleInput />,
+    },
+    {
+      path: '/admin/artikel/:id/edit',
+      element: <ArticleEdit />,
+    },
+    {
+      path: '/admin/artikel',
+      element: <Articles />,
     },
     {
       path: '/unauthorized',
@@ -127,7 +238,9 @@ function App() {
     {
       path: '/artikel',
       element: (
-        <PrivateRoute allowedRoles={[ROLES.INVESTOR, ROLES.PETANI]}>
+        <PrivateRoute
+          allowedRoles={[ROLES.INVESTOR, ROLES.PETANI, ROLES.ADMIN]}
+        >
           <Artikel />
         </PrivateRoute>
       ),
@@ -176,7 +289,7 @@ function App() {
       path: '/proyek/:id/form-transaksi',
       element: (
         <PrivateRoute allowedRoles={ROLES.PETANI}>
-          <FormTransaksi />
+          <FormTransaksiPetani />
         </PrivateRoute>
       ),
     },
@@ -249,6 +362,54 @@ function App() {
       element: (
         <PrivateRoute allowedRoles={ROLES.INVESTOR}>
           <InvestorInvestasi />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: '/investor/investasi/proyek/:id',
+      element: (
+        <PrivateRoute allowedRoles={ROLES.INVESTOR}>
+          <DetailProyekInvestorListNew />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: '/investor/investasi/proyek/:id/form',
+      element: (
+        <PrivateRoute allowedRoles={ROLES.INVESTOR}>
+          <FormInvestor />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: '/investor/investasi/proyek/:id/form/pinjaman',
+      element: (
+        <PrivateRoute allowedRoles={ROLES.INVESTOR}>
+          <FormInfoPinjaman />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: '/investor/investasi/proyek/:id/form/pemasukan',
+      element: (
+        <PrivateRoute allowedRoles={ROLES.INVESTOR}>
+          <FormPemasukanPanenInvestor />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: '/investor/investasi/proyek/:id/form/kunjungan',
+      element: (
+        <PrivateRoute allowedRoles={ROLES.INVESTOR}>
+          <FormKunjunganPanenInvestor />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: '/investor/investasi/proyek/:id/form/pembayaran',
+      element: (
+        <PrivateRoute allowedRoles={ROLES.INVESTOR}>
+          <FormPengembalianDanaInvestor />
         </PrivateRoute>
       ),
     },

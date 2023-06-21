@@ -26,8 +26,7 @@ export const UserLoginNav = () => {
             className="w-8 h-8 rounded-full"
             onError={({ currentTarget }) => {
               currentTarget.onerror = null; // prevents looping
-              currentTarget.src =
-                'https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.jpg';
+              currentTarget.src = 'https://placehold.co/400';
             }}
           />
           {userData().name}
@@ -56,53 +55,72 @@ export const UserLoginNav = () => {
                 className="w-8 h-8 rounded-full"
                 onError={({ currentTarget }) => {
                   currentTarget.onerror = null; // prevents looping
-                  currentTarget.src =
-                    'https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.jpg';
+                  currentTarget.src = 'https://placehold.co/400';
                 }}
               />
             </li>
             <hr />
             <hr />
-            <li>
-              <Link
-                to={'/profil'}
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Profil Saya
-              </Link>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Notifikasi
-              </a>
-            </li>
-            <li>
-              <Link
-                to={
-                  userData().tipeAkun == 'Petani'
-                    ? '/dashboard-petani'
-                    : '/investor/dashboard'
-                }
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Dashboard
-              </Link>
-            </li>
-            <li>
-              <button
-                type="button"
-                onClick={() => {
-                  signOut();
-                  window.location.replace('/login');
-                }}
-                className="block w-full text-start px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Sign Out
-              </button>
-            </li>
+            {userData().tipeAkun == 'Admin' ? (
+              <>
+                <li>
+                  <Link
+                    to={'/admin'}
+                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      signOut();
+                      window.location.replace('/login');
+                    }}
+                    className="block w-full text-start px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    Sign Out
+                  </button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link
+                    to={'/profil'}
+                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    Profil Saya
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    to={
+                      userData().tipeAkun == 'Petani'
+                        ? '/dashboard-petani'
+                        : '/investor/dashboard'
+                    }
+                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      signOut();
+                      window.location.replace('/login');
+                    }}
+                    className="block w-full text-start px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    Sign Out
+                  </button>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </>
