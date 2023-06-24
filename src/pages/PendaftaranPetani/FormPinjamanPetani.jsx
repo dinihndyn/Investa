@@ -28,31 +28,13 @@ export const FormPinjamanPetani = () => {
       end_date: '',
       'gambar[]': '',
       komoditas: '',
-      'kebutuhan[0].nama': 'Pupuk',
       kebutuhan: [
         {
-          nama: 'Pupuk',
+          nama: '',
           jenis: '',
           jumlah: '',
           harga: '',
-        },
-        {
-          nama: 'Bibit',
-          jenis: '',
-          jumlah: '',
-          harga: '',
-        },
-        {
-          nama: 'Pestisida',
-          jenis: '',
-          jumlah: '',
-          harga: '',
-        },
-        {
-          nama: 'Media Tanam',
-          jenis: '',
-          jumlah: '',
-          harga: '',
+          satuan: '',
         },
       ],
     },

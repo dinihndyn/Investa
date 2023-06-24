@@ -41,7 +41,11 @@ export const toRupiahInvesta = (num) => {
 };
 
 export const getPercentageInvesta = (part, full) => {
-  return ((parseInt(part || 0) / parseInt(full || 0)) * 100).toFixed(1) || 0;
+  const hasil = (parseInt(part || 0) / parseInt(full || 0)) * 100;
+  if (hasil > 100) {
+    return 100;
+  }
+  return hasil.toFixed(1) || 0;
 };
 
 export const dateFormatInvesta = (date) => {

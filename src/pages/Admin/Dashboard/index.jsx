@@ -114,9 +114,6 @@ export const AdminDashboard = () => {
                     key={index}
                     status={item.status}
                     title={item.pengajuan_name}
-                    danaTerkumpul={
-                      item.dana_tekumpul == null ? 0 : item.dana_tekumpul
-                    }
                     kebutuhanDana={item.total_pengajuan}
                     item={item}
                     id={item.id}

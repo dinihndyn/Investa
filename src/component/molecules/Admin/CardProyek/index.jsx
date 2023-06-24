@@ -1,26 +1,18 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PUBLIC_URL } from '../../../../utils/constant';
-import { toRupiahInvesta } from '../../../../utils/function';
+import {
+  getPercentageInvesta,
+  toRupiahInvesta,
+} from '../../../../utils/function';
 import { Loading } from '../../Loading';
 
 export const CardProyek = ({
   item,
   title,
-  danaTerkumpul,
-  kebutuhanDana,
   status,
   id,
   link = 'persetujuan',
 }) => {
-  const [progresBar, setProgressBar] = useState(0);
-
-  useEffect(() => {
-    const result =
-      (parseInt(danaTerkumpul || 0) / parseInt(kebutuhanDana)) * 100;
-    setProgressBar(result);
-  }, []);
-
   if (item == {}) {
     return <Loading />;
   }
@@ -57,21 +49,30 @@ export const CardProyek = ({
             <div className="w-full bg-gray-200 col-span-2 mt-2 rounded-full dark:bg-gray-700">
               <div
                 className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-                style={{ width: `${progresBar}%` }}
+                style={{
+                  width: `${getPercentageInvesta(
+                    item.dana_terkumpul,
+                    item.total_pengajuan
+                  )}%`,
+                }}
               >
-                {' '}
-                {progresBar}%
+                {getPercentageInvesta(
+                  item.dana_terkumpul,
+                  item.total_pengajuan
+                )}
+                %
               </div>
             </div>
           </div>
           <p className="mb-2 font-normal text-gray-700 dark:text-gray-400 grid grid-cols-2 grid-flow-row">
             <p>Dana Terkumpul</p>
             <p className="text-right">
-              {toRupiahInvesta(danaTerkumpul == null ? 0 : danaTerkumpul)}
+              {toRupiahInvesta(
+                item.dana_terkumpul == null ? 0 : item.dana_terkumpul
+              )}
             </p>
             <p className="font-bold">Kebutuhan Dana</p>
             <p className="text-right font-bold">
-              Rp.{' '}
               {toRupiahInvesta(
                 item.total_pengajuan == null ? 0 : item.total_pengajuan
               )}
@@ -80,7 +81,17 @@ export const CardProyek = ({
         </div>
         <Link
           to={'/admin/' + link + '/' + item.id}
-          className="button block w-full items-center justify-center px-3 py-2 text-sm font-bold text-center bg-gray-300 rounded-lg hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+          className={`button block w-full items-center justify-center px-3 py-2 text-sm font-bold text-center ${
+            status == 'Sedang Diverifikasi'
+              ? 'bg-[#6D6D6D]'
+              : status == 'Proyek Berjalan'
+              ? 'bg-[#53A711]'
+              : status == 'Proyek Ditolak'
+              ? 'bg-[#B83A52]'
+              : status == 'Pendanaan Terpenuhi'
+              ? 'bg-[#D57415]'
+              : 'bg-[#DCDCDC]'
+          } rounded-lg hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800`}
         >
           {status}
         </Link>

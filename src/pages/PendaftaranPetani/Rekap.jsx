@@ -27,10 +27,17 @@ export const Rekap = ({ formik, file }) => {
           </div>
           <p className="mb-3">Barang Kebutuhan</p>
           <div className="font-semibold mb-3">
-            <p>Pupuk {formik.values.kebutuhan[0]['jumlah']} kg</p>
+            {formik?.values?.kebutuhan.map((item, index) => {
+              return (
+                <p key={index}>
+                  {item?.nama} {item?.jumlah} {item?.satuan}
+                </p>
+              );
+            })}
+            {/* <p>Pupuk {formik.values.kebutuhan[0]['jumlah']} kg</p>
             <p>Bibit {formik?.values?.kebutuhan[1]?.jumlah} g</p>
             <p>Pestisida {formik?.values?.kebutuhan[2]?.jumlah}l </p>
-            <p>Media Tanam {formik?.values?.kebutuhan[3]?.jumlah} Pc</p>
+            <p>Media Tanam {formik?.values?.kebutuhan[3]?.jumlah} Pc</p> */}
           </div>
           <p className="mb-3">Jumlah Nominal Pinjaman</p>
           <p className="font-semibold">{toRupiahInvesta(totalHarga)}</p>

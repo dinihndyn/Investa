@@ -88,10 +88,10 @@ export const CardProyekInvestor = ({ terpenuhi, day, progress, data }) => {
       </div>
       <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
         <div
-          style={{ width: `${progress}%` }}
+          style={{ width: `${progress > 100 ? 100 : progress}%` }}
           className={`bg-investa-primary-50 mt-5 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full`}
         >
-          {progress.toFixed(1)}%
+          {progress.toFixed(1) > 100 ? 100 : progress.toFixed(1)}%
         </div>
       </div>
       <div className="mt-5 py-5 bg-investa-primary-10 rounded-lg">

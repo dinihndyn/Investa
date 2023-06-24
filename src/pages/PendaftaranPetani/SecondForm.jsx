@@ -274,14 +274,19 @@ export const SecondForm = ({ handleChange, formik }) => {
           >
             Luas Lahan
           </label>
-          <input
-            required
-            onChange={handleChange}
-            name="luas_lahan"
-            type="text"
-            value={formik.values.luas_lahan}
-            className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
-          />
+          <div className="flex gap-3">
+            <input
+              required
+              onChange={handleChange}
+              name="luas_lahan"
+              type="text"
+              value={formik.values.luas_lahan}
+              className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
+            />
+            <div className="w-[50px] border border-investa-primary-50 font-bold flex items-center justify-center">
+              m <sup>2</sup>
+            </div>
+          </div>
         </div>
         <div className="my-5">
           <h1 className="font-semibold text-2xl">Alamat lahan</h1>

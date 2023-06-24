@@ -1,27 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Layouts } from '../../../component/molecules/Layouts';
 import { Sidebar } from '../../../component/molecules/Admin/Sidebar';
 import { Container } from '../../../component/atom/Container/Container';
 import TitleForDetail from '../../../component/molecules/Admin/TitleForDetail';
-import { PUBLIC_URL } from '../../../utils/constant';
+import { API_URL, PUBLIC_URL } from '../../../utils/constant';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   dateFormatInvesta,
   getPercentageInvesta,
+  getTokenInvesta,
   toRupiahInvesta,
 } from '../../../utils/function';
-import { useAuthHeader, useSignOut } from 'react-auth-kit';
+import { useAuthHeader } from 'react-auth-kit';
 import CountdownTime from '../../../component/atom/CountdownTime';
 import { Button, Modal, Textarea } from 'flowbite-react';
-import { accPengajuan, getDetailPengajuan } from './data';
 import { toast } from 'react-toastify';
 import { ImgLink } from '../../../component/atom/ImgLink';
 import { Loading } from '../../../component/molecules/Loading';
+import axios from 'axios';
+import { useFormik } from 'formik';
 
 export const DetailPersetujuan = () => {
-  const [dataProyek, setDataProyek] = useState({});
+  // const [data, setdata] = useState({});
   const [openModal, setOpenModal] = useState();
   const props = { openModal, setOpenModal };
+
+  const selectResiko = ['Tinggi', 'Sedang', 'Rendah'];
+
   const selectStatus = [
     {
       label: 'Sedang Diverifikasi',
@@ -40,85 +45,64 @@ export const DetailPersetujuan = () => {
       value: 'Menunggu Konfirmasi',
     },
   ];
-  const selectResiko = ['Tinggi', 'Sedang', 'Rendah'];
-  const params = useParams();
   const token = useAuthHeader();
-  const logout = useSignOut();
   const navigate = useNavigate();
-  const [dataForm, setDataForm] = useState({
-    id: 2,
-    imbal_hasil: '',
-    status_pengajuan: '',
-    resiko: 'Tinggi',
-    deskripsi: '',
-    jumlah_unit: '120',
-  });
-  const [error, setError] = useState({
-    files: [],
-  });
+  const params = useParams();
+  const [data, setData] = useState({});
 
-  const handleAccPengajuan = async () => {
+  const getDataDetail = async () => {
     try {
-      const result = await accPengajuan(dataForm, token());
-      console.log(result);
-      setError({ ...error, ...result });
-
-      setOpenModal(undefined);
-      toast.success(result.message);
-      navigate('/admin/persetujuan');
+      const res = await axios.post(
+        API_URL + `/pengajuan/detailPengajuan/${params.id}`,
+        null,
+        getTokenInvesta(token())
+      );
+      setData(res.data.Pengajuan);
     } catch (error) {
       console.log(error);
     }
   };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setDataForm((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  useEffect(() => {
-    (async () => {
+  const formik = useFormik({
+    initialValues: {
+      imbal_hasil: '',
+      status: '',
+      resiko: '',
+      jumlah_unit: '',
+      deskripsi: '',
+    },
+    onSubmit: async (values) => {
       try {
-        const data = await getDetailPengajuan(params.id, token());
-        setDataProyek(data);
-        console.log(data);
-        setDataForm({
-          ...dataForm,
-          id: data.id,
-          status_pengajuan: data.status,
-          deskripsi: data.deskripsi,
-          imbal_hasil: data.imbal_hasil,
-          resiko: data.resiko,
-          jumlah_unit: data.jumlah_unit,
-        });
+        await axios.post(
+          API_URL + `/pengajuan/acceptPengajuan/${params.id}`,
+          values,
+          getTokenInvesta(token())
+        );
+        toast.success('Berhasil update');
+        navigate('/admin/persetujuan');
       } catch (error) {
-        if (error == 'Unauthorized') {
-          logout();
-          navigate('/login');
-        }
-        toast.warn('Maaf terjadi masalah');
-        console.log(error);
+        toast.error(Object.values(error.response.data)[0][0]);
       }
-    })();
+    },
+  });
+  useState(() => {
+    getDataDetail();
   }, []);
-  if (dataProyek == {}) {
+
+  if (data == {}) {
     return <Loading />;
   }
   return (
     <Layouts title="Detail Proyek" bg="bg-[#fffff]">
       <Sidebar>
         <Container>
-          <TitleForDetail label={dataProyek.pengajuan_name} />
+          <TitleForDetail label={data.pengajuan_name} />
         </Container>
         <div className="h-0.5 w-full bg-gray-300"></div>
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div className="md:pr-3">
               <ImgLink
-                src={PUBLIC_URL + dataProyek?.files?.[0].alamat_gambar}
+                src={PUBLIC_URL + data?.files?.[0].alamat_gambar}
                 link={`/admin/persetujuan_lanjutan/${params.id}`}
                 onError={(e) => {
                   e.target.src = 'https://placehold.co/600x400';
@@ -127,32 +111,30 @@ export const DetailPersetujuan = () => {
               <div className="flex text-sm md:text-lg mt-6">
                 <p className="font-bold">Lokasi:</p>
                 <p className="ml-2">
-                  {dataProyek?.info_tani?.alamat}, Kecamatan{' '}
-                  {dataProyek?.info_tani?.kecamatan},{' '}
-                  {dataProyek?.info_tani?.kota}.
+                  {data?.info_tani?.alamat}, {data?.info_tani?.kecamatan}
                 </p>
               </div>
             </div>
             <div>
               <div className="grid grid-cols-2 mb-2">
-                <p>{toRupiahInvesta(dataProyek?.total_pengajuan || 0)}</p>
-                <p className="text-right md:text-left">
-                  {toRupiahInvesta(dataProyek?.dana_terkumpul || 0)}
+                <p>{toRupiahInvesta(data?.total_pengajuan || 0)}</p>
+                <p className="text-right md:text-right ">
+                  {toRupiahInvesta(data?.dana_terkumpul || 0)}
                 </p>
               </div>
               <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
                 <div
                   className="bg-blue-600 text-sm font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
                   style={{
-                    width: getPercentageInvesta(
-                      dataProyek?.dana_terkumpul,
-                      dataProyek?.total_pengajuan
-                    ),
+                    width: `${getPercentageInvesta(
+                      data.dana_terkumpul,
+                      data.total_pengajuan
+                    )}%`,
                   }}
                 >
                   {getPercentageInvesta(
-                    dataProyek.dana_terkumpul,
-                    dataProyek.total_pengajuan
+                    data.dana_terkumpul,
+                    data.total_pengajuan
                   )}
                   %
                 </div>
@@ -160,7 +142,7 @@ export const DetailPersetujuan = () => {
               <div className="grid grid-cols-3 my-2">
                 <div>
                   <p>Tenor</p>
-                  <p className="font-bold">{dataProyek?.tenor}</p>
+                  <p className="font-bold">{data?.tenor}</p>
                 </div>
                 <div>
                   <label className="block mb-2 text-sm text-gray-900 dark:text-white">
@@ -168,8 +150,7 @@ export const DetailPersetujuan = () => {
                   </label>
                   <select
                     name="imbal_hasil"
-                    onChange={handleChange}
-                    value={dataForm.imbal_hasil}
+                    onChange={formik.handleChange}
                     className="block p-1 px-2 mb-6 md:mb-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
                     <option disabled selected value="">
@@ -183,30 +164,33 @@ export const DetailPersetujuan = () => {
                 <div>
                   <p>Harga per Unit</p>
                   <p className="font-bold">
-                    {toRupiahInvesta(dataProyek.harga_unit || 0)}
+                    {toRupiahInvesta(data.harga_unit || 0)}
                   </p>
                 </div>
               </div>
               <p>
-                {dateFormatInvesta(dataProyek.start_date)} sampai{' '}
-                {dateFormatInvesta(dataProyek.end_date)}
+                {dateFormatInvesta(data.start_date)} sampai{' '}
+                {dateFormatInvesta(data.end_date)}
               </p>
               <hr className="my-2" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-10">
                 <div>
                   <label
-                    htmlFor="status_pengajuan"
+                    htmlFor="staus"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Status
                   </label>
                   <select
-                    name="status_pengajuan"
-                    onChange={handleChange}
+                    name="status"
+                    onChange={formik.handleChange}
                     className="block w-full p-2 mb-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
+                    <option disabled selected value="">
+                      Pilih Status
+                    </option>
                     {selectStatus.map(({ label, value }, index) => {
-                      if (value == dataProyek.status) {
+                      if (value == data.status) {
                         return (
                           <option selected value={value} key={index}>
                             {label}
@@ -231,12 +215,15 @@ export const DetailPersetujuan = () => {
                   </label>
                   <select
                     id="resiko"
+                    onChange={formik.handleChange}
                     name="resiko"
-                    onChange={handleChange}
                     className="block w-full p-2 mb-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
+                    <option disabled selected value="">
+                      Pilih Resiko
+                    </option>
                     {selectResiko.map((item, index) =>
-                      dataProyek.resiko == item ? (
+                      data.resiko == item ? (
                         <option selected value={item} key={index}>
                           {item}
                         </option>
@@ -254,30 +241,27 @@ export const DetailPersetujuan = () => {
                 <div>
                   <p>Pengembalian</p>
                   <p className="font-bold">
-                    <CountdownTime date={dataProyek.estimasi_pengembalian} />
+                    <CountdownTime date={data.estimasi_pengembalian} />
                   </p>
                 </div>
                 <div>
                   <label
                     htmlFor="jumlah_unit"
-                    value={dataForm.jumlah_unit}
                     className="block mb-2 text-sm text-gray-900 dark:text-white"
                   >
                     Jumlah Unit
                   </label>
                   <input
                     type="number"
+                    placeholder="Unit"
                     name="jumlah_unit"
-                    value={dataForm.jumlah_unit}
-                    onChange={handleChange}
+                    onChange={formik.handleChange}
                     className="w-full rounded"
                   />
                 </div>
                 <div>
                   <p>Unit Tersedia</p>
-                  <p className="font-bold">
-                    {dataProyek.unit_tersedia || 'Rp. 0'}
-                  </p>
+                  <p className="font-bold">{data.unit_tersedia || 'Rp. 0'}</p>
                 </div>
               </div>
               <hr className="my-2 mb-4" />
@@ -286,27 +270,17 @@ export const DetailPersetujuan = () => {
                 Resiko kredit atau gagal bayar ditanggung sepenuhnya oleh
                 pendana. Mohon mempelajari risiko pendanaan sebelum mendanai.
               </p>
-              <h5
-                className={`font-bold mt-10 mb-2 ${
-                  error.deskripsi ? 'text-red-600' : ''
-                }`}
-                htmlFor="deskripsi"
-              >
+              <h5 className={`font-bold mt-10 mb-2 `} htmlFor="deskripsi">
                 Rincian Proyek
               </h5>
               <Textarea
                 name="deskripsi"
                 id="deskripsi"
-                color={error.deskripsi ? 'failure' : ''}
-                onChange={handleChange}
-                value={dataForm.deskripsi}
                 required
                 rows={4}
                 placeholder="Tulis Rincian Proyek ..."
+                onChange={formik.handleChange}
               />
-              <p className="text-red-600 text-sm font-medium mt-1">
-                {error.deskripsi && error.deskripsi[0]}
-              </p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-10 mt-10">
@@ -334,13 +308,15 @@ export const DetailPersetujuan = () => {
                 <p className="text-xl">Setujui Pendanaan pada proyek?</p>
               </div>
               <div className="flex justify-between mx-24 my-10">
-                <Button color="warning" onClick={handleAccPengajuan}>
+                <Button color="warning" onClick={formik.handleSubmit}>
                   Setujui
                 </Button>
                 <Button
                   color="warning"
                   outline
-                  onClick={() => props.setOpenModal(undefined)}
+                  onClick={() => {
+                    props.setOpenModal(undefined);
+                  }}
                 >
                   <p className="text-yellow-500 hover:text-white">Tidak</p>
                 </Button>

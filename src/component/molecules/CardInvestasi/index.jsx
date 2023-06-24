@@ -57,11 +57,11 @@ export const CardInvestasi = ({
             <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
               <div
                 style={{
-                  width: `${progress}%`,
+                  width: `${progress > 100 ? 100 : progress}%`,
                 }}
                 className={`bg-investa-primary-50  mt-5 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full`}
               >
-                {progress}%
+                {progress > 100 ? 100 : progress}%
               </div>
             </div>
           </div>
@@ -80,7 +80,19 @@ export const CardInvestasi = ({
           </div>
         </div>
         <Link className="" to={`/proyek/${id}`}>
-          <div className="p-3 bg-investa-netral-30 font-bold text-center rounded-lg">
+          <div
+            className={`p-3 ${
+              statusProyek == 'Sedang Diverifikasi'
+                ? 'bg-[#6D6D6D]'
+                : statusProyek == 'Proyek Berjalan'
+                ? 'bg-[#53A711]'
+                : statusProyek == 'Proyek Ditolak'
+                ? 'bg-[#B83A52]'
+                : statusProyek == 'Pendanaan Terpenuhi'
+                ? 'bg-[#D57415]'
+                : 'bg-[#DCDCDC]'
+            } font-bold text-center rounded-lg`}
+          >
             {statusProyek}
           </div>
         </Link>

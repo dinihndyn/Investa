@@ -1,7 +1,7 @@
 import { useAuthUser } from 'react-auth-kit';
 import { NavLink } from 'react-router-dom';
-import { MenuDropdown } from '../MenuDropdown';
 import { PUBLIC_URL } from '../../../../utils/constant';
+import { Sidebar as MySidebar } from 'flowbite-react';
 
 const AdminInfo = () => {
   const user = useAuthUser();
@@ -34,7 +34,7 @@ const menu = [
   },
   {
     name: 'Traking',
-    link: '/admin/traking_investor',
+    link: '',
     submenu: [
       {
         name: 'Investor',
@@ -82,10 +82,6 @@ const menu = [
       {
         name: 'Input Artikel',
         link: '/admin/artikel/input',
-      },
-      {
-        name: 'Manajemen Unggahan',
-        link: '/admin/artikel/management_unggahan',
       },
     ],
   },
@@ -153,7 +149,7 @@ export const Sidebar = ({ children, withLogo }) => {
               </a>
             </div>
             <AdminInfo />
-            {menu.map((item, index) => {
+            {/* {menu.map((item, index) => {
               return (
                 <MenuDropdown
                   key={index}
@@ -162,7 +158,39 @@ export const Sidebar = ({ children, withLogo }) => {
                   submenu={item.submenu}
                 />
               );
-            })}
+            })} */}
+            <MySidebar className="bg-red-500">
+              <MySidebar.Items>
+                <MySidebar.ItemGroup>
+                  {menu.map((item, index) => {
+                    return (
+                      <>
+                        {item.submenu ? (
+                          <MySidebar.Collapse label={item.name}>
+                            {item.submenu.map((item2, index2) => {
+                              return (
+                                <>
+                                  <MySidebar.Item
+                                    key={index2}
+                                    href={item2.link}
+                                  >
+                                    {item2.name}
+                                  </MySidebar.Item>
+                                </>
+                              );
+                            })}
+                          </MySidebar.Collapse>
+                        ) : (
+                          <MySidebar.Item key={index} href={item.link}>
+                            <p>{item.name}</p>
+                          </MySidebar.Item>
+                        )}
+                      </>
+                    );
+                  })}
+                </MySidebar.ItemGroup>
+              </MySidebar.Items>
+            </MySidebar>
           </div>
         </div>
 
