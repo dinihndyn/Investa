@@ -44,22 +44,26 @@ export const Persetujuan = () => {
       <Sidebar>
         <Container>
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-start relative">
-            {listProyek.map((item, index) => {
-              return (
-                <CardProyek
-                  id={item.id}
-                  key={index}
-                  danaTerkumpul={item.dana_terkumpul}
-                  status={item.status}
-                  kebutuhanDana={item.total_pengajuan}
-                  item={item}
-                  title={item.pengajuan_name}
-                  lokasi={item?.info_tani?.kota}
-                  imbalanHasil={item.imbalan_hasil}
-                  resiko={item.resiko}
-                />
-              );
-            })}
+            {listProyek.length == 0 ? (
+              <h1 className="font-bold">Belum ada pengajuan</h1>
+            ) : (
+              listProyek.map((item, index) => {
+                return (
+                  <CardProyek
+                    id={item.id}
+                    key={index}
+                    danaTerkumpul={item.dana_terkumpul}
+                    status={item.status}
+                    kebutuhanDana={item.total_pengajuan}
+                    item={item}
+                    title={item.pengajuan_name}
+                    lokasi={item?.info_tani?.kota}
+                    imbalanHasil={item.imbalan_hasil}
+                    resiko={item.resiko}
+                  />
+                );
+              })
+            )}
           </div>
         </Container>
       </Sidebar>

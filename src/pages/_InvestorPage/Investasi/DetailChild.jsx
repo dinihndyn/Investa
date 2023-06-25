@@ -65,7 +65,6 @@ export const DetailChild = () => {
             <span className="font-bold whitespace-nowrap">Lokasi :</span>
             <span>
               {data.info_tani.alamat} Kecamatan {data.info_tani.kecamatan}
-              ,Kabupaten {data.info_tani.kota}.
             </span>
           </p>
         </div>
@@ -152,19 +151,7 @@ export const DetailChild = () => {
           <hr />
           <div className="mb-5">
             <p className="font-semibold">Rincian Proyek</p>
-            <p>
-              Pertanian jagung di Nganjuk merupakan sektor penting dalam
-              perekonomian daerah tersebut. Varietas jagung yang dibudidayakan
-              meliputi varietas hibrida dan lokal. Petani menggunakan metode
-              penanaman langsung dan melakukan pemeliharaan rutin seperti
-              penyiangan gulma, pengendalian hama dan penyakit, serta pengairan
-              yang cukup. Panen dilakukan setelah tanaman mencapai kematangan
-              fisiologis. Tantangan yang dihadapi petani termasuk serangan hama
-              dan penyakit, perubahan iklim, serta akses terbatas terhadap
-              teknologi dan pembiayaan. Namun, dengan inovasi teknologi
-              pertanian, pelatihan petani, dan dukungan pemerintah, pertanian
-              jagung di Nganjuk memiliki potensi untuk terus berkembang
-            </p>
+            <p>{data.deskripsi}</p>
           </div>
         </div>
         <div className="flex justify-end">

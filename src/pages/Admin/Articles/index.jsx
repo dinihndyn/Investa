@@ -1,12 +1,14 @@
-import { Dropdown, Table } from "flowbite-react";
-import { useEffect, useState } from "react";
-import { useAuthHeader, useSignOut } from "react-auth-kit";
-import { Link, useNavigate } from "react-router-dom";
-import { Container } from "../../../component/atom/Container/Container";
-import { Sidebar } from "../../../component/molecules/Admin/Sidebar";
-import { Layouts } from "../../../component/molecules/Layouts";
-import { API_URL } from "../../../utils/constant";
-import { dateFormatInvesta } from "../../../utils/function";
+import { Dropdown, Table } from 'flowbite-react';
+import { useEffect, useState } from 'react';
+import { useAuthHeader, useSignOut } from 'react-auth-kit';
+import { Link, useNavigate } from 'react-router-dom';
+import { Container } from '../../../component/atom/Container/Container';
+import { Sidebar } from '../../../component/molecules/Admin/Sidebar';
+import { Layouts } from '../../../component/molecules/Layouts';
+import { API_URL } from '../../../utils/constant';
+import { dateFormatInvesta, getTokenInvesta } from '../../../utils/function';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function Articles() {
   const token = useAuthHeader();
@@ -14,15 +16,30 @@ function Articles() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
 
+  const deleteArtikel = async (id) => {
+    try {
+      const res = await axios.delete(
+        API_URL + `/artikel/deleteArtikel/${id}`,
+        getTokenInvesta(token())
+      );
+      console.log(res);
+      toast.success('Berhasil menghapus artikel');
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+      toast.error('Gagal menghapus artikel');
+    }
+  };
+
   useEffect(() => {
     (async () => {
       try {
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", token());
+        myHeaders.append('Authorization', token());
         var requestOptions = {
-          method: "GET",
+          method: 'GET',
           headers: myHeaders,
-          redirect: "follow",
+          redirect: 'follow',
         };
         const resultApi = await fetch(
           `${API_URL}/artikel/getArtikel`,
@@ -35,14 +52,14 @@ function Articles() {
         console.log(error);
         if (error.response.status == 401) {
           logout();
-          navigate("/login");
+          navigate('/login');
         }
       }
     })();
   }, []);
 
   return (
-    <Layouts title={"Artikel"}>
+    <Layouts title={'Artikel'}>
       <Sidebar>
         <Container>
           <Table striped>
@@ -52,26 +69,40 @@ function Articles() {
               <Table.HeadCell>Aksi</Table.HeadCell>
             </Table.Head>
             <Table.Body>
-              {data.map((item, index) => {
-                return (
-                  <Table.Row key={index}>
-                    <Table.Cell>
-                      {dateFormatInvesta(item.tanggal_upload)}
-                    </Table.Cell>
-                    <Table.Cell>{item.judul}</Table.Cell>
-                    <Table.Cell>
-                      <Dropdown color={"yellow"} label="aksi">
-                        <Dropdown.Item>Hapus</Dropdown.Item>
-                        <Dropdown.Item>
-                          <Link to={`/admin/artikel/${item.id}/edit`}>
-                            Edit
-                          </Link>
-                        </Dropdown.Item>
-                      </Dropdown>
-                    </Table.Cell>
-                  </Table.Row>
-                );
-              })}
+              {data.length == 0 ? (
+                <Table.Row>
+                  <Table.Cell colSpan={4}>
+                    <h1 className="text-center ">Belum ada artikel</h1>
+                  </Table.Cell>
+                </Table.Row>
+              ) : (
+                data.map((item, index) => {
+                  return (
+                    <Table.Row key={index}>
+                      <Table.Cell>
+                        {dateFormatInvesta(item.tanggal_upload)}
+                      </Table.Cell>
+                      <Table.Cell>{item.judul}</Table.Cell>
+                      <Table.Cell>
+                        <Dropdown color={'yellow'} label="aksi">
+                          <Dropdown.Item
+                            onClick={() => {
+                              deleteArtikel(item.id);
+                            }}
+                          >
+                            Hapus
+                          </Dropdown.Item>
+                          <Dropdown.Item>
+                            <Link to={`/admin/artikel/${item.id}/edit`}>
+                              Edit
+                            </Link>
+                          </Dropdown.Item>
+                        </Dropdown>
+                      </Table.Cell>
+                    </Table.Row>
+                  );
+                })
+              )}
             </Table.Body>
           </Table>
         </Container>

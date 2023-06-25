@@ -1,6 +1,6 @@
-import { FileInput, Label, TextInput } from 'flowbite-react';
+import { Label, TextInput } from 'flowbite-react';
 
-const FormBarangPinjaman = ({ formik, onChangeImg }) => {
+const FormBarangPinjaman = ({ formik }) => {
   return (
     <>
       <div>
@@ -49,16 +49,6 @@ const FormBarangPinjaman = ({ formik, onChangeImg }) => {
           placeholder="Masukan harga"
           type="number"
           onChange={formik.handleChange}
-        />
-      </div>
-      <div>
-        <div className="mb-2 block">
-          <Label htmlFor="harga" value="Bukti Pembelian" />
-        </div>
-        <FileInput
-          name="gambar"
-          placeholder="Masukan harga"
-          onChange={onChangeImg}
         />
       </div>
     </>
