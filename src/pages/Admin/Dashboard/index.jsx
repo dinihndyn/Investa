@@ -32,15 +32,10 @@ const CardDashboard = ({ label, value, image }) => {
   );
 };
 
-const dataChart = [
-  { name: 'Januari', investor: 40, proyek: 20 },
-  { name: 'Februari', investor: 30, proyek: 60 },
-  { name: 'Maret', investor: 40, proyek: 10 },
-  { name: 'April', investor: 5, proyek: 40 },
-];
-
 export const AdminDashboard = () => {
   const [dataProyek, setDataProyek] = useState([]);
+  const [dataChart, setDataChart] = useState([]);
+
   const [dataDashboard, setDataDashboard] = useState({
     total_dana: '',
     total_petani: '',
@@ -66,13 +61,17 @@ export const AdminDashboard = () => {
           API_URL + `/pengajuan/getPengajuanSeluruhnya`,
           getTokenInvesta(token())
         );
-        console.log('Ini hasil API ', result);
+        const getDataChart = await axios.get(
+          API_URL + `/dashboard/chartDashboard`,
+          getTokenInvesta(token())
+        );
         setDataDashboard({
           total_dana: result.data.total_dana,
           total_petani: getPetani.data.total_petani,
           total_investor: getInvestor.data.total_investor,
         });
         setDataProyek(getPengajuanSeluruhnya.data);
+        setDataChart(getDataChart.data);
       } catch (error) {
         // Handle error
         console.log(error);
