@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useAuthHeader } from 'react-auth-kit';
 import axios from 'axios';
 
-export const CardProyekInvestor = ({ terpenuhi, day, progress, data }) => {
+export const CardProyekInvestor = ({ terpenuhi, day, amount, progress, data }) => {
   const [dataDashboard, setDataDashboard] = useState({
     total_dana: '',
   });
@@ -100,11 +100,9 @@ export const CardProyekInvestor = ({ terpenuhi, day, progress, data }) => {
         <div className="grid grid-cols-2 justify-between px-5">
           {dataDashboard.total_dana != '' ? (
             <>
-              <p className="text-sm">Saldo Dana:</p>
+              <p className="text-sm">Dana Investasi:</p>
               <p className="text-end text-sm">
-                {toRupiahInvesta(
-                  dataDashboard.total_dana == '' ? 0 : dataDashboard.total_dana
-                )}
+                {amount}
               </p>
             </>
           ) : null}

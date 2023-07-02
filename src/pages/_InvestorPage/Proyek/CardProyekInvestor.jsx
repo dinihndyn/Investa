@@ -73,7 +73,7 @@ export const CardProyekInvestor = ({ terpenuhi, day, progress, data }) => {
           <div className="absolute top-2 text-black bg-white right-2 flex p-2 rounded-lg font-bold items-center gap-2 ">
             {' '}
             <AiOutlineClockCircle className="w-fit" />
-            <span>{day}</span>
+            <span>{day} Hari Tersisa</span>
           </div>
         </Link>
       )}
