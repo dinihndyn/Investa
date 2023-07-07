@@ -44,7 +44,7 @@ export const Persetujuan = () => {
       <Sidebar>
         <Container>
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-start relative">
-            {listProyek.length == 0 ? (
+            {listProyek.length === 0 || !listProyek[0] || Object.keys(listProyek[0]).length === 0 ? (
               <h1 className="font-bold">Belum ada pengajuan</h1>
             ) : (
               listProyek.map((item, index) => {

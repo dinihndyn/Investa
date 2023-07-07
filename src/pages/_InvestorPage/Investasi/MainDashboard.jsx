@@ -45,7 +45,7 @@ export const MainDashboard = () => {
               data={item}
               day={item.day_left}
               progress={(item.dana_terkumpul / item.total_pengajuan) * 100}
-              terpenuhi={item.status == 'Pendanaan Terpenuhi' ? true : false}
+              terpenuhi={item.status === 'Pendanaan Terpenuhi' || item.status === 'Proyek Selesai'}
               amount={amount}
             />
           );

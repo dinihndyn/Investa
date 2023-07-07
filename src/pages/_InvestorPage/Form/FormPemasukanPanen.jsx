@@ -37,7 +37,7 @@ export const FormPemasukanPanenInvestor = () => {
   return (
     <div>
       <Layouts title={'Pemasukan '}>
-        <SideDashboard>
+        <SideDashboard isInvestor>
           <Container>
             <div>
               <h1 className="text-2xl font-bold mb-5">Form Pemasukan/Panen</h1>

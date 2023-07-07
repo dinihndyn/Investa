@@ -74,7 +74,7 @@ export const TrackingInvestor = () => {
                         name={item.user.name}
                         proyek={item.pengajuan.pengajuan_name}
                         tanggal={dateFormatInvesta(item.pengajuan.created_at)}
-                        tenor="6"
+                        tenor={item.pengajuan.tenor}
                       />
                     );
                   })

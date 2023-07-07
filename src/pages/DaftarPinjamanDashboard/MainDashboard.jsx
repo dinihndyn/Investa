@@ -45,8 +45,10 @@ export const MainDashboard = () => {
               statusProyek={item.status}
               pengajuan={item.total_pengajuan}
               dana_terkumpul={item.dana_terkumpul}
+              imbal_hasil={item.imbal_hasil}
               name={item.pengajuan_name}
               key={index}
+              lokasi={item.info_tani.kecamatan}
               img={item.files[0].alamat_gambar}
             />
           );

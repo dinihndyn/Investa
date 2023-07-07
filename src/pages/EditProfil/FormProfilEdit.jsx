@@ -40,7 +40,7 @@ export const FormProfilEdit = () => {
         });
         toast('Success Update Foto');
         setTimeout(() => {
-          window.location.reload();
+          window.location.href = '/profil';
         }, 1500);
       } catch (error) {
         toast.error('Lengkapi data sesuai yang diminta');
@@ -111,15 +111,14 @@ export const FormProfilEdit = () => {
                   htmlFor="#"
                   className=" col-span-2 text-md whitespace-nowrap font-bold "
                 >
-                  Email
+                  Pengalaman Bertani (tahun)
                 </label>
                 <input
-                  disabled
                   required
-                  readOnly
-                  value={userData().email}
-                  type="email"
-                  className="w-full rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
+                  name="pengalaman"
+                  onChange={formik.handleChange}
+                  type="text"
+                  className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -238,7 +237,7 @@ export const FormProfilEdit = () => {
               >
                 Kembali
               </Link>
-              <button type="submit" className="button-investa ">
+              <button type="submit" className="button-investa">
                 Simpan Perubahan
               </button>
             </div>

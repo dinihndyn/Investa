@@ -104,11 +104,11 @@ const FormTransaksiPinjaman = () => {
               <div className="grid grid-cols-2">
                 <Link
                   to={'/admin/tracking_proyek/' + params.id + '/form'}
-                  className="border bg-white   border-investa-primary-50 py-2.5 px-5 rounded text-investa-primary-50 hover:bg-investa-primary-50 hover:text-white transition-all text-center"
+                  className="border bg-white me-2  border-investa-primary-50 py-2.5 px-5 rounded text-investa-primary-50 hover:bg-investa-primary-50 hover:text-white transition-all text-center"
                 >
                   Kembali
                 </Link>
-                <Button type="submit">Simpan</Button>
+                <Button className="ms-2" type="submit">Simpan</Button>
               </div>
             </form>
           </div>
@@ -124,6 +124,7 @@ const FormTransaksiPinjaman = () => {
             </h2>
             <TableInfoPinjaman
               totalHasil={data['Total Setelah Imbal']}
+              imbal_hasil={data['imbal_hasil']}
               data={data['Info Pinjaman']}
             />
             <Button className={'self-end'}>Print Bukti Pembelian</Button>

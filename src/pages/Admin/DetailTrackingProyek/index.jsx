@@ -62,17 +62,17 @@ export const DetailTrackingProyek = () => {
                 <p>
                   {data.info_tani.alamat +
                     ', ' +
-                    data.info_tani.kota +
-                    ', ' +
                     data.info_tani.kecamatan}
                 </p>
               </div>
             </div>
             <div className="mr-10">
-              <div className="grid grid-cols-2 justify-items-start">
+              <div className="grid grid-cols-2">
                 <p>{toRupiahInvesta(data.total_pengajuan)}</p>
-                <p className="justify-self-center">
-                  {data.dana_terkumpul == null ? 'Rp. 0' : data.dana_terkumpul}
+                <p className="flex justify-end">
+                  {toRupiahInvesta(
+                    data.dana_terkumpul == null ? 0 : data.dana_terkumpul
+                  )}
                 </p>
               </div>
               <div className="w-full my-4 bg-gray-200 rounded-full dark:bg-gray-700">
@@ -143,10 +143,11 @@ export const DetailTrackingProyek = () => {
               <h5 className="mt-6 font-bold">Rincian Proyek</h5>
               <p>{data.deskripsi}</p>
             </div>
-            <div>
+            <div className="flex justify-end">
               <Link
                 to="form"
-                className="focus:outline-none text-white bg-investa-primary-50 hover:bg-yellow-400 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900 text-xl"
+                className="bg-investa-primary-50 px-5 py-2 text-white rounded"
+                style={{ alignSelf: 'flex-start' }}
               >
                 Tracking Proyek
               </Link>

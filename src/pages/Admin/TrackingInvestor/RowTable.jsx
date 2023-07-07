@@ -13,9 +13,9 @@ const RowTable = ({ img, name, proyek, danaInvest, tanggal, tenor }) => {
       </th>
       <td className="px-6 py-4 font-bold">{name}</td>
       <td className="px-6 py-4">{proyek}</td>
-      <td className="px-6 py-4">Rp. {danaInvest}</td>
+      <td className="px-6 py-4">{danaInvest}</td>
       <td className="px-6 py-4">{tanggal}</td>
-      <td className="px-6 py-4">{tenor} Bulan</td>
+      <td className="px-6 py-4">{tenor}</td>
     </tr>
   );
 };

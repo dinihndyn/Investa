@@ -33,7 +33,7 @@ export const FormKunjunganPanenInvestor = () => {
   return (
     <div>
       <Layouts title={'Pemasukan '}>
-        <SideDashboard>
+        <SideDashboar isInvestor>
           <Container>
             <div>
               <h1 className="text-2xl font-bold mb-5">Riwayat Kunjungan</h1>
@@ -130,7 +130,7 @@ export const FormKunjunganPanenInvestor = () => {
               </div>
             </div>
           </Container>
-        </SideDashboard>
+        </SideDashboar>
       </Layouts>
     </div>
   );

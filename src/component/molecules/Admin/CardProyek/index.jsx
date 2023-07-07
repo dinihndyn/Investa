@@ -41,7 +41,7 @@ export const CardProyek = ({
             className={`mb-2 font-normal text-gray-700 dark:text-gray-400 grid grid-cols-2 grid-flow-row hidden group-hover:grid`}
           >
             <p>Expektasi Imbal Hasil</p>
-            <p className="text-right">{(item.imbal_hasil || '-') + '%'}</p>
+            <p className="text-right">{item.imbal_hasil ? item.imbal_hasil + '%' : '-'}</p>
             <p className="">Lokasi</p>
             <p className="text-right">{item?.info_tani?.kecamatan}</p>
             <p className="">Resiko</p>
@@ -81,17 +81,16 @@ export const CardProyek = ({
         </div>
         <Link
           to={'/admin/' + link + '/' + item.id}
-          className={`button block w-full items-center justify-center px-3 py-2 text-sm font-bold text-center ${
-            status == 'Sedang Diverifikasi'
-              ? 'bg-[#6D6D6D]'
-              : status == 'Proyek Berjalan'
+          className={`button block w-full items-center justify-center px-3 py-2 text-sm font-bold text-center ${status == 'Sedang Diverifikasi'
+            ? 'bg-[#6D6D6D]'
+            : status == 'Proyek Berjalan'
               ? 'bg-[#53A711]'
               : status == 'Proyek Ditolak'
-              ? 'bg-[#B83A52]'
-              : status == 'Pendanaan Terpenuhi'
-              ? 'bg-[#D57415]'
-              : 'bg-[#DCDCDC]'
-          } rounded-lg hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800`}
+                ? 'bg-[#B83A52]'
+                : status == 'Pendanaan Terpenuhi'
+                  ? 'bg-[#D57415]'
+                  : 'bg-[#DCDCDC]'
+            } rounded-lg hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800`}
         >
           {status}
         </Link>

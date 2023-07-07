@@ -331,7 +331,6 @@ export const SecondForm = ({ handleChange, formik }) => {
               formik.handleChange(e);
               fetchKecamatan(e.target.value);
             }}
-            name="kecamatan"
             id="komoditas"
             className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
           >
@@ -355,7 +354,8 @@ export const SecondForm = ({ handleChange, formik }) => {
             Pilih Kecamatan
           </label>
           <select
-            name="name"
+            name="kecamatan"
+            onChange={handleChange}
             id="komoditas"
             className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
           >

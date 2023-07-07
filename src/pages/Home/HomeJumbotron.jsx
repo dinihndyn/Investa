@@ -1,7 +1,10 @@
+import { useAuthUser } from 'react-auth-kit';
 import { Button } from '../../component/atom/Button';
 import { Container } from '../../component/atom/Container/Container';
 import jumbotronImage from './assets/banner.png';
 export const HomeJumbotron = () => {
+  const userData = useAuthUser();
+
   return (
     <section
       id="jumbotron"
@@ -17,7 +20,11 @@ export const HomeJumbotron = () => {
           juta dengan cara yang mudah serta bisa diakses dari mana saja dan
           kapan pun
         </h2>
-        <Button linkTo={'/ajukan-pinjaman'} label={'Ajukan Pinjaman'} />
+        {userData() && userData().tipeAkun === 'Investor' ? (
+          <Button linkTo={'/investor/proyek'} label={'Mulai Investasi'} />
+        ) : (
+          <Button linkTo={'/ajukan-pinjaman'} label={'Ajukan Pinjaman'} />
+        )}
       </Container>
     </section>
   );

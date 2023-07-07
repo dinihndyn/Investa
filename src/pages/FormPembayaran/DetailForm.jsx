@@ -142,9 +142,8 @@ export const DetailForm = () => {
               </form>
             </div>
             <div
-              className={`px-10 ${
-                data.length >= 1 ? 'col-span-3' : 'col-span-2'
-              }`}
+              className={`px-10 ${data.length >= 1 ? 'col-span-3' : 'col-span-2'
+                }`}
             >
               <h1 className="text-xl font-bold text-investa-primary-50 mb-5">
                 Riwayat Pengembalian

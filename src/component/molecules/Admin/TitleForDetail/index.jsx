@@ -9,7 +9,7 @@ function TitleForDetail({ label }) {
       <a
         href="#"
         onClick={() => navigate("/admin/tracking_proyek")}
-        className="text-investa-primary-50 md:text-right md:pr-24 text-xl font-bold"
+        className="text-investa-primary-50 md:text-right md:pr-21 text-xl font-bold"
       >
         Klik untuk proyek lain
       </a>

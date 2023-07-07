@@ -6,8 +6,10 @@ export const CardInvestasi = ({
   pengajuan,
   dana_terkumpul,
   name,
+  imbal_hasil,
   img,
   id,
+  lokasi
 }) => {
   const progress = ((dana_terkumpul / pengajuan) * 100).toFixed(2);
   return (
@@ -44,11 +46,11 @@ export const CardInvestasi = ({
           <div className="px-5 py-5">
             <div className="flex flex-row justify-between">
               <p>Ekspetasi Imbal Hasil</p>
-              <p>5%</p>
+              <p>{imbal_hasil ? `${imbal_hasil}%` : '-'}</p>
             </div>
             <div className="flex flex-row justify-between">
               <p>Lokasi</p>
-              <p>Nganjuk</p>
+              <p>{lokasi}</p>
             </div>
             <div className="flex flex-row justify-between">
               <p>Resiko</p>
@@ -81,17 +83,16 @@ export const CardInvestasi = ({
         </div>
         <Link className="" to={`/proyek/${id}`}>
           <div
-            className={`p-3 ${
-              statusProyek == 'Sedang Diverifikasi'
-                ? 'bg-[#6D6D6D]'
-                : statusProyek == 'Proyek Berjalan'
+            className={`p-3 ${statusProyek == 'Sedang Diverifikasi'
+              ? 'bg-[#6D6D6D]'
+              : statusProyek == 'Proyek Berjalan'
                 ? 'bg-[#53A711]'
                 : statusProyek == 'Proyek Ditolak'
-                ? 'bg-[#B83A52]'
-                : statusProyek == 'Pendanaan Terpenuhi'
-                ? 'bg-[#D57415]'
-                : 'bg-[#DCDCDC]'
-            } font-bold text-center rounded-lg`}
+                  ? 'bg-[#B83A52]'
+                  : statusProyek == 'Pendanaan Terpenuhi'
+                    ? 'bg-[#D57415]'
+                    : 'bg-[#DCDCDC]'
+              } font-bold text-center rounded-lg`}
           >
             {statusProyek}
           </div>

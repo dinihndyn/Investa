@@ -102,8 +102,8 @@ export const DetailForm = () => {
                       name="deskripsi"
                       disabled={
                         cekPembayaran(data, 'Pengembalian Dana oleh Petani') &&
-                        cekPembayaran(data, 'Verifikasi Pembayaran Petani') &&
-                        cekPembayaran(data, 'Pengembalian Dana Investor')
+                          cekPembayaran(data, 'Verifikasi Pembayaran Petani') &&
+                          cekPembayaran(data, 'Pengembalian Dana Investor')
                           ? true
                           : false
                       }
@@ -113,8 +113,8 @@ export const DetailForm = () => {
                     >
                       <option value="" selected disabled hidden>
                         {cekPembayaran(data, 'Pengembalian Dana oleh Petani') &&
-                        cekPembayaran(data, 'Verifikasi Pembayaran Petani') &&
-                        cekPembayaran(data, 'Pengembalian Dana Investor')
+                          cekPembayaran(data, 'Verifikasi Pembayaran Petani') &&
+                          cekPembayaran(data, 'Pengembalian Dana Investor')
                           ? 'Semua telah diverifikasi'
                           : 'Pilih Deskripsi'}
                       </option>
@@ -159,8 +159,8 @@ export const DetailForm = () => {
                     onChange={formik.handleChange}
                     disabled={
                       cekPembayaran(data, 'Pengembalian Dana oleh Petani') &&
-                      cekPembayaran(data, 'Verifikasi Pembayaran Petani') &&
-                      cekPembayaran(data, 'Pengembalian Dana Investor')
+                        cekPembayaran(data, 'Verifikasi Pembayaran Petani') &&
+                        cekPembayaran(data, 'Pengembalian Dana Investor')
                         ? true
                         : false
                     }
@@ -178,10 +178,10 @@ export const DetailForm = () => {
 
                 <div className="mt-5 flex justify-between">
                   <Link
-                    to={`/proyek/${params.id}/form-transaksi`}
+                    to={`/admin/tracking_proyek/${params.id}/form`}
                     className="px-4  rounded-lg py-1 text-investa-primary-50 border border-investa-primary-50 bg-white"
                   >
-                    Batal
+                    Kembali
                   </Link>
                   <button
                     type={formik.isSubmitting ? 'button' : 'submit'}
@@ -240,30 +240,19 @@ export const DetailForm = () => {
                               </th>
                               <td className="px-6 py-4">{item.deskripsi}</td>
                               <td className="px-6 py-4">
-                                {toRupiahInvesta(
-                                  item.jumlah_pembayaran == null
-                                    ? 0
-                                    : item.jumlah_pembayaran
-                                )}
+                                {item.jumlah_pembayaran ? toRupiahInvesta(item.jumlah_pembayaran) : "-"}
                               </td>
                               <td className="px-6 py-4">{item.status}</td>
                             </tr>
                           );
                         })
                       )}
-                      {}
+                      { }
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="flex justify-start">
-            <Button
-              fit
-              linkTo={`/admin/tracking_proyek/${params.id}/form`}
-              label={'Kembali'}
-            />
           </div>
         </div>
       </div>

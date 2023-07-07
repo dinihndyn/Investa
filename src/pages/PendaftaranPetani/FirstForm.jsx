@@ -289,9 +289,9 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
           </div>
         </div>
         <div className=" grid grid-cols-2 gap-2 mb-3 bg-investa-primary-10 p-5 rounded">
-          <div>Imbal Hasil Perbulan</div>
+          <div>Imbal Hasil</div>
           <div>-</div>
-          <div>Imbal Hasil Perbulan</div>
+          <div>Estimasi Pengembalian</div>
           <div>Rp. - </div>
         </div>
         <div className="flex flex-col gap-2 mb-3">

@@ -106,7 +106,9 @@ export const FormProfile = () => {
             required
             type="text"
             value={
-              data.pengalaman == null ? 'Belum diinputkan' : data.pengalaman
+              data.pengalaman == null
+                ? 'Belum diinputkan'
+                : data.pengalaman + ' Tahun'
             }
             className="w-full rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
           />

@@ -5,7 +5,7 @@ import ImageFarmer from './assets/Farmer-rafiki 1.png';
 
 export const HomeKeuntungan = () => {
   return (
-    <div>
+    <div id="tentangkami">
       <Container>
         <HeaderText
           header={'Keuntungan Bersama INVESTA'}

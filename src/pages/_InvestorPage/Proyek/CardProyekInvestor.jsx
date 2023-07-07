@@ -34,10 +34,10 @@ export const CardProyekInvestor = ({ terpenuhi, day, progress, data }) => {
       {terpenuhi ? (
         <Link
           to={`/investor/proyek/${data.id}`}
-          className="relative group rounded-lg "
+          className="relative group rounded-lg"
         >
           <img
-            src={data.files[0].alamat_gambar}
+            src={PUBLIC_URL + data.files[0].alamat_gambar}
             onError={({ currentTarget }) => {
               currentTarget.onerror = null; // prevents looping
               currentTarget.src =

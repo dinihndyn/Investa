@@ -45,7 +45,7 @@ export const Rekap = ({ formik, file }) => {
         <div className="">
           <div className="grid grid-cols-2">
             <p className="mb-3 h-fit">Estimasi Tanggal Pembayaran</p>
-            <p className="font-semibold h-fit">{formik.values.end_date}</p>
+            <p className="font-semibold h-fit">{formik.values.estimasi_pengembalian}</p>
           </div>
 
           <div className="grid grid-cols-2">
@@ -55,9 +55,9 @@ export const Rekap = ({ formik, file }) => {
 
           <div className="col-span-2">
             <div className=" grid grid-cols-2 gap-2 mb-3 bg-investa-primary-10 p-5 rounded">
-              <div>Imbal Hasil Perbulan</div>
+              <div>Imbal Hasil</div>
               <div>-</div>
-              <div>Imbal Hasil Perbulan</div>
+              <div>Estimasi Pengembalian</div>
               <div>Rp. - </div>
             </div>
           </div>

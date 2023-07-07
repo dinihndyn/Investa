@@ -82,12 +82,33 @@ export const Navbar = () => {
             <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 items-center">
               {dataAuth()?.tipeAkun == 'Investor' ? (
                 <NavbarItem to={'/investor/proyek'} label={'Mulai Investasi'} />
-              ) : (
+              ) : dataAuth()?.tipeAkun == 'Admin' ? null : (
                 <NavbarItem to={'/'} label={'Ajukan Pinjaman'} />
               )}
 
               <NavbarItem to={'/artikel'} label={'Artikel'} />
-              <NavbarItem label={'Tentang Kami'} />
+              <div>
+                {dataAuth()?.tipeAkun == 'Investor' ? (
+                  <li>
+                    <a
+                      href="/#tentangkami"
+                      className="block py-2 pl-3 pr-4 text-investa-warning-50 hover:text-investa-warning-70 "
+                    >
+                      Tentang Kami
+                    </a>
+                  </li>
+                ) : dataAuth()?.tipeAkun == 'Admin' ? null : (
+                  <li>
+                    <a
+                      href="/#tentangkami"
+                      className="block py-2 pl-3 pr-4 text-investa-warning-50 hover:text-investa-warning-70 "
+                    >
+                      Tentang Kami
+                    </a>
+                  </li>
+                )}
+
+              </div>
 
               <li>
                 <a

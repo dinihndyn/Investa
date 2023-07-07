@@ -47,9 +47,15 @@ export const CardProyekInvestor = ({ terpenuhi, day, amount, progress, data }) =
             }}
           />
           <div className="absolute w-full h-full bg-black/70 rounded-lg top-0 transition-all items-center justify-center flex">
-            <h1 className=" text-white font-bold text-2xl">
-              Pendanaan Terpenuhi
-            </h1>
+            {data.status === 'Pendanaan Terpenuhi' ? (
+              <h1 className="text-white font-bold text-2xl">
+                Pendanaan Terpenuhi
+              </h1>
+            ) : data.status === 'Proyek Selesai' ? (
+              <h1 className="text-white font-bold text-2xl">
+                Proyek Selesai
+              </h1>
+            ) : null}
           </div>
         </Link>
       ) : (

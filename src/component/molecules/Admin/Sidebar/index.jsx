@@ -128,9 +128,8 @@ export const Sidebar = ({ children, withLogo }) => {
         </button>
       </div>
       <div
-        className={`${
-          withLogo ? 'min-h-[100vh]' : 'min-h-[80vh]'
-        }  transition-all  flex relative`}
+        className={`${withLogo ? 'min-h-[100vh]' : 'min-h-[80vh]'
+          }  transition-all  flex relative`}
       >
         <div className="w-[350px] border-r-2 border-r-investa-primary-30 hidden md:block bg-white  ">
           <div className="flex flex-col">

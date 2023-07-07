@@ -135,7 +135,7 @@ const PencairanInvestor = () => {
                     </div>
                     <div className="flex gap-4 px-24 justify-between">
                       <Button
-                        onClick={() => kembalikanDana(item.pengajuan.id)}
+                        onClick={() => kembalikanDana(item.id)}
                         color={'yellow'}
                       >
                         {loading ? <Spiner /> : 'Ya'}

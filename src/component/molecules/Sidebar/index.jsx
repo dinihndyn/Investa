@@ -1,9 +1,12 @@
 import { AiTwotoneSetting } from 'react-icons/ai';
+import { useSignOut } from 'react-auth-kit';
 import { FiLogOut } from 'react-icons/fi';
 
 import { NavLink } from 'react-router-dom';
 
 export const Sidebar = ({ children }) => {
+  const logout = useSignOut();
+
   return (
     <>
       <div className="flex md:hidden flex-col items-center gap-1 px-10 bg-investa-primary-10 justify-center py-3 mb-5">
@@ -23,7 +26,7 @@ export const Sidebar = ({ children }) => {
         >
           <div className="text-xs font-medium ">Edit Profil</div>
         </NavLink>
-        <NavLink
+        {/*<NavLink
           to={'/pengaturan-akun'}
           className={({ isActive }) =>
             isActive ? 'sidebar-header actives' : 'sidebar-header'
@@ -32,13 +35,19 @@ export const Sidebar = ({ children }) => {
           <div className="text-xs font-medium flex gap-2 items-center ">
             <span>Pengaturan Akun</span>
           </div>
-        </NavLink>
-        <button type={'button'} className="sidebar-header">
+        </NavLink>*/}
+        <button
+          type={'button'}
+          onClick={() => {
+            logout();
+          }}
+          className="sidebar"
+        >
           <div className="text-xs font-medium  gap-2 items-center ">
             <span>Keluar</span>
           </div>
         </button>
-      </div>
+      </div >
       <div className={` min-h-[80vh] transition-all  flex relative`}>
         <div className="w-[350px] border-r-2 border-r-investa-primary-30 hidden md:block bg-white  ">
           <div className="flex flex-col ">
@@ -62,7 +71,7 @@ export const Sidebar = ({ children }) => {
               <div className="text-xl font-medium ">Edit Profil</div>
             </NavLink>
             <div className=" h-[2px] mx-5 my-5 bg-investa-primary-30"></div>
-            <NavLink
+            {/*<NavLink
               to={'/pengaturan-akun'}
               className={({ isActive }) =>
                 isActive ? 'sidebar actives' : 'sidebar'
@@ -72,8 +81,14 @@ export const Sidebar = ({ children }) => {
                 <AiTwotoneSetting className="w-fit" />
                 <span>Pengaturan Akun</span>
               </div>
-            </NavLink>
-            <button type={'button'} className="sidebar">
+            </NavLink>*/}
+            <button
+              type={'button'}
+              onClick={() => {
+                logout();
+              }}
+              className="sidebar"
+            >
               <div className="text-xl font-medium flex gap-2 items-center ">
                 <FiLogOut className="w-fit" />
                 <span>Keluar</span>
