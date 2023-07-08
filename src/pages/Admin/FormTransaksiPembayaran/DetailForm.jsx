@@ -170,7 +170,7 @@ export const DetailForm = () => {
                     <option value="" selected disabled hidden>
                       Pilih Status
                     </option>
-                    <option value={'Sukses'}>Sukses</option>
+                    <option value={'Success'}>Sukses</option>
                     <option value={'Gagal'}>Gagal</option>
                     <option value={'Ditunda'}>Ditunda</option>
                   </select>

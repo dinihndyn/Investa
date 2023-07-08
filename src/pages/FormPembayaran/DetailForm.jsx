@@ -102,7 +102,7 @@ export const DetailForm = () => {
                     <option value="" selected disabled hidden>
                       Pilih Pembayaran...
                     </option>
-                    <option value="Pengembalian Dana oleh Petani">
+                    <option value="Transfer Bank">
                       Transfer Bank
                     </option>
                   </select>
@@ -178,7 +178,7 @@ export const DetailForm = () => {
                           </td>
                         </tr>
                       ) : (
-                        data.toReversed().map((item, index) => {
+                        data.map((item, index) => {
                           return (
                             <tr
                               key={index}
@@ -191,10 +191,10 @@ export const DetailForm = () => {
                                 {dateFormatInvesta(item.created_at)}
                               </th>
                               <td className="px-6 py-4">
-                                {item.pilih_pembayaran}
+                                {item.deskripsi}
                               </td>
                               <td className="px-6 py-4">
-                                {toRupiahInvesta(item.jumlah_pembayaran)}
+                                {item.jumlah_pembayaran ? toRupiahInvesta(item.jumlah_pembayaran) : "-"}
                               </td>
                               <td className="px-6 py-4">{item.status}</td>
                             </tr>

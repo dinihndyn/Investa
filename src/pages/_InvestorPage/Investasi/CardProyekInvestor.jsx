@@ -34,7 +34,7 @@ export const CardProyekInvestor = ({ terpenuhi, day, amount, progress, data }) =
       {terpenuhi ? (
         <Link
           to={`/investor/investasi/proyek/${data.id}`}
-          className="relative group rounded-lg cursor-not-allowed"
+          className="relative group rounded-lg"
         >
           <img
             src={PUBLIC_URL + data.files[0].alamat_gambar}

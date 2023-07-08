@@ -61,11 +61,11 @@ export const FormPinjaman = () => {
                   />
                 </div>
                 <div className="px-10">
-                  <h1 className="text-xl font-bold text-investa-primary-50 mb-5">
-                    Riwayat Informasi Pinjaman
-                  </h1>
+
                   <div ref={ref}>
-                    <h1 className="hidden">Halooo</h1>
+                    <h1 className="text-xl font-bold text-investa-primary-50 mb-5">
+                      Riwayat Informasi Pinjaman
+                    </h1>
                     <div className="relative overflow-x-auto">
                       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead className="text-xs text-gray-700 uppercase bg-investa-primary-10 dark:bg-gray-700 dark:text-gray-400">
