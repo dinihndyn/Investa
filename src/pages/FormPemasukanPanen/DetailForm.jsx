@@ -32,7 +32,7 @@ export const DetailForm = () => {
             },
           }
         );
-        toast('Success Update Foto');
+        toast('Success Update Pemasukan');
         setTimeout(() => {
           window.location.reload();
         }, 500);
@@ -144,11 +144,11 @@ export const DetailForm = () => {
                     htmlFor="#"
                     className=" col-span-2 text-md whitespace-nowrap font-bold "
                   >
-                    Harga
+                    Total Harga
                   </label>
                   <input
                     required
-                    placeholder="Masukan tujuan kunjungan..."
+                    placeholder="Masukan total harga..."
                     onChange={formik.handleChange}
                     name="harga"
                     type="text"
@@ -173,7 +173,7 @@ export const DetailForm = () => {
             </div>
             <div className="px-10 col-span-2">
               <h1 className="text-xl font-bold text-investa-primary-50 mb-5">
-                Riwayat Kunjungan
+                Riwayat Pemasukan/Panen
               </h1>
               <div>
                 <div className="relative overflow-x-auto">
@@ -226,7 +226,7 @@ export const DetailForm = () => {
                           );
                         })
                       )}
-                      {}
+                      { }
                     </tbody>
                     <thead className="text-xs text-gray-700 uppercase bg-investa-primary-10 dark:bg-gray-700 dark:text-gray-400">
                       <tr>

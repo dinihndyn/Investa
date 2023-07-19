@@ -24,7 +24,7 @@
 }
 
 input:disabled {
-  @apply bg-investa-primary-10 cursor-not-allowed italic text-investa-netral-70;
+  @apply bg-gray-200 italic text-investa-netral-70;
 }
 .button-investa {
   @apply bg-investa-primary-50 hover:bg-investa-primary-70 transition-all px-5 py-2 w-fit rounded text-white disabled:cursor-not-allowed disabled:bg-investa-primary-30;

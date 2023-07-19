@@ -3,9 +3,11 @@ import { Sidebar } from '../../../component/molecules/Admin/Sidebar'
 import { Container } from '../../../component/atom/Container/Container'
 import { Button } from 'flowbite-react'
 import { Link, useParams } from 'react-router-dom'
+import { Table } from 'flowbite-react';
 import { useAuthHeader, useSignOut } from 'react-auth-kit'
 import { getDetailPengajuan } from '../DetailPersetujuan/data'
 import { dateFormatInvesta, toRupiahInvesta } from '../../../utils/function'
+import { API_URL, PUBLIC_URL } from '../../../utils/constant';
 
 const CardWrapper = ({ children, className = "bg-white" }) => {
   return (
@@ -48,28 +50,58 @@ export const DetailPersetujuanLanjutan = () => {
                 <p className="mb-3.5 font-bold text-base text-gray-700 dark:text-gray-400">{data?.info_tani.pengalaman_tani || '-'}</p>
                 <p className="mb-3.5 font-normal text-base text-gray-700 dark:text-gray-400">Status Kelompok Tani</p>
                 <p className="mb-3.5 font-bold text-base text-gray-700 dark:text-gray-400">{data?.info_tani.nama_kelompok || "Belum bergabung"}</p>
-                <h5 className="mb-2 col-span-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Rencana Pinkaman</h5>
+                <h5 className="mb-2 col-span-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Rencana Pinjaman</h5>
                 <p className="mb-3.5 font-normal text-base text-gray-700 dark:text-gray-400">Nama Proyek Pinjaman</p>
                 <p className="mb-3.5 font-bold text-base text-gray-700 dark:text-gray-400">{data?.pengajuan_name}</p>
                 <p className="mb-3.5 font-normal text-base text-gray-700 dark:text-gray-400">Estimasi Lama Proyek Berlangsung</p>
                 <p className="mb-3.5 font-bold text-base text-gray-700 dark:text-gray-400">{dateFormatInvesta(data?.estimasi_pengembalian)}</p>
                 <p className="mb-3.5 font-normal text-base text-gray-700 dark:text-gray-400">Foto Proyek Pinjaman</p>
                 <div className="mb-3.5">
-                  <img src="https://placehold.co/600x400" className='w-full' alt="" />
+                  <img
+                    src={PUBLIC_URL + data?.files?.[0].alamat_gambar}
+                    alt=""
+                    onError={({ currentTarget }) => {
+                      currentTarget.onerror = null; // prevents looping
+                      currentTarget.src =
+                        'https://climate.onep.go.th/wp-content/uploads/2020/01/default-image.jpg';
+                    }}
+                    className="rounded-2xl w-full"
+                  />
                 </div>
                 <p className="mb-3.5 font-normal text-base text-gray-700 dark:text-gray-400">Komoditas Tanam</p>
                 <p className="mb-3.5 font-bold text-base text-gray-700 dark:text-gray-400">{data?.komoditas}</p>
                 <p className="mb-3.5 font-normal text-base text-gray-700 dark:text-gray-400">Barang Kebutuhan</p>
+                <CardWrapper className={"col-span-2 bg-[#FEE1A5] mb-3.5"} >
                 <div className="mb-3.5">
-                  {
-                    data?.kebutuhan.map((item, index) => (
-                      <div key={index} className='grid grid-cols-2'>
-                        <p className="font-bold text-base text-gray-700 dark:text-gray-400">{item.nama}</p>
-                        <p className="font-bold text-base text-gray-700 dark:text-gray-400">{item.jumlah}</p>
-                      </div>
-                    ))
-                  }
-                </div>
+                  <Table>
+                    <Table.Head>
+                      <Table.HeadCell className="bg-investa-primary-50 text-white">
+                        Barang
+                      </Table.HeadCell>
+                      <Table.HeadCell className="bg-investa-primary-50 text-white">
+                        Jumlah
+                      </Table.HeadCell>
+                      <Table.HeadCell className="bg-investa-primary-50 text-white">
+                        Harga
+                      </Table.HeadCell>
+                    </Table.Head>
+                    <Table.Body className="divide-y">
+                      {data?.kebutuhan.map((item, index) => {
+                        return (
+                          <Table.Row
+                            key={index}
+                            className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                          >
+                            <Table.Cell>{item.nama}</Table.Cell>
+                            <Table.Cell>{item.jumlah}</Table.Cell>
+                            <Table.Cell>{toRupiahInvesta(item.total)}</Table.Cell>
+                          </Table.Row>
+                        );
+                      })}
+                    </Table.Body>
+                  </Table>
+                  </div>
+                </CardWrapper>
                 <p className="mb-3.5 font-normal text-base text-gray-700 dark:text-gray-400">Jumlah Nominal Pinjaman</p>
                 <p className="mb-3.5 font-bold text-base text-gray-700 dark:text-gray-400">{toRupiahInvesta(data?.total_pengajuan || 0)}</p>
               </div>
@@ -85,7 +117,7 @@ export const DetailPersetujuanLanjutan = () => {
                 <p className="mb-3.5 mt-2 font-bold text-base text-gray-700 dark:text-gray-400">{data?.info_tani.alamat} Kec.{data?.info_tani.kecamatan} Kota.{data?.info_tani.kota}</p>
                 <h5 className="mb-2 col-span-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Rencana Pengembalian</h5>
                 <p className="mb-3.5 font-normal text-base text-gray-700 dark:text-gray-400">Estimasi Tanggal Pembayaran</p>
-                <p className="mb-3.5 font-bold text-base text-gray-700 dark:text-gray-400">{dateFormatInvesta(data?.estimasi_pengembalian)}</p>
+                <p className="mb-3.5 font-bold text-base text-gray-700 dark:text-gray-400"></p>
                 <p className="mb-3.5 font-normal text-base text-gray-700 dark:text-gray-400">Jangka Waktu Pinjam (Tenor)</p>
                 <p className="mb-3.5 font-bold text-base text-gray-700 dark:text-gray-400">{data?.tenor}</p>
                 <CardWrapper className={"col-span-2 bg-[#FEE1A5] mb-3.5 grid grid-cols-2"} >

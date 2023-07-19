@@ -109,7 +109,7 @@ export const FormInfoPinjaman = () => {
                               colSpan={2}
                               className="px-6 py-3 text-base"
                             >
-                              Total + Imbal 5%
+                              TOTAL + Imbal Hasil : {data['imbal_hasil']}%
                             </th>
                             <td className="px-6 py-3 "></td>
                             <td className="px-6 py-3 ">

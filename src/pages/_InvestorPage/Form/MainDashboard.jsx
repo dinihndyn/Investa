@@ -100,7 +100,7 @@ export const MainDashboard = () => {
         </div>
         <div className="mt-10">
           <Link
-            to="/"
+            to={`/investor/investasi/proyek/${params.id}`}
             className="border bg-white   border-investa-primary-50 px-20 py-3 rounded text-investa-primary-50 hover:bg-investa-primary-50 hover:text-white transition-all"
           >
             Kembali

@@ -86,7 +86,6 @@ export const Navbar = () => {
                 <NavbarItem to={'/'} label={'Ajukan Pinjaman'} />
               )}
 
-              <NavbarItem to={'/artikel'} label={'Artikel'} />
               <div>
                 {dataAuth()?.tipeAkun == 'Investor' ? (
                   <li>
@@ -110,7 +109,16 @@ export const Navbar = () => {
 
               </div>
 
-              <li>
+              <div>
+                {dataAuth()?.tipeAkun == 'Investor' ? (
+                  <NavbarItem to={'/artikel'} label={'Artikel'} />
+                ) : dataAuth()?.tipeAkun == 'Admin' ? null : (
+                    <NavbarItem to={'/artikel'} label={'Artikel'} />
+                )}
+
+              </div>
+
+              {/* <li>
                 <a
                   href="#"
                   className="block py-2 pl-3 pr-4 text-investa-warning-50 hover:text-investa-warning-70 "
@@ -120,7 +128,7 @@ export const Navbar = () => {
                   <br />
                   97,29%
                 </a>
-              </li>
+              </li> */}
               {isAuthenticated() ? (
                 <UserLoginNav />
               ) : (

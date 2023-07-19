@@ -1,11 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toRupiahInvesta } from '../../utils/function';
 import { FormConditional } from './components/FormConditional';
 
 export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
-  const totalHarga = formik.values.kebutuhan.reduce((total, item) => {
-    return total + item.jumlah * item.harga;
-  }, 0);
+  const [totalHarga, setTotalHarga] = useState(0);
+  const [imbalHasil, setImbalHasil] = useState(0);
+  const [estimasiPengembalian, setEstimasiPengembalian] = useState(0);
+
+  useEffect(() => {
+    const calculateTotalHarga = () => {
+      const harga = formik.values.kebutuhan.reduce((total, item) => {
+        return total + item.jumlah * item.harga;
+      }, 0);
+      setTotalHarga(harga);
+    };
+
+    const calculateImbalHasil = () => {
+      let persen = 0;
+      if (formik.values.tenor === '3 Bulan') {
+        persen = 1;
+      } else if (formik.values.tenor === '6 Bulan') {
+        persen = 3;
+      } else if (formik.values.tenor === '9 Bulan') {
+        persen = 5;
+      }
+      setImbalHasil(persen);
+    };
+
+    const calculateEstimasiPengembalian = () => {
+      const estimasi = totalHarga + (totalHarga * imbalHasil) / 100;
+      setEstimasiPengembalian(estimasi);
+    };
+
+    calculateTotalHarga();
+    calculateImbalHasil();
+    calculateEstimasiPengembalian();
+  }, [formik.values.kebutuhan, formik.values.tenor, totalHarga, imbalHasil]);
+  
 
   const [elements, setElements] = useState([]);
 
@@ -140,6 +171,7 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
           >
             Kebutuhan pinjaman
           </label>
+          
           <button
             type="button"
             onClick={addElement}
@@ -148,13 +180,22 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
             Tambah Pinjaman (+)
           </button>
         </div>
+        <span className="text-investa-netral-50">
+          1. Nama Barang contoh (bibit,pupuk,dll.)<br />
+          2. Jenis/Merek adalah varian spesifik dari barang pertanian<br />
+          3. Jumlah adalah banyak barang yang di perlukan<br />
+          4. Satuan banyak barang contoh (kg/g/karung/l,)<br />
+          5. Harga Satuan adalah harga barang per item<br />
+
+        </span>
+        
 
         <div className="grid grid-cols-1 md:grid-cols-5 gap-5 mb-2 mt-5">
           <div>
-            <p className="font-semibold">Barang</p>
+            <p className="font-semibold">Nama Barang</p>
           </div>
           <div>
-            <p className="font-semibold">Jenis</p>
+            <p className="font-semibold">Jenis/Merek</p>
           </div>
           <div>
             <p className="font-semibold">Jumlah</p>
@@ -207,13 +248,12 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
         <div className="flex flex-col gap-2 mb-3">
           <label
             htmlFor="#"
-            className=" col-span-2 text-md whitespace-nowrap requireds "
+            className="col-span-2 text-md whitespace-nowrap requireds"
           >
             Jangka waktu Pinjaman (Tenor)
           </label>
           <span className="text-investa-netral-50">
-            Tenor yang Anda Pilih Mempengaruhi Imbal Hasil yang harus Anda
-            Bayarkan
+            Tenor yang Anda Pilih Mempengaruhi Imbal Hasil yang harus Anda Bayarkan
           </span>
           <div>
             <div>
@@ -224,19 +264,17 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
                     id="3-bulan"
                     name="tenor"
                     onChange={handleChange}
-                    value={'3 Bulan'}
+                    value="3 Bulan"
                     className="hidden peer"
                     required
-                    checked={formik.values.tenor == '3 Bulan' ? true : false}
+                    checked={formik.values.tenor === '3 Bulan'}
                   />
                   <label
                     htmlFor="3-bulan"
                     className="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-investa-primary-50 peer-checked:text-investa-primary-50 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
                   >
                     <div className="block">
-                      <div className="w-full text-lg font-semibold">
-                        3 Bulan
-                      </div>
+                      <div className="w-full text-lg font-semibold">3 Bulan</div>
                     </div>
                   </label>
                 </li>
@@ -246,8 +284,8 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
                     id="6-bulan"
                     name="tenor"
                     onChange={handleChange}
-                    value={'6 Bulan'}
-                    checked={formik.values.tenor == '6 Bulan' ? true : false}
+                    value="6 Bulan"
+                    checked={formik.values.tenor === '6 Bulan'}
                     className="hidden peer"
                     required
                   />
@@ -256,9 +294,7 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
                     className="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-investa-primary-50 peer-checked:text-investa-primary-50 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
                   >
                     <div className="block">
-                      <div className="w-full text-lg font-semibold">
-                        6 Bulan
-                      </div>
+                      <div className="w-full text-lg font-semibold">6 Bulan</div>
                     </div>
                   </label>
                 </li>
@@ -270,7 +306,7 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
                     onChange={handleChange}
                     value="9 Bulan"
                     className="hidden peer"
-                    checked={formik.values.tenor == '9 Bulan' ? true : false}
+                    checked={formik.values.tenor === '9 Bulan'}
                     required
                   />
                   <label
@@ -278,9 +314,7 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
                     className="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-investa-primary-50 peer-checked:text-investa-primary-50 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
                   >
                     <div className="block">
-                      <div className="w-full text-lg font-semibold">
-                        9 Bulan
-                      </div>
+                      <div className="w-full text-lg font-semibold">9 Bulan</div>
                     </div>
                   </label>
                 </li>
@@ -288,11 +322,11 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
             </div>
           </div>
         </div>
-        <div className=" grid grid-cols-2 gap-2 mb-3 bg-investa-primary-10 p-5 rounded">
+        <div className="grid grid-cols-2 gap-2 mb-3 bg-investa-primary-10 p-5 rounded">
           <div>Imbal Hasil</div>
-          <div>-</div>
+          <div>{imbalHasil}%</div>
           <div>Estimasi Pengembalian</div>
-          <div>Rp. - </div>
+          <div>{toRupiahInvesta(estimasiPengembalian)}</div>
         </div>
         <div className="flex flex-col gap-2 mb-3">
           <label

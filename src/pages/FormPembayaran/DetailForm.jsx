@@ -9,8 +9,10 @@ import { API_URL, PUBLIC_URL } from '../../utils/constant';
 import { toast } from 'react-toastify';
 import { Spiner } from '../../component/atom/Spiner';
 
+
 export const DetailForm = () => {
   const [data, setData] = useState([]);
+  const [totalPengembalian, setTotalPengembalian] = useState(0);
   const getToken = useAuthHeader();
   const params = useParams();
   const handleFileChange = (event) => {
@@ -42,7 +44,7 @@ export const DetailForm = () => {
             },
           }
         );
-        toast('Success Update Foto');
+        toast('Success Update Pengembalian');
         setTimeout(() => {
           window.location.reload();
         }, 1500);
@@ -54,6 +56,23 @@ export const DetailForm = () => {
     },
   });
 
+  const getTotalPengembalian = async () => {
+    try {
+      const result = await axios.post(
+        `${API_URL}/pengajuan/detailPengajuan/${params.id}`,
+        null,
+        {
+          headers: { Authorization: `${getToken()}` },
+        }
+      );
+      const { total_pengembalian } = result.data.Pengajuan;
+      setTotalPengembalian(total_pengembalian);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   const getData = async () => {
     try {
       const res = await axios.get(
@@ -62,7 +81,6 @@ export const DetailForm = () => {
           headers: { Authorization: `${getToken()}` },
         }
       );
-      console.log(res.data);
       setData(res.data);
     } catch (error) {
       console.log(data);
@@ -70,6 +88,7 @@ export const DetailForm = () => {
   };
   useEffect(() => {
     getData();
+    getTotalPengembalian();
   }, []);
   return (
     <div>
@@ -87,6 +106,20 @@ export const DetailForm = () => {
             <div className={data.length >= 1 ? 'hidden' : 'block'}>
               <form onSubmit={formik.handleSubmit}>
                 <div className="flex flex-col gap-2 mb-3">
+                  <label
+                    htmlFor="#"
+                    className=" col-span-2 text-md whitespace-nowrap requireds"
+                  >
+                    Total Pengembalian
+                  </label>
+                  <input
+                    value={toRupiahInvesta(totalPengembalian)}
+                    disabled
+                    readOnly
+                    required
+                    type="text"
+
+                  />
                   <label
                     htmlFor="#"
                     className=" col-span-2 text-md whitespace-nowrap requireds "

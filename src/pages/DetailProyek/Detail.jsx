@@ -12,6 +12,7 @@ import {
 import { useAuthHeader } from 'react-auth-kit';
 import { Loading } from '../../component/molecules/Loading';
 import { ProgressBar } from '../../component/atom/ProgressBar';
+import { Table } from 'flowbite-react';
 
 export const Detail = () => {
   const [data, setData] = useState();
@@ -62,13 +63,63 @@ export const Detail = () => {
             }}
           />
           <p className="mt-5 flex flex-row gap-2">
-            <span className="font-bold whitespace-nowrap">Lokasi :</span>
+            <span className="font-bold whitespace-nowrap">Nama Petani :</span>
             <span>
-              {data.info_tani.alamat} Kecamatan {data.info_tani.kecamatan}
+              {data.user.name}
             </span>
           </p>
+          <p className="mt-5 flex flex-row gap-2">
+            <span className="font-bold whitespace-nowrap">Pengalaman Bertani :</span>
+            <span>
+              {data.info_tani.pengalaman_tani}
+            </span>
+          </p>
+          <p className="mt-5 flex flex-row gap-2">
+            <span className="font-bold whitespace-nowrap">Lokasi :</span>
+            <span>
+              {data.info_tani.provinsi}, {data.info_tani.kota}, {data.info_tani.kecamatan}, {data.info_tani.alamat}
+            </span>
+          </p>
+          <hr className="my-5"/>
+          <p className="mt-5 mb-5 flex flex-row gap-2">
+            <span className="font-bold whitespace-nowrap">Kebutuhan :</span>
+          </p>
+          <Table>
+            <Table.Head>
+              <Table.HeadCell className="bg-investa-primary-50 text-white">
+                Nama Barang
+              </Table.HeadCell>
+              <Table.HeadCell className="bg-investa-primary-50 text-white">
+                Jumlah
+              </Table.HeadCell>
+              <Table.HeadCell className="bg-investa-primary-50 text-white">
+                Harga
+              </Table.HeadCell>
+            </Table.Head>
+            <Table.Body className="divide-y" data={data.kebutuhan}>
+              {data.kebutuhan && data.kebutuhan.length === 0 ? (
+                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Cell colSpan={3} className="text-center">
+                    Belum ada data
+                  </Table.Cell>
+                </Table.Row>
+              ) : (
+                data.kebutuhan &&
+                data.kebutuhan.map((item, index) => (
+                  <Table.Row
+                    key={index}
+                    className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                  >
+                    <Table.Cell className="bg-gray-100">{item.nama}</Table.Cell>
+                    <Table.Cell className="bg-gray-100">{item.jumlah}</Table.Cell>
+                    <Table.Cell className="bg-gray-100">{toRupiahInvesta(item.total)}</Table.Cell>
+                  </Table.Row>
+                ))
+              )}
+            </Table.Body>
+          </Table>
         </div>
-        <div>
+        <div className="ms-4">
           <div className="flex justify-between">
             <p>
               {toRupiahInvesta(
@@ -138,18 +189,22 @@ export const Detail = () => {
             </p>
           </div>
           <hr />
-          <div className="mb-5">
+          <div className="mb-5 mt-3">
             <p className="font-semibold">Rincian Proyek</p>
             <p>{data.deskripsi}</p>
           </div>
         </div>
         <div className="flex justify-end">
-          <div>
-            <Button
-              label={'Tracking Proyek'}
-              linkTo={`/proyek/${params.id}/form-transaksi`}
-            />
-          </div>
+          {data.status === 'Proyek Berjalan' ||
+            data.status === 'Pendanaan Terpenuhi' ||
+            data.status === 'Proyek Selesai' ? (
+            <div>
+              <Button
+                label={'Tracking Proyek'}
+                linkTo={`/proyek/${params.id}/form-transaksi`}
+              />
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

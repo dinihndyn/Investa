@@ -55,7 +55,7 @@ export const TrackingInvestor = () => {
                     Tanggal
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Tenor
+                    Imbal Hasil
                   </th>
                 </tr>
               </thead>
@@ -74,7 +74,7 @@ export const TrackingInvestor = () => {
                         name={item.user.name}
                         proyek={item.pengajuan.pengajuan_name}
                         tanggal={dateFormatInvesta(item.pengajuan.created_at)}
-                        tenor={item.pengajuan.tenor}
+                        imbal={item.pengajuan.imbal_hasil}
                       />
                     );
                   })

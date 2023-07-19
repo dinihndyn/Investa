@@ -72,20 +72,24 @@ const PencairanInvestor = () => {
               <Table.HeadCell></Table.HeadCell>
               <Table.HeadCell>Name</Table.HeadCell>
               <Table.HeadCell>Proyek</Table.HeadCell>
+              <Table.HeadCell>Imbal Hasil</Table.HeadCell>
               <Table.HeadCell>Dana Investasi</Table.HeadCell>
+              <Table.HeadCell>Total Nilai Investasi</Table.HeadCell>
               <Table.HeadCell>Actions</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
               {data.length == 0 ? (
                 <>
                   <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                    <Table.Cell colSpan={5} className="text-center">
+                    <Table.Cell colSpan={7} className="text-center">
                       Tidak ada investor
                     </Table.Cell>
                   </Table.Row>
                 </>
               ) : (
                 data.map((item) => {
+                  const additionalAmount = item.amount * (item.pengajuan.imbal_hasil / 100);
+                  const totalAmount = item.amount + additionalAmount;
                   return (
                     <>
                       <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -103,7 +107,9 @@ const PencairanInvestor = () => {
                         </Table.Cell>
                         <Table.Cell>{item.user.name}</Table.Cell>
                         <Table.Cell>{item.pengajuan.pengajuan_name}</Table.Cell>
+                        <Table.Cell>{item.pengajuan.imbal_hasil}%</Table.Cell>
                         <Table.Cell>{toRupiahInvesta(item.amount)}</Table.Cell>
+                        <Table.Cell>{toRupiahInvesta(totalAmount)}</Table.Cell>
                         <Table.Cell>
                           <button
                             onClick={() => {
@@ -122,6 +128,8 @@ const PencairanInvestor = () => {
             </Table.Body>
           </Table>
           {data.map((item) => {
+            const additionalAmount = item.amount * (item.pengajuan.imbal_hasil / 100);
+            const totalAmount = item.amount + additionalAmount;
             return (
               <>
                 <Modal
@@ -131,7 +139,7 @@ const PencairanInvestor = () => {
                   <Modal.Body>
                     <div className="text-center py-24 text-xl px-24 font-bold">
                       Apakah anda ingin melakukan dana pengiriman dana{' '}
-                      {item.user.name} sebesar {toRupiahInvesta(item.amount)}?
+                      {item.user.name} sebesar {toRupiahInvesta(totalAmount)}?
                     </div>
                     <div className="flex gap-4 px-24 justify-between">
                       <Button

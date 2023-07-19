@@ -299,11 +299,13 @@ export const SecondForm = ({ handleChange, formik }) => {
             Pilih Provinsi
           </label>
           <select
-            name="name"
+            name="provinsi"
             id="komoditas"
             onChange={(e) => {
               formik.handleChange(e);
-              fetchKabKota(e.target.value);
+              const selectedProvinsiNama = e.target.value; // Nama Provinsi
+              const selectedProvinsi = dataProvinsi.find(item => item.nama === selectedProvinsiNama);
+              fetchKabKota(selectedProvinsi.id); // Ambil ID Provinsi untuk mendapatkan data kota
             }}
             className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
           >
@@ -312,7 +314,7 @@ export const SecondForm = ({ handleChange, formik }) => {
             </option>
             {dataProvinsi.map((item, index) => {
               return (
-                <option key={index} value={item.id}>
+                <option key={index} value={item.nama}>
                   {item.nama}
                 </option>
               );
@@ -327,9 +329,12 @@ export const SecondForm = ({ handleChange, formik }) => {
             Pilih Kota
           </label>
           <select
+            name="kota"
             onChange={(e) => {
               formik.handleChange(e);
-              fetchKecamatan(e.target.value);
+              const selectedKotaNama = e.target.value; // Nama Kota
+              const selectedKota = kabKota.find(item => item.nama === selectedKotaNama);
+              fetchKecamatan(selectedKota.id); // Ambil ID Kota untuk mendapatkan data kecamatan
             }}
             id="komoditas"
             className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
@@ -339,7 +344,7 @@ export const SecondForm = ({ handleChange, formik }) => {
             </option>
             {kabKota?.map((item) => {
               return (
-                <option value={item.id} key={item.id}>
+                <option value={item.nama} key={item.id}>
                   {item.nama}
                 </option>
               );

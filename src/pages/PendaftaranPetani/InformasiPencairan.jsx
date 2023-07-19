@@ -17,6 +17,7 @@ export const InformasiPencairan = () => {
         <li>Pilih kolom Form Pinjaman</li>
         <li>Klilk Print Bukti Pembayaran</li>
         <li>Lalu Tujukan ketoko tani untuk penukaran barang</li>
+        <li>Revenue 2% untuk platform</li>
       </ol>
     </div>
   );

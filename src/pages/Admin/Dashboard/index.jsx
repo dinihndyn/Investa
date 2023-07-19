@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { Layouts } from '../../../component/molecules/Layouts';
 import { Container } from '../../../component/atom/Container/Container';
 import { Sidebar } from '../../../component/molecules/Admin/Sidebar';
-import Dashboard1 from './assets/dashboard-1.png';
-import Dashboard2 from './assets/dashboard-2.png';
+import Money from './assets/money.png';
+import Farmer from './assets/farmer.png';
+import Investor from './assets/investor.png';
 import { LineChartAdmin } from '../../../component/molecules/Admin/LineChartAdmin';
 import { CardProyek } from '../../../component/molecules/Admin/CardProyek';
 import axios from 'axios';
@@ -88,17 +89,17 @@ export const AdminDashboard = () => {
               <CardDashboard
                 label="Total Dana"
                 value={toRupiahInvesta(dataDashboard.total_dana)}
-                image={Dashboard1}
+                image={Money}
               />
               <CardDashboard
                 label="Jumlah Petani"
                 value={dataDashboard.total_petani}
-                image={Dashboard2}
+                image={Farmer}
               />
               <CardDashboard
-                label="Investor"
+                label="Jumlah Investor"
                 value={dataDashboard.total_investor}
-                image={Dashboard2}
+                image={Investor}
               />
             </div>
             <div>

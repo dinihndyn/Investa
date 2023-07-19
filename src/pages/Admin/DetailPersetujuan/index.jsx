@@ -100,7 +100,7 @@ export const DetailPersetujuan = () => {
         <div className="h-0.5 w-full bg-gray-300"></div>
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-2">
-            <div className="md:pr-3">
+            <div className="md:pr-5">
               <ImgLink
                 src={PUBLIC_URL + data?.files?.[0].alamat_gambar}
                 link={`/admin/persetujuan_lanjutan/${params.id}`}
@@ -111,11 +111,11 @@ export const DetailPersetujuan = () => {
               <div className="flex text-sm md:text-lg mt-6">
                 <p className="font-bold">Lokasi:</p>
                 <p className="ml-2">
-                  {data?.info_tani?.alamat}, {data?.info_tani?.kecamatan}
+                  {data?.info_tani?.provinsi}, {data?.info_tani?.kota}, {data?.info_tani?.kecamatan}, {data?.info_tani?.alamat}
                 </p>
               </div>
             </div>
-            <div>
+            <div className="ms-5">
               <div className="grid grid-cols-2 mb-2">
                 <p>{toRupiahInvesta(data?.total_pengajuan || 0)}</p>
                 <p className="text-right md:text-right ">
@@ -241,7 +241,7 @@ export const DetailPersetujuan = () => {
                 <div>
                   <p>Pengembalian</p>
                   <p className="font-bold">
-                    <CountdownTime date={data.estimasi_pengembalian} />
+                    {dateFormatInvesta(data.estimasi_pengembalian)}
                   </p>
                 </div>
                 <div>

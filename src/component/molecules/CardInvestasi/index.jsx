@@ -9,6 +9,7 @@ export const CardInvestasi = ({
   imbal_hasil,
   img,
   id,
+  resiko,
   lokasi
 }) => {
   const progress = ((dana_terkumpul / pengajuan) * 100).toFixed(2);
@@ -54,7 +55,7 @@ export const CardInvestasi = ({
             </div>
             <div className="flex flex-row justify-between">
               <p>Resiko</p>
-              <p>Sedang</p>
+              <p>{resiko ? `${resiko}` : '-'}</p>
             </div>
             <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
               <div
@@ -86,12 +87,14 @@ export const CardInvestasi = ({
             className={`p-3 ${statusProyek == 'Sedang Diverifikasi'
               ? 'bg-[#6D6D6D]'
               : statusProyek == 'Proyek Berjalan'
-                ? 'bg-[#53A711]'
+                ? 'bg-[#53A711] text-white'
                 : statusProyek == 'Proyek Ditolak'
-                  ? 'bg-[#B83A52]'
+                  ? 'bg-[#B83A52] text-white'
                   : statusProyek == 'Pendanaan Terpenuhi'
-                    ? 'bg-[#D57415]'
-                    : 'bg-[#DCDCDC]'
+                    ? 'bg-[#D57415] text-white'
+                    : statusProyek == 'Proyek Selesai'
+                      ? 'bg-[#1C64F2] text-white'
+                      : 'bg-[#DCDCDC]'
               } font-bold text-center rounded-lg`}
           >
             {statusProyek}

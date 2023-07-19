@@ -12,6 +12,7 @@ import {
 } from '../../../utils/function';
 import { API_URL, PUBLIC_URL } from '../../../utils/constant';
 import { Loading } from '../../../component/molecules/Loading';
+import { Table } from 'flowbite-react';
 
 export const DetailTrackingProyek = () => {
   const params = useParams();
@@ -57,16 +58,75 @@ export const DetailTrackingProyek = () => {
                 }}
                 className="rounded-2xl w-full"
               />
-              <div className="flex gap-2 py-4">
-                <p className="font-bold text-gray-900">Lokasi:</p>
-                <p>
-                  {data.info_tani.alamat +
-                    ', ' +
-                    data.info_tani.kecamatan}
+              <div className="flex gap-2 py-2">
+                <p className="flex flex-row gap-2">
+                  <span className="font-bold whitespace-nowrap">Nama Petani :</span>
+                  <span>
+                    {data.user.name}
+                  </span>
                 </p>
               </div>
+              <div className="flex gap-2 py-2">
+                <p className="flex flex-row gap-2">
+                  <span className="font-bold whitespace-nowrap">Pengalaman Bertani :</span>
+                  <span>
+                    {data.info_tani.pengalaman_tani}
+                  </span>
+                </p>
+              </div>
+              <div className="flex gap-2 py-2">
+                <p className="flex flex-row gap-2">
+                  <span className="font-bold whitespace-nowrap">Lokasi :</span>
+                  <span>
+                    {data.info_tani.provinsi}, {data.info_tani.kota}, {data.info_tani.kecamatan}, {data.info_tani.alamat}
+                  </span>
+                </p>
+              </div>
+              <hr className="my-5" />
+              <div className="flex gap-2 py-2">
+                <p className="flex flex-row gap-2">
+                  <span className="font-bold whitespace-nowrap">Kebutuhan :</span>
+                </p>
+                
+              </div>
+              <div className="flex gap-2 py-2">
+                <Table>
+                  <Table.Head>
+                    <Table.HeadCell className="bg-investa-primary-50 text-white">
+                      Nama Barang
+                    </Table.HeadCell>
+                    <Table.HeadCell className="bg-investa-primary-50 text-white">
+                      Jumlah
+                    </Table.HeadCell>
+                    <Table.HeadCell className="bg-investa-primary-50 text-white">
+                      Harga
+                    </Table.HeadCell>
+                  </Table.Head>
+                  <Table.Body className="divide-y" data={data.kebutuhan}>
+                    {data.kebutuhan && data.kebutuhan.length === 0 ? (
+                      <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                        <Table.Cell colSpan={3} className="text-center">
+                          Belum ada data
+                        </Table.Cell>
+                      </Table.Row>
+                    ) : (
+                      data.kebutuhan &&
+                      data.kebutuhan.map((item, index) => (
+                        <Table.Row
+                          key={index}
+                          className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                        >
+                          <Table.Cell className="bg-gray-100">{item.nama}</Table.Cell>
+                          <Table.Cell className="bg-gray-100">{item.jumlah}</Table.Cell>
+                          <Table.Cell className="bg-gray-100">{toRupiahInvesta(item.total)}</Table.Cell>
+                        </Table.Row>
+                      ))
+                    )}
+                  </Table.Body>
+                </Table>
+              </div>
             </div>
-            <div className="mr-10">
+            <div className="ms-5">
               <div className="grid grid-cols-2">
                 <p>{toRupiahInvesta(data.total_pengajuan)}</p>
                 <p className="flex justify-end">

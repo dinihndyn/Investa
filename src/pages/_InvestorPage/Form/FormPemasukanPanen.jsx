@@ -68,7 +68,7 @@ export const FormPemasukanPanenInvestor = () => {
                               Jumlah
                             </th>
                             <th scope="col" className="px-6 py-3">
-                              Harga
+                              Total Harga
                             </th>
                           </tr>
                         </thead>

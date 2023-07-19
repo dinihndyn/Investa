@@ -25,7 +25,7 @@ const TablePengembalianDana = ({ data }) => {
             Jumlah
           </Table.HeadCell>
           <Table.HeadCell className="bg-investa-primary-50 text-white">
-            Harga
+            Total Harga
           </Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">

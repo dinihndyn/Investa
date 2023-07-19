@@ -84,12 +84,14 @@ export const CardProyek = ({
           className={`button block w-full items-center justify-center px-3 py-2 text-sm font-bold text-center ${status == 'Sedang Diverifikasi'
             ? 'bg-[#6D6D6D]'
             : status == 'Proyek Berjalan'
-              ? 'bg-[#53A711]'
+              ? 'bg-[#53A711] text-white'
               : status == 'Proyek Ditolak'
-                ? 'bg-[#B83A52]'
+                ? 'bg-[#B83A52] text-white'
                 : status == 'Pendanaan Terpenuhi'
-                  ? 'bg-[#D57415]'
-                  : 'bg-[#DCDCDC]'
+                  ? 'bg-[#D57415] text-white'
+                  : status == 'Proyek Selesai'
+                    ? 'bg-[#1C64F2] text-white'
+                    : 'bg-[#DCDCDC]'
             } rounded-lg hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800`}
         >
           {status}

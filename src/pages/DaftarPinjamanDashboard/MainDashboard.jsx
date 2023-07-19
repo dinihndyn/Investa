@@ -46,6 +46,7 @@ export const MainDashboard = () => {
               pengajuan={item.total_pengajuan}
               dana_terkumpul={item.dana_terkumpul}
               imbal_hasil={item.imbal_hasil}
+              resiko={item.resiko}
               name={item.pengajuan_name}
               key={index}
               lokasi={item.info_tani.kecamatan}

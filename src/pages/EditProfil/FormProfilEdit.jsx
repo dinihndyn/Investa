@@ -106,21 +106,23 @@ export const FormProfilEdit = () => {
                   className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
                 />
               </div>
-              <div className="flex flex-col gap-2">
-                <label
-                  htmlFor="#"
-                  className=" col-span-2 text-md whitespace-nowrap font-bold "
-                >
-                  Pengalaman Bertani (tahun)
-                </label>
-                <input
-                  required
-                  name="pengalaman"
-                  onChange={formik.handleChange}
-                  type="text"
-                  className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
-                />
-              </div>
+              {userData()?.tipeAkun == 'Petani' ? (
+                <div className="flex flex-col gap-2">
+                  <label
+                    htmlFor="#"
+                    className=" col-span-2 text-md whitespace-nowrap font-bold "
+                  >
+                    Pengalaman Bertani (tahun)
+                  </label>
+                  <input
+                    required
+                    name="pengalaman"
+                    onChange={formik.handleChange}
+                    type="text"
+                    className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
+                  />
+                </div>
+              ) : null}
               <div className="flex flex-col gap-2">
                 <label
                   htmlFor="#"

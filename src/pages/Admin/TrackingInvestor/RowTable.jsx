@@ -1,4 +1,4 @@
-const RowTable = ({ img, name, proyek, danaInvest, tanggal, tenor }) => {
+const RowTable = ({ img, name, proyek, danaInvest, tanggal, imbal }) => {
   return (
     <tr className="border-b text-sm bg-gray-100 dark:bg-gray-900 dark:border-gray-700">
       <th
@@ -15,7 +15,7 @@ const RowTable = ({ img, name, proyek, danaInvest, tanggal, tenor }) => {
       <td className="px-6 py-4">{proyek}</td>
       <td className="px-6 py-4">{danaInvest}</td>
       <td className="px-6 py-4">{tanggal}</td>
-      <td className="px-6 py-4">{tenor}</td>
+      <td className="px-6 py-4">{imbal}%</td>
     </tr>
   );
 };

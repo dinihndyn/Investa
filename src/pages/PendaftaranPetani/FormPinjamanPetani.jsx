@@ -49,7 +49,21 @@ export const FormPinjamanPetani = () => {
         toast('Sukses menambahkan pinjaman');
         navigate('/daftar-pinjaman');
       } catch (error) {
-        toast.error(Object.values(error.response.data)[0][0]);
+        if (error.response) {
+          const statusCode = error.response.status;
+          if (statusCode === 404) {
+            toast.error('Data tidak ditemukan');
+          } else if (statusCode === 422) {
+            toast.error('Data tidak valid');
+          } else if (statusCode === 403) {
+            toast.error('Anda memiliki pengajuan yang sedang berjalan');
+            navigate('/dashboard-petani');
+          } else {
+            toast.error('Terjadi kesalahan');
+          }
+        } else {
+          toast.error('Terjadi kesalahan');
+        }
       } finally {
         actions.setSubmitting(false);
       }

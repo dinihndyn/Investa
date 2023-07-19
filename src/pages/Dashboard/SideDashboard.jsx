@@ -118,9 +118,6 @@ export const SideDashboard = ({ children, isQuestion, isInvestor }) => {
                       Bila anda memiliki pertanyaan terkait Investa. Hubungi
                       kami kapan pun
                     </p>
-                    <div className="mt-5">
-                      <Button label={'Hubungi'} />
-                    </div>
                   </div>
                 </div>
               ) : null}
@@ -161,9 +158,6 @@ export const SideDashboard = ({ children, isQuestion, isInvestor }) => {
                       Bila anda memiliki pertanyaan terkait Investa. Hubungi
                       kami kapan pun
                     </p>
-                    <div className="mt-5">
-                      <Button label={'Hubungi'} />
-                    </div>
                   </div>
                 </div>
               ) : null}

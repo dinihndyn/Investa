@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
-import { useAuthHeader } from 'react-auth-kit';
+import { useAuthHeader, useAuthUser } from 'react-auth-kit';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Loading } from '../../component/molecules/Loading';
 import { API_URL, PUBLIC_URL } from '../../utils/constant';
 
 export const FormProfile = () => {
+  const userData = useAuthUser();
   const [data, setData] = useState();
   const getToken = useAuthHeader();
   useEffect(() => {
@@ -93,26 +94,29 @@ export const FormProfile = () => {
             className="w-full rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
           />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center mt-6">
-          <label
-            htmlFor="#"
-            className=" col-span-2 text-md whitespace-nowrap font-bold me-5"
-          >
-            Pengalaman Bertani
-          </label>
-          <input
-            readOnly
-            disabled
-            required
-            type="text"
-            value={
-              data.pengalaman == null
-                ? 'Belum diinputkan'
-                : data.pengalaman + ' Tahun'
-            }
-            className="w-full rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
-          />
-        </div>
+        {userData()?.tipeAkun == 'Petani' ? (
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center mt-6">
+            <label
+              htmlFor="#"
+              className=" col-span-2 text-md whitespace-nowrap font-bold me-5"
+            >
+              Pengalaman Bertani
+            </label>
+            <input
+              readOnly
+              disabled
+              required
+              type="text"
+              value={
+                data.pengalaman == null
+                  ? 'Belum diinputkan'
+                  : data.pengalaman + ' Tahun'
+              }
+              className="w-full rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
+            />
+          </div>
+        ) : null}
+        
         <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center mt-6">
           <label
             htmlFor="#"

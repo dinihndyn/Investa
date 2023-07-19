@@ -198,7 +198,7 @@ export const DetailForm = () => {
                           cols
                         >
                           <td colSpan={'4'} className="px-6 py-4 text-center">
-                            Belum ada pemasukan
+                            Belum ada kunjungan
                           </td>
                         </tr>
                       ) : (
@@ -234,7 +234,7 @@ export const DetailForm = () => {
                           );
                         })
                       )}
-                      {}
+                      { }
                     </tbody>
                   </table>
                 </div>
