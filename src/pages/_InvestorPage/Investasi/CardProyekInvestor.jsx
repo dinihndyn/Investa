@@ -76,11 +76,11 @@ export const CardProyekInvestor = ({ terpenuhi, day, amount, progress, data }) =
           <div className="absolute w-full h-full bg-black/70 rounded-lg top-0 transition-all items-center justify-center hidden group-hover:flex">
             <h1 className=" text-white font-bold text-2xl">DETAIL PROYEK</h1>
           </div>
-          <div className="absolute top-2 text-black bg-white right-2 flex p-2 rounded-lg font-bold items-center gap-2 ">
+          {/* <div className="absolute top-2 text-black bg-white right-2 flex p-2 rounded-lg font-bold items-center gap-2 ">
             {' '}
             <AiOutlineClockCircle className="w-fit" />
             <span>{day} Hari Tersisa</span>
-          </div>
+          </div> */}
         </Link>
       )}
       <h1 className="my-3 text-2xl font-bold py-1 px-5">

@@ -27,9 +27,9 @@ export const MainDeposit = () => {
   useEffect(() => {
     getData();
   }, []);
-  if (dataRupiah == null) {
-    return <Loading />;
-  }
+  // if (dataRupiah == null) {
+  //   return <Loading />;
+  // }
   return (
     <div className="">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

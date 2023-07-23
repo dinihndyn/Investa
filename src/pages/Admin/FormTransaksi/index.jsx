@@ -50,7 +50,7 @@ const FormTransaksi = () => {
                 <CardFormTransaksi
                   img={FormMasukan}
                   href={`/admin/tracking_proyek/${params.id}/form-transaksi/pengembalian`}
-                  label={'Form Pengembalian Dana'}
+                  label={'Form Pemasukan Panen'}
                   status={data?.status}
                 />
                 <CardFormTransaksi

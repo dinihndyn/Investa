@@ -10,21 +10,6 @@ export const HomeBigFooter = () => {
     <section>
       <Container>
         <div className="grid grid-cols-2 md:grid-cols-5 items-center justify-center gap-10">
-          <div>
-            <img src={ImgFoot1} alt="footer-img" />
-          </div>
-          <div>
-            <img src={ImgFoot2} alt="footer-img" />
-          </div>
-          <div>
-            <img src={ImgFoot3} alt="footer-img" />
-          </div>
-          <div>
-            <img src={ImgFoot4} alt="footer-img" />
-          </div>
-          <div className="col-span-2 md:col-span-1">
-            <img src={ImgFoot5} alt="footer-img" />
-          </div>
         </div>
         <div className="mt-5">
           <h1 className="text-2xl font-medium mb-4">Perhatian :</h1>

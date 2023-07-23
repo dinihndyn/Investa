@@ -33,7 +33,7 @@ const menu = [
     link: '/admin/persetujuan',
   },
   {
-    name: 'Traking',
+    name: 'Tracking',
     link: '',
     submenu: [
       {
@@ -50,17 +50,17 @@ const menu = [
     name: 'Pencairan',
     submenu: [
       {
-        name: 'Investor',
+        name: 'Pencairan Dana Investor',
         link: '/admin/pencairan_investor',
       },
       {
-        name: 'Petani',
+        name: 'Pengembalian Dana Petani',
         link: '/admin/pencairan_petani',
       },
     ],
   },
   {
-    name: 'Management Akun',
+    name: 'Manajemen Akun',
     submenu: [
       {
         name: 'Investor',
@@ -76,7 +76,7 @@ const menu = [
     name: 'Artikel',
     submenu: [
       {
-        name: 'Artikel',
+        name: 'Manajemen Unggahan',
         link: '/admin/artikel/list',
       },
       {

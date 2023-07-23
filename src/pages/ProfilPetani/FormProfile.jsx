@@ -133,6 +133,24 @@ export const FormProfile = () => {
             className="w-full rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
           />
         </div>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center mt-6">
+          <label
+            htmlFor="#"
+            className=" col-span-2 text-md whitespace-nowrap font-bold me-5"
+          >
+            Feedback
+          </label>
+          <a href="https://www.youtube.com/watch?v=WNT98SOXIbA&list=RDgBnY57d7vRQ&index=9"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              color: 'blue',          // Warna teks biru
+              textDecoration: 'underline', // Membuat garis bawah
+              fontStyle: 'italic'     // Membuat font menjadi italic
+            }}>
+            Link Feedback
+          </a>
+        </div>
       </form>
       <Link
         to="/"

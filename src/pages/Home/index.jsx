@@ -17,7 +17,6 @@ export const Home = () => {
         <HomeKeuntungan />
         <HomePengajuanProyek />
         <HomeCeritaMereka />
-        <HomeLiputan />
         <HomeProyekPertanian />
         <HomeBigFooter />
       </Layouts>

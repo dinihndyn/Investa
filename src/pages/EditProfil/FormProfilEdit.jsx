@@ -38,7 +38,7 @@ export const FormProfilEdit = () => {
             'Content-Type': 'multipart/form-data',
           },
         });
-        toast('Success Update Foto');
+        toast('Success Update Profile');
         setTimeout(() => {
           window.location.href = '/profil';
         }, 1500);

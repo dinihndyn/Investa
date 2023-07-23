@@ -26,7 +26,7 @@ export const MainArtikel = () => {
     fetchData();
   }, []);
   return (
-    <section>
+    <section className="min-h-[80vh]">
       <Container>
         {data.length == 0 ? (
           <>

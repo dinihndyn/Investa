@@ -7,6 +7,7 @@ import {
   AiFillYoutube,
   AiOutlineCopyrightCircle,
   AiFillLinkedin,
+  AiFillPhone,
 } from 'react-icons/ai';
 
 export const Footer = () => {
@@ -42,7 +43,7 @@ export const Footer = () => {
             </div>
             <div>
               <h1 className="font-semibold text-xl mb-5 text-[#615F5F]">
-                Layanan
+                Tentang Kami
               </h1>
               <div>
                 <Link to="#" className="text-lg text-[#615F5F]">
@@ -54,29 +55,18 @@ export const Footer = () => {
                   Tentang Kami
                 </Link>
               </div>
-              <div>
-                <Link className="text-lg text-[#615F5F]" to="#">
-                  Pertanyaan
-                </Link>
-              </div>
-              <div>
-                <Link className="text-lg text-[#615F5F]" to="#">
-                  Karir
-                </Link>
-              </div>
-              <div>
-                <Link className="text-lg text-[#615F5F]" to="#">
-                  Blog
-                </Link>
-              </div>
+              
             </div>
             <div className="col-span-2 md:col-span-1 text-center md:text-start">
               <h1 className="font-semibold text-xl mb-5 text-[#615F5F]">
-                Layanan
+                Hubungi Kami
               </h1>
               <div>
-                <Link to="#" className="text-lg text-[#615F5F]">
-                  +62 2121383317
+                <Link
+                  className="text-lg text-[#615F5F] flex items-center justify-center md:justify-start gap-2"
+                  to="#"
+                >
+                  <AiFillPhone className="w-fit" /> <span>+62 2121383317</span>
                 </Link>
               </div>
               <div>

@@ -75,7 +75,7 @@ const PencairanInvestor = () => {
               <Table.HeadCell>Imbal Hasil</Table.HeadCell>
               <Table.HeadCell>Dana Investasi</Table.HeadCell>
               <Table.HeadCell>Total Nilai Investasi</Table.HeadCell>
-              <Table.HeadCell>Actions</Table.HeadCell>
+              <Table.HeadCell>Aksi</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
               {data.length == 0 ? (
