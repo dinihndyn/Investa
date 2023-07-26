@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { toRupiahInvesta } from '../../utils/function';
 import { FormConditional } from './components/FormConditional';
 
+
 export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
   const [totalHarga, setTotalHarga] = useState(0);
-  const [imbalHasil, setImbalHasil] = useState(0);
-  const [estimasiPengembalian, setEstimasiPengembalian] = useState(0);
+
 
   useEffect(() => {
+    // Perhitungan totalHarga
     const calculateTotalHarga = () => {
       const harga = formik.values.kebutuhan.reduce((total, item) => {
         return total + item.jumlah * item.harga;
@@ -15,6 +16,12 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
       setTotalHarga(harga);
     };
 
+    // Panggil fungsi perhitungan totalHarga
+    calculateTotalHarga();
+  }, [formik.values.kebutuhan]);
+
+  useEffect(() => {
+    // Perhitungan imbalHasil berdasarkan nilai formik.values.tenor
     const calculateImbalHasil = () => {
       let persen = 0;
       if (formik.values.tenor === '3 Bulan') {
@@ -24,19 +31,24 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
       } else if (formik.values.tenor === '9 Bulan') {
         persen = 5;
       }
-      setImbalHasil(persen);
+      formik.setFieldValue('imbal_hasil', persen);
     };
 
-    const calculateEstimasiPengembalian = () => {
-      const estimasi = totalHarga + (totalHarga * imbalHasil) / 100;
-      setEstimasiPengembalian(estimasi);
-    };
-
-    calculateTotalHarga();
+    // Panggil fungsi perhitungan imbalHasil saat nilai formik.values.tenor berubah
     calculateImbalHasil();
+  }, [formik.values.tenor]);
+
+  useEffect(() => {
+    // Perhitungan estimasiPengembalian berdasarkan totalHarga dan imbalHasil
+    const calculateEstimasiPengembalian = () => {
+      const estimasi = totalHarga + (totalHarga * formik.values.imbal_hasil) / 100;
+      formik.setFieldValue('total_pengembalian', estimasi);
+    };
+
+    // Panggil fungsi perhitungan estimasiPengembalian saat totalHarga atau imbalHasil berubah
     calculateEstimasiPengembalian();
-  }, [formik.values.kebutuhan, formik.values.tenor, totalHarga, imbalHasil]);
-  
+  }, [totalHarga, formik.values.imbal_hasil]);
+
 
   const [elements, setElements] = useState([]);
 
@@ -72,6 +84,7 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
             type="text"
             className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
           />
+
         </div>
         <div className="flex flex-col gap-2 mb-3">
           <label
@@ -130,6 +143,7 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
           </label>
           <select
             name="komoditas"
+            required
             onChange={handleChange}
             id="komoditas"
             className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
@@ -159,6 +173,30 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
               selected={formik.values.komoditas == 'Lainnya' ? true : false}
               value="Lainnya"
             >
+              Ubi Kayu
+            </option>
+            <option
+              selected={formik.values.komoditas == 'Lainnya' ? true : false}
+              value="Lainnya"
+            >
+              Singkong
+            </option>
+            <option
+              selected={formik.values.komoditas == 'Lainnya' ? true : false}
+              value="Lainnya"
+            >
+              Kopi
+            </option>
+            <option
+              selected={formik.values.komoditas == 'Lainnya' ? true : false}
+              value="Lainnya"
+            >
+              Teh
+            </option>
+            <option
+              selected={formik.values.komoditas == 'Lainnya' ? true : false}
+              value="Lainnya"
+            >
               Lainnya
             </option>
           </select>
@@ -171,7 +209,7 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
           >
             Kebutuhan pinjaman
           </label>
-          
+
           <button
             type="button"
             onClick={addElement}
@@ -188,7 +226,6 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
           5. Harga Satuan adalah harga barang per item<br />
 
         </span>
-        
 
         <div className="grid grid-cols-1 md:grid-cols-5 gap-5 mb-2 mt-5">
           <div>
@@ -213,6 +250,7 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
         {elements.map((element, index) => (
           <React.Fragment key={index}>{element}</React.Fragment>
         ))}
+
 
         <div className="flex flex-col gap-2 mb-3 mt-10">
           <label
@@ -324,9 +362,9 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
         </div>
         <div className="grid grid-cols-2 gap-2 mb-3 bg-investa-primary-10 p-5 rounded">
           <div>Imbal Hasil</div>
-          <div>{imbalHasil}%</div>
+          <div>{formik.values.imbal_hasil}%</div>
           <div>Estimasi Pengembalian</div>
-          <div>{toRupiahInvesta(estimasiPengembalian)}</div>
+          <div>{toRupiahInvesta(formik.values.total_pengembalian)}</div>
         </div>
         <div className="flex flex-col gap-2 mb-3">
           <label
