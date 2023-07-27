@@ -28,6 +28,7 @@ export const FormPinjamanPetani = () => {
       end_date: '',
       'gambar[]': '',
       komoditas: '',
+      tenor: '',
       kebutuhan: [
         {
           nama: '',
@@ -39,6 +40,7 @@ export const FormPinjamanPetani = () => {
       ],
     },
     onSubmit: async (values, actions) => {
+      localStorage.removeItem('step2');
       try {
         await axios.post(API_URL + '/pengajuan/addPengajuan', values, {
           headers: {
@@ -54,7 +56,7 @@ export const FormPinjamanPetani = () => {
           if (statusCode === 404) {
             toast.error('Data tidak ditemukan');
           } else if (statusCode === 422) {
-            toast.error('Data tidak valid');
+            toast.error('Terdapat data yang belum terisi');
           } else if (statusCode === 403) {
             toast.error('Anda memiliki pengajuan yang sedang berjalan');
             navigate('/dashboard-petani');

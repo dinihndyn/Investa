@@ -47,8 +47,7 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
 
     // Panggil fungsi perhitungan estimasiPengembalian saat totalHarga atau imbalHasil berubah
     calculateEstimasiPengembalian();
-  }, [totalHarga, formik.values.imbal_hasil]);
-
+  }, [formik.values.kebutuhan, formik.values.tenor, totalHarga, formik.values.imbal_hasil]);
 
   const [elements, setElements] = useState([]);
 
@@ -64,6 +63,23 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
     );
     setElements([...elements, newElement]);
   };
+  const tenor = formik.values.tenor.split(' ')[0];
+  const step2 = localStorage.getItem('step2');
+  const end_date = new Date(formik.values.end_date);
+  const futureMonth = end_date.setMonth(end_date.getMonth() + parseInt(tenor));
+  function convertTimestampToYYYYMMDD(timestamp) {
+    const date = new Date(timestamp);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  }
+  const maxDate = convertTimestampToYYYYMMDD(futureMonth);
+  console.log('Max ', maxDate);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
       <div className="bg-white rounded p-10">
@@ -84,14 +100,13 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
             type="text"
             className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
           />
-
         </div>
         <div className="flex flex-col gap-2 mb-3">
           <label
             htmlFor="#"
             className=" col-span-2 text-md whitespace-nowrap requireds "
           >
-            Tanggal Mulai Proyek
+            Tanggal Mulai Pendanaan
           </label>
           <input
             required
@@ -107,7 +122,7 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
             htmlFor="#"
             className=" col-span-2 text-md whitespace-nowrap requireds "
           >
-            Tanggal Selesai Proyek
+            Tanggal Selesai Pendanaan
           </label>
           <input
             required
@@ -143,7 +158,6 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
           </label>
           <select
             name="komoditas"
-            required
             onChange={handleChange}
             id="komoditas"
             className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
@@ -164,34 +178,40 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
               Jagung
             </option>
             <option
+              selected={formik.values.komoditas == 'Kedelai' ? true : false}
+              value="Kedelai"
+            >
+              Kedelai
+            </option>
+            <option
+              selected={formik.values.komoditas == 'Cengkeh' ? true : false}
+              value="Cengkeh"
+            >
+              Cengkeh
+            </option>
+            <option
               selected={formik.values.komoditas == 'Cabai' ? true : false}
               value="Cabai"
             >
               Cabai
             </option>
             <option
-              selected={formik.values.komoditas == 'Lainnya' ? true : false}
-              value="Lainnya"
-            >
-              Ubi Kayu
-            </option>
-            <option
-              selected={formik.values.komoditas == 'Lainnya' ? true : false}
-              value="Lainnya"
+              selected={formik.values.komoditas == 'Singkong' ? true : false}
+              value="Singkong"
             >
               Singkong
             </option>
             <option
-              selected={formik.values.komoditas == 'Lainnya' ? true : false}
-              value="Lainnya"
+              selected={formik.values.komoditas == 'Melon' ? true : false}
+              value="Melon"
             >
-              Kopi
+              Melon
             </option>
             <option
-              selected={formik.values.komoditas == 'Lainnya' ? true : false}
-              value="Lainnya"
+              selected={formik.values.komoditas == 'Bawang Merah' ? true : false}
+              value="Bawang Merah"
             >
-              Teh
+              Bawang Merah
             </option>
             <option
               selected={formik.values.komoditas == 'Lainnya' ? true : false}
@@ -219,12 +239,16 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
           </button>
         </div>
         <span className="text-investa-netral-50">
-          1. Nama Barang contoh (bibit,pupuk,dll.)<br />
-          2. Jenis/Merek adalah varian spesifik dari barang pertanian<br />
-          3. Jumlah adalah banyak barang yang di perlukan<br />
-          4. Satuan banyak barang contoh (kg/g/karung/l,)<br />
-          5. Harga Satuan adalah harga barang per item<br />
-
+          1. Nama Barang contoh (bibit,pupuk,dll.)
+          <br />
+          2. Jenis/Merek adalah varian spesifik dari barang pertanian
+          <br />
+          3. Jumlah adalah banyak barang yang di perlukan
+          <br />
+          4. Satuan banyak barang contoh (kg/g/karung/l,)
+          <br />
+          5. Harga Satuan adalah harga barang per item
+          <br />
         </span>
 
         <div className="grid grid-cols-1 md:grid-cols-5 gap-5 mb-2 mt-5">
@@ -250,7 +274,30 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
         {elements.map((element, index) => (
           <React.Fragment key={index}>{element}</React.Fragment>
         ))}
+        {step2 == 'true' &&
+          formik.values.kebutuhan.length > 1 &&
+          elements.length < 1 ? (
+          <h1 className="font-bold mb-5">Barang Sebelumnya</h1>
+        ) : null}
 
+        {step2 == 'true' &&
+          formik.values.kebutuhan.length > 1 &&
+          elements.length < 1
+          ? formik.values.kebutuhan.map((item, index) => {
+            return (
+              <>
+                <div className="grid grid-cols-5 gap-5" key={index}>
+                  <h1>{item.nama}</h1>
+                  <h1>{item.jenis}</h1>
+                  <h1>{item.jumlah}</h1>
+                  <h1>{item.satuan}</h1>
+                  <h1>{item.harga}</h1>
+                </div>
+                <hr />
+              </>
+            );
+          })
+          : null}
 
         <div className="flex flex-col gap-2 mb-3 mt-10">
           <label
@@ -267,22 +314,7 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
       </div>
       <div className="bg-white rounded p-10">
         <h1 className="text-2xl font-semibold mb-5">Rencana Pengembalian</h1>
-        <div className="flex flex-col gap-2 mb-3">
-          <label
-            htmlFor="#"
-            className=" col-span-2 text-md whitespace-nowrap  requireds"
-          >
-            Estimasi Pengembalian Pinjaman
-          </label>
-          <input
-            required
-            onChange={handleChange}
-            value={formik.values.estimasi_pengembalian}
-            name="estimasi_pengembalian"
-            type="date"
-            className="w-full  rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
-          />
-        </div>
+
         <div className="flex flex-col gap-2 mb-3">
           <label
             htmlFor="#"
@@ -291,7 +323,8 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
             Jangka waktu Pinjaman (Tenor)
           </label>
           <span className="text-investa-netral-50">
-            Tenor yang Anda Pilih Mempengaruhi Imbal Hasil yang harus Anda Bayarkan
+            Tenor yang Anda Pilih Mempengaruhi Imbal Hasil yang harus Anda
+            Bayarkan
           </span>
           <div>
             <div>
@@ -312,7 +345,9 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
                     className="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-investa-primary-50 peer-checked:text-investa-primary-50 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
                   >
                     <div className="block">
-                      <div className="w-full text-lg font-semibold">3 Bulan</div>
+                      <div className="w-full text-lg font-semibold">
+                        3 Bulan
+                      </div>
                     </div>
                   </label>
                 </li>
@@ -332,7 +367,9 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
                     className="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-investa-primary-50 peer-checked:text-investa-primary-50 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
                   >
                     <div className="block">
-                      <div className="w-full text-lg font-semibold">6 Bulan</div>
+                      <div className="w-full text-lg font-semibold">
+                        6 Bulan
+                      </div>
                     </div>
                   </label>
                 </li>
@@ -352,13 +389,32 @@ export const FirstForm = ({ handleChange, handleFileChange, formik }) => {
                     className="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-investa-primary-50 peer-checked:text-investa-primary-50 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
                   >
                     <div className="block">
-                      <div className="w-full text-lg font-semibold">9 Bulan</div>
+                      <div className="w-full text-lg font-semibold">
+                        9 Bulan
+                      </div>
                     </div>
                   </label>
                 </li>
               </ul>
             </div>
           </div>
+        </div>
+        <div className="flex flex-col gap-2 mb-3">
+          <label
+            htmlFor="#"
+            className=" col-span-2 text-md whitespace-nowrap  requireds"
+          >
+            Estimasi Pengembalian Pinjaman
+          </label>
+          <input
+            required
+            onChange={handleChange}
+            value={formik.values.estimasi_pengembalian}
+            name="estimasi_pengembalian"
+            type="date"
+            max={maxDate}
+            className="w-full  rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
+          />
         </div>
         <div className="grid grid-cols-2 gap-2 mb-3 bg-investa-primary-10 p-5 rounded">
           <div>Imbal Hasil</div>

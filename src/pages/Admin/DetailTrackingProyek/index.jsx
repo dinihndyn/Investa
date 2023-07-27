@@ -87,7 +87,7 @@ export const DetailTrackingProyek = () => {
                 <p className="flex flex-row gap-2">
                   <span className="font-bold whitespace-nowrap">Kebutuhan :</span>
                 </p>
-                
+
               </div>
               <div className="flex gap-2 py-2">
                 <Table>
@@ -127,6 +127,7 @@ export const DetailTrackingProyek = () => {
               </div>
             </div>
             <div className="ms-5">
+              <h5 className="font-bold mb-2">Pendanaan yang terkumpul</h5>
               <div className="grid grid-cols-2">
                 <p>{toRupiahInvesta(data.total_pengajuan)}</p>
                 <p className="flex justify-end">
@@ -154,7 +155,7 @@ export const DetailTrackingProyek = () => {
                   ).toFixed(1)}%`}
                 </div>
               </div>
-              <h5 className="font-bold">Pendanaan yang terkumpul</h5>
+              <hr />
               <div className="grid grid-cols-3 py-5 text-sm w-full">
                 <div>
                   <p>Tenor</p>

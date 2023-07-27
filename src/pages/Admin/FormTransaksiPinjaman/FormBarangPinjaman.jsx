@@ -1,18 +1,18 @@
 import { Label, TextInput } from 'flowbite-react';
 
-const FormBarangPinjaman = ({ formik }) => {
+const FormBarangPinjaman = ({ formik, dana }) => {
   return (
     <>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="tanggal" value="Tanggal" />
+          <Label htmlFor="dana" value="Dana Terkumpul" />
         </div>
         <TextInput
-          id="tanggal"
-          name="infoPinjam[0][tanggal]"
-          placeholder="Masukan tanggal"
-          type="date"
-          onChange={formik.handleChange}
+          className="font-bold"
+          id="dana"
+          type="text"
+          value={dana}
+          readOnly
         />
       </div>
       <div>

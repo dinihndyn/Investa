@@ -6,8 +6,15 @@ export const SecondForm = ({ handleChange, formik }) => {
   const [kabKota, setKabKota] = useState([]);
   const [kecamatan, setKecamatan] = useState([]);
 
+  const [selectedKota, setSelectedKota] = useState(formik.values.kota || '');
+  const [selectedKecamatan, setSelectedKecamatan] = useState(
+    formik.values.kecamatan || ''
+  );
+
+
   // eslint-disable-next-line no-unused-vars
   const [idProvinsi, setIdProvinsi] = useState('');
+
   const fetchApi = async () => {
     const response = await axios.get(
       'https://dev.farizdotid.com/api/daerahindonesia/provinsi'
@@ -27,9 +34,30 @@ export const SecondForm = ({ handleChange, formik }) => {
     );
     setKecamatan(response.data.kecamatan);
   };
+
   useEffect(() => {
     fetchApi();
-  }, []);
+    localStorage.setItem('step2', true);
+    if (formik.values.provinsi) {
+      const selectedProvinsi = dataProvinsi.find(
+        (item) => item.nama === formik.values.provinsi
+      );
+      setSelectedKota(formik.values.kota || ''); // Set selectedKota state based on formik values
+      if (selectedProvinsi) {
+        setIdProvinsi(selectedProvinsi.id);
+        fetchKabKota(selectedProvinsi.id);
+      }
+    }
+    if (formik.values.kota) {
+      const selectedKota = kabKota.find((item) => item.nama === formik.values.kota);
+      setSelectedKecamatan(formik.values.kecamatan || ''); // Set selectedKecamatan state based on formik values
+      if (selectedKota) {
+        fetchKecamatan(selectedKota.id);
+      }
+    }
+  }, [formik.values.provinsi, formik.values.kota, formik.values.kecamatan, dataProvinsi]);
+
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
       <div className="bg-white rounded p-10">
@@ -103,7 +131,7 @@ export const SecondForm = ({ handleChange, formik }) => {
         <div className="flex flex-col gap-2 mb-3">
           <label
             htmlFor="#"
-            className=" col-span-2 text-md whitespace-nowrap  requireds"
+            className="col-span-2 text-md whitespace-nowrap requireds"
           >
             Sudah Bergabung dalam kelompok tani?
           </label>
@@ -120,9 +148,7 @@ export const SecondForm = ({ handleChange, formik }) => {
                     name="kelompok_tani"
                     onChange={handleChange}
                     checked={
-                      formik.values.kelompok_tani == 'Sudah Bergabung'
-                        ? true
-                        : false
+                      formik.values.kelompok_tani === 'Sudah Bergabung'
                     }
                   />
                   <label
@@ -146,9 +172,7 @@ export const SecondForm = ({ handleChange, formik }) => {
                     name="kelompok_tani"
                     onChange={handleChange}
                     checked={
-                      formik.values.kelompok_tani == 'Belum Bergabung'
-                        ? true
-                        : false
+                      formik.values.kelompok_tani === 'Belum Bergabung'
                     }
                   />
                   <label
@@ -166,40 +190,44 @@ export const SecondForm = ({ handleChange, formik }) => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-2 mb-3">
-          <label
-            htmlFor="#"
-            className=" col-span-2 text-md whitespace-nowrap requireds "
-          >
-            Nama Kelompok Tani
-          </label>
-          <input
-            required
-            name="nama_kelompok"
-            onChange={handleChange}
-            value={formik.values.nama_kelompok}
-            placeholder="Masukan Nama Kelompok Tani"
-            type="text"
-            className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
-          />
-        </div>
-        <div className="flex flex-col gap-2 mb-3">
-          <label
-            htmlFor="#"
-            className=" col-span-2 text-md whitespace-nowrap requireds "
-          >
-            Jumlah Kelompok Tani
-          </label>
-          <input
-            required
-            value={formik.values.jumlah_anggota}
-            placeholder="Masukan Jumlah Anggota Kelompok Tani"
-            name="jumlah_anggota"
-            type="text"
-            onChange={handleChange}
-            className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
-          />
-        </div>
+        {formik.values.kelompok_tani === 'Sudah Bergabung' && (
+          <>
+            <div className="flex flex-col gap-2 mb-3">
+              <label
+                htmlFor="#"
+                className="col-span-2 text-md whitespace-nowrap requireds"
+              >
+                Nama Kelompok Tani
+              </label>
+              <input
+                required
+                name="nama_kelompok"
+                onChange={handleChange}
+                value={formik.values.nama_kelompok}
+                placeholder="Masukkan Nama Kelompok Tani"
+                type="text"
+                className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
+              />
+            </div>
+            <div className="flex flex-col gap-2 mb-3">
+              <label
+                htmlFor="#"
+                className="col-span-2 text-md whitespace-nowrap requireds"
+              >
+                Jumlah Kelompok Tani
+              </label>
+              <input
+                required
+                value={formik.values.jumlah_anggota}
+                placeholder="Masukkan Jumlah Anggota Kelompok Tani"
+                name="jumlah_anggota"
+                type="text"
+                onChange={handleChange}
+                className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
+              />
+            </div>
+          </>
+        )}
       </div>
       <div className="bg-white rounded p-10">
         <h1 className="text-2xl font-semibold mb-5">Informasi Lahan</h1>
@@ -307,6 +335,7 @@ export const SecondForm = ({ handleChange, formik }) => {
               const selectedProvinsi = dataProvinsi.find(item => item.nama === selectedProvinsiNama);
               fetchKabKota(selectedProvinsi.id); // Ambil ID Provinsi untuk mendapatkan data kota
             }}
+            value={formik.values.provinsi}
             className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
           >
             <option value="" selected disabled hidden>
@@ -332,11 +361,14 @@ export const SecondForm = ({ handleChange, formik }) => {
             name="kota"
             onChange={(e) => {
               formik.handleChange(e);
+              setSelectedKota(e.target.value); // Update selectedKota state
               const selectedKotaNama = e.target.value; // Nama Kota
-              const selectedKota = kabKota.find(item => item.nama === selectedKotaNama);
+              const selectedKota = kabKota.find(
+                (item) => item.nama === selectedKotaNama
+              );
               fetchKecamatan(selectedKota.id); // Ambil ID Kota untuk mendapatkan data kecamatan
             }}
-            id="komoditas"
+            value={selectedKota} // Use selectedKota state variable
             className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
           >
             <option value="" selected disabled hidden>
@@ -360,8 +392,11 @@ export const SecondForm = ({ handleChange, formik }) => {
           </label>
           <select
             name="kecamatan"
-            onChange={handleChange}
-            id="komoditas"
+            onChange={(e) => {
+              formik.handleChange(e);
+              setSelectedKecamatan(e.target.value); // Update selectedKecamatan state
+            }}
+            value={selectedKecamatan} // Use selectedKecamatan state variable
             className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
           >
             <option value="" selected disabled hidden>
@@ -375,6 +410,7 @@ export const SecondForm = ({ handleChange, formik }) => {
               );
             })}
           </select>
+
         </div>
         <div className="flex flex-col gap-2 mb-3">
           <label

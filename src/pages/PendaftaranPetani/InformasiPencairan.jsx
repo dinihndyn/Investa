@@ -11,10 +11,10 @@ export const InformasiPencairan = () => {
       </p>
       <ol className="list-decimal p-10">
         <li>Masuk akun</li>
-        <li>Pilih daftar</li>
-        <li>Pinjaman Pilih Proyek yang telah diajukan</li>
-        <li>Pilih Form Transaksi</li>
-        <li>Pilih kolom Form Pinjaman</li>
+        <li>Pilih daftar pinjaman</li>
+        <li>Pilih Proyek yang telah diajukan</li>
+        <li>Pilih Tracking Proyek</li>
+        <li>Pilih kolom Form Pencairan</li>
         <li>Klilk Print Bukti Pembayaran</li>
         <li>Lalu Tujukan ketoko tani untuk penukaran barang</li>
         <li>Revenue 2% untuk platform</li>

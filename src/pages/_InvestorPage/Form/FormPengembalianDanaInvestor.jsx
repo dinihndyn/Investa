@@ -75,7 +75,7 @@ export const FormPengembalianDanaInvestor = () => {
                         <tbody>
                           {data.length == 0 ? (
                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                              <td className="px-6 py-4 text-center" colSpan={4}>
+                              <td className="px-6 py-4 text-center" colSpan={6}>
                                 Belum ada pemasukan
                               </td>
                             </tr>
@@ -90,7 +90,7 @@ export const FormPengembalianDanaInvestor = () => {
                                     scope="row"
                                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                   >
-                                    {dateFormatInvesta(item.tanggal)}
+                                    {dateFormatInvesta(item.created_at)}
                                   </th>
                                   <td className="px-6 py-4">
                                     {item.deskripsi}
@@ -104,28 +104,6 @@ export const FormPengembalianDanaInvestor = () => {
                             })
                           )}
                         </tbody>
-                        {data.length == 0 ? null : (
-                          <tfoot>
-                            <tr className="font-semibold bg-investa-primary-10 text-gray-900 dark:text-white">
-                              <th
-                                scope="row"
-                                colSpan={2}
-                                className="px-6 py-3 text-base"
-                              >
-                                Total
-                              </th>
-                              <td className="px-6 py-3 ">
-                                {toRupiahInvesta(
-                                  data.reduce(
-                                    (acc, obj) => acc + obj.jumlah_pembayaran,
-                                    0
-                                  )
-                                )}
-                              </td>
-                              <td className="px-6 py-3 "></td>
-                            </tr>
-                          </tfoot>
-                        )}
                       </table>
                     </div>
                     <div className="flex justify-start mt-5">

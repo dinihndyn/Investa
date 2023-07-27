@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Layouts } from '../../../component/molecules/Layouts';
 import { Sidebar } from '../../../component/molecules/Admin/Sidebar';
 import { Container } from '../../../component/atom/Container/Container';
@@ -24,6 +24,11 @@ export const DetailPersetujuan = () => {
   // const [data, setdata] = useState({});
   const [openModal, setOpenModal] = useState();
   const props = { openModal, setOpenModal };
+  const calculateUnit = (totalPengajuan) => {
+    return totalPengajuan / 10000;
+  };
+
+  // Menghitung nilai unit ketika data total_pengajuan berubah
 
   const selectResiko = ['Tinggi', 'Sedang', 'Rendah'];
 
@@ -87,6 +92,12 @@ export const DetailPersetujuan = () => {
   useState(() => {
     getDataDetail();
   }, []);
+  useEffect(() => {
+    if (data && data.total_pengajuan) {
+      const unitValue = calculateUnit(data.total_pengajuan);
+      formik.setFieldValue('jumlah_unit', unitValue); // Set nilai unit ke formik
+    }
+  }, [data]);
 
   if (data == {}) {
     return <Loading />;
@@ -117,9 +128,9 @@ export const DetailPersetujuan = () => {
             </div>
             <div className="ms-5">
               <div className="grid grid-cols-2 mb-2">
-                <p>{toRupiahInvesta(data?.total_pengajuan || 0)}</p>
+                <p>{toRupiahInvesta(data?.dana_terkumpul || 0)}</p>
                 <p className="text-right md:text-right ">
-                  {toRupiahInvesta(data?.dana_terkumpul || 0)}
+                  {toRupiahInvesta(data?.total_pengajuan || 0)}
                 </p>
               </div>
               <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
@@ -164,7 +175,7 @@ export const DetailPersetujuan = () => {
                 <div>
                   <p>Harga per Unit</p>
                   <p className="font-bold">
-                    {toRupiahInvesta(data.harga_unit || 0)}
+                    {toRupiahInvesta(data.harga_unit || 10000)}
                   </p>
                 </div>
               </div>
@@ -252,16 +263,17 @@ export const DetailPersetujuan = () => {
                     Jumlah Unit
                   </label>
                   <input
+                    disabled
                     type="number"
-                    placeholder="Unit"
+                    value={formik.values.jumlah_unit}
                     name="jumlah_unit"
                     onChange={formik.handleChange}
-                    className="w-full rounded"
+                    className="w-20 rounded"
                   />
                 </div>
                 <div>
                   <p>Unit Tersedia</p>
-                  <p className="font-bold">{data.unit_tersedia || 'Rp. 0'}</p>
+                  <p className="font-bold">{data.unit_tersedia || '0 Unit'}</p>
                 </div>
               </div>
               <hr className="my-2 mb-4" />

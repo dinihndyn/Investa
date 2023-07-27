@@ -23,7 +23,7 @@ export const HomeJumbotron = () => {
         {userData() && userData().tipeAkun === 'Investor' ? (
           <Button linkTo={'/investor/proyek'} label={'Mulai Investasi'} />
         ) : (
-          <Button linkTo={'/ajukan-pinjaman'} label={'Ajukan Pinjaman'} />
+          <Button linkTo={'/dashboard-petani'} label={'Ajukan Pinjaman'} />
         )}
       </Container>
     </section>

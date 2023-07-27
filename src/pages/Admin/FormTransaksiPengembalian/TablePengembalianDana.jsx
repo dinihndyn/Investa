@@ -39,7 +39,7 @@ const TablePengembalianDana = ({ data }) => {
                   {dateFormatInvesta(item.created_at)}
                 </Table.Cell>
                 <Table.Cell>{item.nama_produk}</Table.Cell>
-                <Table.Cell>{item.jumlah} kg</Table.Cell>
+                <Table.Cell>{item.jumlah}</Table.Cell>
                 <Table.Cell>{toRupiahInvesta(item.harga)}</Table.Cell>
               </Table.Row>
             );

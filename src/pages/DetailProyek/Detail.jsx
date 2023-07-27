@@ -80,7 +80,7 @@ export const Detail = () => {
               {data.info_tani.provinsi}, {data.info_tani.kota}, {data.info_tani.kecamatan}, {data.info_tani.alamat}
             </span>
           </p>
-          <hr className="my-5"/>
+          <hr className="my-5" />
           <p className="mt-5 mb-5 flex flex-row gap-2">
             <span className="font-bold whitespace-nowrap">Kebutuhan :</span>
           </p>
@@ -120,6 +120,9 @@ export const Detail = () => {
           </Table>
         </div>
         <div className="ms-4">
+          <h1 className="font-semibold mb-2 mt-3">
+            Pendanaan yang Terkumpul
+          </h1>
           <div className="flex justify-between">
             <p>
               {toRupiahInvesta(
@@ -128,19 +131,13 @@ export const Detail = () => {
             </p>
             <p>{toRupiahInvesta(data.total_pengajuan)}</p>
           </div>
-
           <ProgressBar
             percentage={getPercentageInvesta(
               data.dana_terkumpul == null ? 0 : data.dana_terkumpul,
               data.total_pengajuan
             )}
           />
-
-          <div>
-            <h1 className="font-semibold mb-3 mt-3">
-              Pendanaan yang Terkumpul
-            </h1>
-          </div>
+          <hr className="my-5" />
           <div className="grid grid-cols-2 mb-5">
             <div>
               <p>Tenor</p>
@@ -164,13 +161,13 @@ export const Detail = () => {
             <div>
               <p>Jumlah Unit</p>
               <p className="font-semibold">
-                {data.jumlah_unit == null ? '0' : data.jumlah_unit + 'Unit'}
+                {data.jumlah_unit == null ? '0' : data.jumlah_unit + ' Unit'}
               </p>
             </div>
             <div>
               <p>Unit Tersedia</p>
               <p className="font-semibold">
-                {data.jumlah_unit == null ? '0' : data.jumlah_unit + 'Unit'}
+                {data.unit_tersedia == null ? '0' : data.unit_tersedia + ' Unit'}
               </p>
             </div>
           </div>
@@ -197,6 +194,8 @@ export const Detail = () => {
         <div className="flex justify-end">
           {data.status === 'Proyek Berjalan' ||
             data.status === 'Pendanaan Terpenuhi' ||
+            data.status === 'Verifikasi Pembayaran' ||
+            data.status === 'Pembayaran Gagal' ||
             data.status === 'Proyek Selesai' ? (
             <div>
               <Button

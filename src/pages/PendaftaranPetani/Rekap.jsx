@@ -56,9 +56,9 @@ export const Rekap = ({ formik, file }) => {
           <div className="col-span-2">
             <div className=" grid grid-cols-2 gap-2 mb-3 bg-investa-primary-10 p-5 rounded">
               <div>Imbal Hasil</div>
-              <div>-</div>
+              <div>{formik.values.imbal_hasil}%</div>
               <div>Estimasi Pengembalian</div>
-              <div>Rp. - </div>
+              <div>{toRupiahInvesta(formik.values.total_pengembalian)}</div>
             </div>
           </div>
           <div className="grid grid-cols-2">
@@ -85,7 +85,7 @@ export const Rekap = ({ formik, file }) => {
           <p className="mb-3">Luas Lahan</p>
           <p className="font-semibold">{formik.values.luas_lahan} Meter</p>
           <p>Alamat Lahan</p>
-          <p className="mb-3">{formik.values.alamat}</p>
+          <p className="mb-3">{formik.values.alamat} Kec. {formik.values.kecamatan} {formik.values.kota}, {formik.values.provinsi}</p>
         </div>
       </div>
       <hr className="my-10" />

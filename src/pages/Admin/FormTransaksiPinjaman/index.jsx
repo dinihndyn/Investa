@@ -6,17 +6,23 @@ import FormBarangPinjaman from './FormBarangPinjaman';
 import Button from './Button';
 import axios from 'axios';
 import { API_URL } from '../../../utils/constant';
+import {
+  toRupiahInvesta,
+} from '../../../utils/function';
 import { useAuthHeader } from 'react-auth-kit';
 import { toast } from 'react-toastify';
 import { Layouts } from '../../../component/molecules/Layouts';
 import { useFormik } from 'formik';
+
 
 const FormTransaksiPinjaman = () => {
   const [data, setData] = useState({
     'File Info Pinjaman': [],
     'Info Pinjaman': [],
     'Total Setelah Imbal': '',
+    'Dana': ''
   });
+
   const params = useParams();
   const token = useAuthHeader();
 
@@ -99,6 +105,9 @@ const FormTransaksiPinjaman = () => {
               <FormBarangPinjaman
                 onChangeImg={handleFileChange}
                 formik={formik}
+                dana={toRupiahInvesta(data['Dana'])}
+
+
               />
 
               <div className="grid grid-cols-2">
@@ -113,12 +122,6 @@ const FormTransaksiPinjaman = () => {
             </form>
           </div>
           <div className="col-span-2 flex flex-col">
-            <Link
-              className="self-end"
-              to={'/admin/tracking_proyek/' + params.id + '/form'}
-            >
-              <Button>Tracking Proyek</Button>
-            </Link>
             <h2 className="text-lg font-medium text-investa-primary-50">
               Riwayat Informasi Pinjaman
             </h2>
@@ -127,7 +130,6 @@ const FormTransaksiPinjaman = () => {
               imbal_hasil={data['imbal_hasil']}
               data={data['Info Pinjaman']}
             />
-            <Button className={'self-end'}>Print Bukti Pembelian</Button>
           </div>
         </div>
       </Container>

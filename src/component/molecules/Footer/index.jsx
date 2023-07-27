@@ -109,7 +109,7 @@ export const Footer = () => {
       <section className="bg-investa-netral-70 text-white px-5 py-3 flex justify-between">
         <div className="flex items-center text-sm gap-3">
           <AiOutlineCopyrightCircle />{' '}
-          <span>2022 PT Investa Membangun Bangsa. All rights reserved</span>
+          <span>2023 PT Investa Membangun Bangsa. All rights reserved</span>
         </div>
         <div className="flex gap-3 text-sm ">
           <Link to={'#'}>Syarat & Ketentuan</Link>

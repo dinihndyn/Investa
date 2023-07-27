@@ -33,7 +33,7 @@ export const FormTransaksiChild = () => {
   }, []);
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-5">Form Pencairan</h1>
+      <h1 className="text-2xl font-bold mb-5">Tracking Proyek</h1>
       <div className="bg-investa-netral-30 p-5">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <div className="col-span-2">
@@ -74,7 +74,7 @@ export const FormTransaksiChild = () => {
             <div className="m-3 ps-5 mb-5">
               <ol className="list-decimal">
                 <li>
-                  Form Pinjaman adalah form yang memuat barang pinjaman yang
+                  Form Pencairan Pinjaman adalah form yang memuat barang pinjaman yang
                   menjadi keperluan petani
                 </li>
                 <li>

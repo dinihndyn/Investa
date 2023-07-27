@@ -5,9 +5,10 @@ import { dateFormatInvesta, toRupiahInvesta } from '../../../utils/function';
 import { Link, useParams } from 'react-router-dom';
 import { useAuthHeader } from 'react-auth-kit';
 import { useFormik } from 'formik';
-import { API_URL } from '../../../utils/constant';
+import { API_URL, PUBLIC_URL } from '../../../utils/constant';
 import { toast } from 'react-toastify';
 import { Spiner } from '../../../component/atom/Spiner';
+
 
 export const DetailForm = () => {
   const [data, setData] = useState([]);
@@ -17,6 +18,7 @@ export const DetailForm = () => {
   const formik = useFormik({
     initialValues: {
       deskripsi: '',
+      note: '',
       status: '',
     },
     onSubmit: async (values, actions) => {
@@ -112,38 +114,31 @@ export const DetailForm = () => {
                       className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 text-black placeholder:italic"
                     >
                       <option value="" selected disabled hidden>
-                        {cekPembayaran(data, 'Pengembalian Dana oleh Petani') &&
-                          cekPembayaran(data, 'Verifikasi Pembayaran Petani') &&
-                          cekPembayaran(data, 'Pengembalian Dana Investor')
-                          ? 'Semua telah diverifikasi'
-                          : 'Pilih Deskripsi'}
+                        Pilih Deskripsi
                       </option>
-                      {cekPembayaran(
-                        data,
-                        'Pengembalian Dana oleh Petani'
-                      ) ? null : (
-                        <option value={'Pengembalian Dana oleh Petani'}>
-                          Pengembalian Dana oleh Petani
-                        </option>
-                      )}
-                      {cekPembayaran(
-                        data,
-                        'Verifikasi Pembayaran Petani'
-                      ) ? null : (
-                        <option value={'Verifikasi Pembayaran Petani'}>
-                          Verifikasi Pembayaran Petani
-                        </option>
-                      )}
-                      {cekPembayaran(
-                        data,
-                        'Pengembalian Dana Investor'
-                      ) ? null : (
-                        <option value={'Pengembalian Dana Investor'}>
-                          Pengembalian Dana Investor
-                        </option>
-                      )}
+                      <option value={'Verifikasi Pembayaran Petani'}>
+                        Verifikasi Pembayaran Petani
+                      </option>
+                      <option value={'Pengembalian Dana Investor'}>
+                        Pengembalian Dana Investor
+                      </option>
                     </select>
                   </div>
+                </div>
+                <div>
+                  <label
+                    htmlFor="#"
+                    className=" col-span-2 text-md whitespace-nowrap font-bold "
+                  >
+                    Catatan
+                  </label>
+                  <input
+                    onChange={formik.handleChange}
+                    name="note"
+                    placeholder="Masukkan catatan"
+                    type="text"
+                    className="w-full capitalize rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic mb-5"
+                  />
                 </div>
                 <div>
                   <label
@@ -172,7 +167,6 @@ export const DetailForm = () => {
                     </option>
                     <option value={'Success'}>Sukses</option>
                     <option value={'Gagal'}>Gagal</option>
-                    <option value={'Ditunda'}>Ditunda</option>
                   </select>
                 </div>
 
@@ -211,6 +205,12 @@ export const DetailForm = () => {
                           Jumlah
                         </th>
                         <th scope="col" className="px-6 py-3">
+                          Note
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                          Photo
+                        </th>
+                        <th scope="col" className="px-6 py-3">
                           Status
                         </th>
                       </tr>
@@ -221,7 +221,7 @@ export const DetailForm = () => {
                           className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                           cols
                         >
-                          <td colSpan={'4'} className="px-6 py-4 text-center">
+                          <td colSpan={'6'} className="px-6 py-4 text-center">
                             Belum ada pemasukan
                           </td>
                         </tr>
@@ -241,6 +241,29 @@ export const DetailForm = () => {
                               <td className="px-6 py-4">{item.deskripsi}</td>
                               <td className="px-6 py-4">
                                 {item.jumlah_pembayaran ? toRupiahInvesta(item.jumlah_pembayaran) : "-"}
+                              </td>
+                              <td className="px-6 py-4">{item.note ? item.note : "-"}</td>
+                              <td className="px-6 py-4">
+                                <a
+                                  target="_blank"
+                                  className="cursor-zoom-in"
+                                  href={PUBLIC_URL + 'image/' + item.photo}
+                                  rel="noreferrer"
+                                >
+                                  {item.photo ? (
+                                    <img
+                                      src={PUBLIC_URL + 'image/' + item.photo}
+                                      alt="photo"
+                                      className="rounded-lg w-10 h-10 object-cover"
+                                      onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src = 'https://placehold.co/100';
+                                      }}
+                                    />
+                                  ) : (
+                                    '-'
+                                  )}
+                                </a>
                               </td>
                               <td className="px-6 py-4">{item.status}</td>
                             </tr>

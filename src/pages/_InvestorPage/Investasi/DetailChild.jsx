@@ -120,6 +120,9 @@ export const DetailChild = () => {
           </Table>
         </div>
         <div className="ms-4">
+          <h1 className="font-semibold mb-3 mt-3">
+            Pendanaan yang Terkumpul
+          </h1>
           <div className="flex justify-between">
             <p>
               {toRupiahInvesta(
@@ -137,7 +140,7 @@ export const DetailChild = () => {
                   data.total_pengajuan
                 )}%`,
               }}
-              className={`bg-investa-primary-50 mt-5 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full`}
+              className={`bg-investa-primary-50 mt-5 mb-5text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full`}
             >
               {getPercentageInvesta(
                 data.dana_terkumpul == null ? 0 : data.dana_terkumpul,
@@ -146,12 +149,7 @@ export const DetailChild = () => {
               %
             </div>
           </div>
-
-          <div>
-            <h1 className="font-semibold mb-3 mt-3">
-              Pendanaan yang Terkumpul
-            </h1>
-          </div>
+          <hr className="my-5" />
           <div className="grid grid-cols-2 mb-5">
             <div>
               <p>Tenor</p>

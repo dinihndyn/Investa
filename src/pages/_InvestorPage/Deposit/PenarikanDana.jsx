@@ -200,24 +200,6 @@ export const PenarikanDana = () => {
             </div>
           </Modal.Footer>
         </Modal>
-        <div className="text-white p-10">
-          <ol className="list-decimal">
-            <li>Minimal Tarik Dana = 50.000,00 IDR. dana anda.</li>
-            <li>
-              Penarikan dana hanya akan di proses ke rekening yang pertama kali
-              di daftarkan.
-            </li>
-            <li>
-              Setelah proses pengisian form Penarikan dana selesai maka
-              pengiriman dana akan di proses secepatnya ke dalam rekening
-              terdaftar anda.
-            </li>
-            <li>
-              Silahkan hubungin customer service kami untuk konfirmasi status
-              penarikan
-            </li>
-          </ol>
-        </div>
       </form>
     </div>
   );

@@ -123,6 +123,9 @@ export const DetailProyekKepunyaan = () => {
           </Table>
         </div>
         <div className="ms-4">
+          <h1 className="font-semibold mb-3 mt-3">
+            Pendanaan yang Terkumpul
+          </h1>
           <div className="flex justify-between">
             <p>
               {toRupiahInvesta(
@@ -149,12 +152,7 @@ export const DetailProyekKepunyaan = () => {
               %
             </div>
           </div>
-
-          <div>
-            <h1 className="font-semibold mb-3 mt-3">
-              Pendanaan yang Terkumpul
-            </h1>
-          </div>
+          <hr className="my-5" />
           <div className="grid grid-cols-2 mb-5">
             <div>
               <p>Tenor</p>

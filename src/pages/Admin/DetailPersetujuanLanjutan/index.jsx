@@ -53,8 +53,6 @@ export const DetailPersetujuanLanjutan = () => {
                 <h5 className="mb-2 col-span-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Rencana Pinjaman</h5>
                 <p className="mb-3.5 font-normal text-base text-gray-700 dark:text-gray-400">Nama Proyek Pinjaman</p>
                 <p className="mb-3.5 font-bold text-base text-gray-700 dark:text-gray-400">{data?.pengajuan_name}</p>
-                <p className="mb-3.5 font-normal text-base text-gray-700 dark:text-gray-400">Estimasi Lama Proyek Berlangsung</p>
-                <p className="mb-3.5 font-bold text-base text-gray-700 dark:text-gray-400">{dateFormatInvesta(data?.estimasi_pengembalian)}</p>
                 <p className="mb-3.5 font-normal text-base text-gray-700 dark:text-gray-400">Foto Proyek Pinjaman</p>
                 <div className="mb-3.5">
                   <img
@@ -72,34 +70,34 @@ export const DetailPersetujuanLanjutan = () => {
                 <p className="mb-3.5 font-bold text-base text-gray-700 dark:text-gray-400">{data?.komoditas}</p>
                 <p className="mb-3.5 font-normal text-base text-gray-700 dark:text-gray-400">Barang Kebutuhan</p>
                 <CardWrapper className={"col-span-2 bg-[#FEE1A5] mb-3.5"} >
-                <div className="mb-3.5">
-                  <Table>
-                    <Table.Head>
-                      <Table.HeadCell className="bg-investa-primary-50 text-white">
-                        Barang
-                      </Table.HeadCell>
-                      <Table.HeadCell className="bg-investa-primary-50 text-white">
-                        Jumlah
-                      </Table.HeadCell>
-                      <Table.HeadCell className="bg-investa-primary-50 text-white">
-                        Harga
-                      </Table.HeadCell>
-                    </Table.Head>
-                    <Table.Body className="divide-y">
-                      {data?.kebutuhan.map((item, index) => {
-                        return (
-                          <Table.Row
-                            key={index}
-                            className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                          >
-                            <Table.Cell>{item.nama}</Table.Cell>
-                            <Table.Cell>{item.jumlah}</Table.Cell>
-                            <Table.Cell>{toRupiahInvesta(item.total)}</Table.Cell>
-                          </Table.Row>
-                        );
-                      })}
-                    </Table.Body>
-                  </Table>
+                  <div className="mb-3.5">
+                    <Table>
+                      <Table.Head>
+                        <Table.HeadCell className="bg-investa-primary-50 text-white">
+                          Barang
+                        </Table.HeadCell>
+                        <Table.HeadCell className="bg-investa-primary-50 text-white">
+                          Jumlah
+                        </Table.HeadCell>
+                        <Table.HeadCell className="bg-investa-primary-50 text-white">
+                          Harga
+                        </Table.HeadCell>
+                      </Table.Head>
+                      <Table.Body className="divide-y">
+                        {data?.kebutuhan.map((item, index) => {
+                          return (
+                            <Table.Row
+                              key={index}
+                              className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                            >
+                              <Table.Cell>{item.nama}</Table.Cell>
+                              <Table.Cell>{item.jumlah}</Table.Cell>
+                              <Table.Cell>{toRupiahInvesta(item.total)}</Table.Cell>
+                            </Table.Row>
+                          );
+                        })}
+                      </Table.Body>
+                    </Table>
                   </div>
                 </CardWrapper>
                 <p className="mb-3.5 font-normal text-base text-gray-700 dark:text-gray-400">Jumlah Nominal Pinjaman</p>
@@ -117,17 +115,11 @@ export const DetailPersetujuanLanjutan = () => {
                 <p className="mb-3.5 mt-2 font-bold text-base text-gray-700 dark:text-gray-400">{data?.info_tani.alamat} Kec.{data?.info_tani.kecamatan} Kota.{data?.info_tani.kota}</p>
                 <h5 className="mb-2 col-span-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Rencana Pengembalian</h5>
                 <p className="mb-3.5 font-normal text-base text-gray-700 dark:text-gray-400">Estimasi Tanggal Pembayaran</p>
-                <p className="mb-3.5 font-bold text-base text-gray-700 dark:text-gray-400"></p>
+                <p className="mb-3.5 font-bold text-base text-gray-700 dark:text-gray-400">{dateFormatInvesta(data?.estimasi_pengembalian)}</p>
                 <p className="mb-3.5 font-normal text-base text-gray-700 dark:text-gray-400">Jangka Waktu Pinjam (Tenor)</p>
                 <p className="mb-3.5 font-bold text-base text-gray-700 dark:text-gray-400">{data?.tenor}</p>
-                <CardWrapper className={"col-span-2 bg-[#FEE1A5] mb-3.5 grid grid-cols-2"} >
-                  <p className="font-normal text-base text-gray-700 dark:text-gray-400">Imbalan hasil perbulan</p>
-                  <p className="font-normal text-base text-gray-700 dark:text-gray-400">{data?.imbal_hasil || '-'}%</p>
-                  <p className="font-normal text-base text-gray-700 dark:text-gray-400">Total Pengembalian</p>
-                  <p className="font-normal text-base text-gray-700 dark:text-gray-400">{toRupiahInvesta(data?.total_pengembalian || 0)}</p>
-                </CardWrapper>
                 <p className="mb-3.5 font-normal text-base text-gray-700 dark:text-gray-400">Metode Pelunasan</p>
-                <p className="mb-3.5 font-bold text-base text-gray-700 dark:text-gray-400">Via {data?.metode_pelunasan}</p>
+                <p className="mb-3.5 font-bold text-base text-gray-700 dark:text-gray-400">{data?.metode_pelunasan}</p>
               </div>
             </CardWrapper>
           </div>

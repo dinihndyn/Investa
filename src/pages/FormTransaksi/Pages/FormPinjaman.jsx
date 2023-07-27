@@ -53,15 +53,7 @@ export const FormPinjaman = () => {
                 Form Informasi Pinjaman
               </h1>
               <div className="bg-investa-netral-30 rounded-lg p-5">
-                <div className="flex justify-end">
-                  <Button
-                    fit
-                    linkTo={`/proyek/${params.id}/form-transaksi`}
-                    label={'Tracking Proyek'}
-                  />
-                </div>
                 <div className="px-10">
-
                   <div ref={ref}>
                     <h1 className="text-xl font-bold text-investa-primary-50 mb-5">
                       Riwayat Informasi Pinjaman

@@ -110,17 +110,6 @@ export const SideDashboard = ({ children, isQuestion, isInvestor }) => {
               >
                 <div className="text-xl font-medium ">Artikel</div>
               </NavLink>
-              {isQuestion ? (
-                <div className="h-full mt-10">
-                  <div className="mx-10 bg-investa-primary-10 py-10 px-5 rounded-lg">
-                    <p className="text-lg">Butuh Bantuan?</p>
-                    <p>
-                      Bila anda memiliki pertanyaan terkait Investa. Hubungi
-                      kami kapan pun
-                    </p>
-                  </div>
-                </div>
-              ) : null}
             </div>
           ) : (
             <div className="flex flex-col ">
@@ -150,17 +139,6 @@ export const SideDashboard = ({ children, isQuestion, isInvestor }) => {
               >
                 <div className="text-xl font-medium ">Artikel</div>
               </NavLink>
-              {isQuestion ? (
-                <div className="h-full mt-10">
-                  <div className="mx-10 bg-investa-primary-10 py-10 px-5 rounded-lg">
-                    <p className="text-lg">Butuh Bantuan?</p>
-                    <p>
-                      Bila anda memiliki pertanyaan terkait Investa. Hubungi
-                      kami kapan pun
-                    </p>
-                  </div>
-                </div>
-              ) : null}
             </div>
           )}
         </div>

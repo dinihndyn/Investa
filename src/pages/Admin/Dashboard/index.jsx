@@ -10,7 +10,8 @@ import { CardProyek } from '../../../component/molecules/Admin/CardProyek';
 import axios from 'axios';
 import { getTokenInvesta, toRupiahInvesta } from '../../../utils/function';
 import { useAuthHeader } from 'react-auth-kit';
-import { API_URL } from '../../../utils/constant';
+import { API_URL, dataCarousel } from '../../../utils/constant';
+import { Loading } from '../../../component/molecules/Loading';
 
 const CardDashboard = ({ label, value, image }) => {
   return (
@@ -46,6 +47,8 @@ export const AdminDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setDataDashboard(null);
+
         const result = await axios.get(
           API_URL + `/dashboard/totalDana`,
           getTokenInvesta(token())
@@ -80,6 +83,11 @@ export const AdminDashboard = () => {
     };
     fetchData();
   }, []);
+  if (dataDashboard == null) {
+    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Loading />
+    </div>;
+  }
   return (
     <Layouts title="Admin Dashboard" bg="bg-[#FEE1A5]">
       <Sidebar>

@@ -27,68 +27,68 @@ export const ModalBodyFetch = ({ data, setOpenModal }) => {
                     Transaksi
                 </p>
                 {historiWallet
-                    .slice(0, 10)
+                    .slice(0, 5)
                     .map((item) => (
-                    <div key={item.id} className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-                        <div className="flex items-center">
-                            {item.tipe === 'Deposit' ? (
-                                <img
-                                    className="w-[30px] object-cover rounded-full h-[30px] mr-3"
-                                    src={topup} // Gambar untuk tipe deposit
-                                    alt="deposit"
-                                />
-                            ) : item.tipe === 'Withdraw' ? (
-                                <img
-                                    className="w-[30px] object-cover rounded-full h-[30px] mr-3"
-                                    src={withdraw} // Gambar untuk tipe withdraw
-                                    alt="withdraw"
-                                />
-                            ) : null}
-                            <div>
-                                <p className="font-semibold">{item.tipe}</p>
+                        <div key={item.id} className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                            <div className="flex items-center">
                                 {item.tipe === 'Deposit' ? (
-                                    <p style={{ color: 'green' }}>+ {toRupiahInvesta(item.jumlah_deposit)}</p> // Jumlah deposit
+                                    <img
+                                        className="w-[30px] object-cover rounded-full h-[30px] mr-3"
+                                        src={topup} // Gambar untuk tipe deposit
+                                        alt="deposit"
+                                    />
                                 ) : item.tipe === 'Withdraw' ? (
-                                    <p style={{ color: 'red' }}>- {toRupiahInvesta(item.jumlah_withdraw)}</p> // Jumlah withdraw
+                                    <img
+                                        className="w-[30px] object-cover rounded-full h-[30px] mr-3"
+                                        src={withdraw} // Gambar untuk tipe withdraw
+                                        alt="withdraw"
+                                    />
                                 ) : null}
+                                <div>
+                                    <p className="font-semibold">{item.tipe}</p>
+                                    {item.tipe === 'Deposit' ? (
+                                        <p style={{ color: 'green' }}>+ {toRupiahInvesta(item.jumlah_deposit)}</p> // Jumlah deposit
+                                    ) : item.tipe === 'Withdraw' ? (
+                                        <p style={{ color: 'red' }}>- {toRupiahInvesta(item.jumlah_withdraw)}</p> // Jumlah withdraw
+                                    ) : null}
+                                </div>
+                            </div>
+                            <div className="flex flex-col items-end justify-end">
+                                <div className="text-right">Tanggal: {separateDateAndTime(item.created_at).date}</div>
+                                <div className="text-right">Jam: {separateDateAndTime(item.created_at).time}</div>
                             </div>
                         </div>
-                        <div className="flex flex-col items-end justify-end">
-                            <div className="text-right">Tanggal: {separateDateAndTime(item.created_at).date}</div>
-                            <div className="text-right">Jam: {separateDateAndTime(item.created_at).time}</div>
-                        </div>
-                    </div>
-                ))}
+                    ))}
             </div>
-            <hr className="mb-5 mt-5"/>
+            <hr className="mb-5 mt-5" />
             {/* Tampilkan informasi histori invest */}
             <div>
                 <p className="text-center font-bold mb-2">
                     Investasi
                 </p>
                 {historiInvest
-                    .slice(0, 10)
+                    .slice(0, 5)
                     .map((item) => (
-                    <div key={item.id} className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-                        <div className="my-3 flex item-center">
-                            <img
-                                className="w-[30px] object-cover rounded-full h-[30px] mr-3"
-                                src={invest} // Gambar untuk tipe withdraw
-                                alt="invest"
-                            />
-                            <div>
-                                <p className="font-semibold">Investasi - {item.pengajuan.pengajuan_name}</p>
-                                <p style={{ color: 'red' }}>- {toRupiahInvesta(item.amount)}</p>
+                        <div key={item.id} className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                            <div className="my-3 flex item-center">
+                                <img
+                                    className="w-[30px] object-cover rounded-full h-[30px] mr-3"
+                                    src={invest} // Gambar untuk tipe withdraw
+                                    alt="invest"
+                                />
+                                <div>
+                                    <p className="font-semibold">Investasi - {item.pengajuan.pengajuan_name}</p>
+                                    <p style={{ color: 'red' }}>- {toRupiahInvesta(item.amount)}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div className="my-3">
-                            <div className="text-right">Tanggal: {separateDateAndTime(item.created_at).date}</div>
-                            <div className="text-right">Jam: {separateDateAndTime(item.created_at).time}</div>
+                            <div className="my-3">
+                                <div className="text-right">Tanggal: {separateDateAndTime(item.created_at).date}</div>
+                                <div className="text-right">Jam: {separateDateAndTime(item.created_at).time}</div>
 
+                            </div>
+                            {/* ... tampilkan informasi lainnya sesuai kebutuhan */}
                         </div>
-                        {/* ... tampilkan informasi lainnya sesuai kebutuhan */}
-                    </div>
-                ))}
+                    ))}
             </div>
             <hr className="mb-5 mt-5" />
             <div>
@@ -96,30 +96,30 @@ export const ModalBodyFetch = ({ data, setOpenModal }) => {
                     Revenue
                 </p>
                 {historiRevenue
-                    .slice(0, 10)
+                    .slice(0, 5)
                     .map((item) => (
-                    <div key={item.id} className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-                        <div className="my-3 flex item-center">
-                            {item.tipe === 'Pengembalian' ? (
-                                <img
-                                    className="w-[30px] object-cover rounded-full h-[30px] mr-3"
-                                    src={revenue} // Gambar untuk tipe withdraw
-                                    alt="revenue"
-                                />
-                            ) : null}
-                            <div>
-                                <p className="font-semibold">Revenue Investasi - {item.note}</p>
-                                <p style={{ color: 'green' }}>+ {toRupiahInvesta(item.jumlah_deposit)}</p>
+                        <div key={item.id} className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                            <div className="my-3 flex item-center">
+                                {item.tipe === 'Pengembalian' ? (
+                                    <img
+                                        className="w-[30px] object-cover rounded-full h-[30px] mr-3"
+                                        src={revenue} // Gambar untuk tipe withdraw
+                                        alt="revenue"
+                                    />
+                                ) : null}
+                                <div>
+                                    <p className="font-semibold">Revenue Investasi - {item.note}</p>
+                                    <p style={{ color: 'green' }}>+ {toRupiahInvesta(item.jumlah_revenue)}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div className="my-3">
-                            <div className="text-right">Tanggal: {separateDateAndTime(item.created_at).date}</div>
-                            <div className="text-right">Jam: {separateDateAndTime(item.created_at).time}</div>
+                            <div className="my-3">
+                                <div className="text-right">Tanggal: {separateDateAndTime(item.created_at).date}</div>
+                                <div className="text-right">Jam: {separateDateAndTime(item.created_at).time}</div>
 
+                            </div>
+                            {/* ... tampilkan informasi lainnya sesuai kebutuhan */}
                         </div>
-                        {/* ... tampilkan informasi lainnya sesuai kebutuhan */}
-                    </div>
-                ))}
+                    ))}
             </div>
 
             <hr />

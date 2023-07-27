@@ -95,17 +95,10 @@ export const DetailForm = () => {
       <div>
         <h1 className="text-2xl font-bold mb-5">Form Pengembalian Dana</h1>
         <div className="bg-investa-netral-30 rounded-lg p-5">
-          <div className="flex justify-end">
-            <Button
-              fit
-              linkTo={`/proyek/${params.id}/form-transaksi`}
-              label={'Tracking Proyek'}
-            />
-          </div>
           <div className="grid grid-cols-1 md:grid-cols-3">
-            <div className={data.length >= 1 ? 'hidden' : 'block'}>
+            <div>
               <form onSubmit={formik.handleSubmit}>
-                <div className="flex flex-col gap-2 mb-3">
+                <div className="flex flex-col gap-2 mb-5">
                   <label
                     htmlFor="#"
                     className=" col-span-2 text-md whitespace-nowrap requireds"
@@ -140,8 +133,65 @@ export const DetailForm = () => {
                     </option>
                   </select>
                 </div>
-
-                <div className="flex flex-col gap-2 mb-5">
+                <hr className="my-5" style={{ borderWidth: '2px' }} />
+                <label
+                  htmlFor="#"
+                  className=" col-span-2 text-md whitespace-nowrap font-bold"
+                >
+                  Penerima Dana
+                </label>
+                <div className="grid grid-cols-2  gap-5 text-black items-center mt-2">
+                  <div>
+                    <label
+                      htmlFor="#"
+                      className=" col-span-2 text-md whitespace-nowrap"
+                    >
+                      Nama Bank
+                    </label>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="#"
+                      className=" col-span-2 text-md whitespace-nowrap "
+                    >
+                      BCA
+                    </label>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="#"
+                      className=" col-span-2 text-md whitespace-nowrap "
+                    >
+                      Nama Rekening
+                    </label>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="#"
+                      className=" col-span-2 text-md whitespace-nowrap "
+                    >
+                      Admin Investa
+                    </label>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="#"
+                      className=" col-span-2 text-md whitespace-nowrap "
+                    >
+                      Nomor Rekening
+                    </label>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="#"
+                      className=" col-span-2 text-md whitespace-nowrap "
+                    >
+                      321-3213-312-22
+                    </label>
+                  </div>
+                </div>
+                <hr className="my-5" style={{ borderWidth: '2px' }} />
+                <div className="flex flex-col gap-2 mb-5 mt-5">
                   <label
                     htmlFor="#"
                     className=" col-span-2 text-md whitespace-nowrap font-bold "
@@ -159,25 +209,22 @@ export const DetailForm = () => {
                 </div>
 
                 <div className="mt-5 flex justify-between">
+                  <Link
+                    to={`/proyek/${params.id}/form-transaksi`}
+                    className="px-4  rounded-lg py-1 text-investa-primary-50 border border-investa-primary-50 bg-white"
+                  >
+                    Kembali
+                  </Link>
                   <button
                     type={formik.isSubmitting ? 'button' : 'submit'}
                     className="px-4  rounded-lg py-1 text-white bg-investa-primary-50"
                   >
                     {formik.isSubmitting ? <Spiner /> : 'Simpan'}
                   </button>
-                  <Link
-                    to={`/proyek/${params.id}/form-transaksi`}
-                    className="px-4  rounded-lg py-1 text-investa-primary-50 border border-investa-primary-50 bg-white"
-                  >
-                    Batal
-                  </Link>
                 </div>
               </form>
             </div>
-            <div
-              className={`px-10 ${data.length >= 1 ? 'col-span-3' : 'col-span-2'
-                }`}
-            >
+            <div className="px-10 col-span-2">
               <h1 className="text-xl font-bold text-investa-primary-50 mb-5">
                 Riwayat Pengembalian
               </h1>
@@ -196,6 +243,12 @@ export const DetailForm = () => {
                           Jumlah Pembayaran
                         </th>
                         <th scope="col" className="px-6 py-3">
+                          Note
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                          Photo
+                        </th>
+                        <th scope="col" className="px-6 py-3">
                           Status
                         </th>
                       </tr>
@@ -206,7 +259,7 @@ export const DetailForm = () => {
                           className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                           cols
                         >
-                          <td colSpan={'4'} className="px-6 py-4 text-center">
+                          <td colSpan={'6'} className="px-6 py-4 text-center">
                             Belum ada pemasukan
                           </td>
                         </tr>
@@ -229,6 +282,29 @@ export const DetailForm = () => {
                               <td className="px-6 py-4">
                                 {item.jumlah_pembayaran ? toRupiahInvesta(item.jumlah_pembayaran) : "-"}
                               </td>
+                              <td className="px-6 py-4">{item.note ? item.note : "-"}</td>
+                              <td className="px-6 py-4">
+                                <a
+                                  target="_blank"
+                                  className="cursor-zoom-in"
+                                  href={PUBLIC_URL + 'image/' + item.photo}
+                                  rel="noreferrer"
+                                >
+                                  {item.photo ? (
+                                    <img
+                                      src={PUBLIC_URL + 'image/' + item.photo}
+                                      alt="photo"
+                                      className="rounded-lg w-10 h-10 object-cover"
+                                      onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src = 'https://placehold.co/100';
+                                      }}
+                                    />
+                                  ) : (
+                                    '-'
+                                  )}
+                                </a>
+                              </td>
                               <td className="px-6 py-4">{item.status}</td>
                             </tr>
                           );
@@ -237,28 +313,11 @@ export const DetailForm = () => {
                     </tbody>
                   </table>
                 </div>
-                <div className="flex justify-between items-center">
-                  <div className="flex justify-end">
-                    <Button
-                      fit
-                      linkTo={`/proyek/${params.id}/form-transaksi`}
-                      label={'Kembali'}
-                    />
-                  </div>
-                  <a
-                    target="_blank"
-                    href={PUBLIC_URL + 'image/' + data[0]?.photo}
-                    rel="noreferrer"
-                    className=" bg-investa-primary-30 rounded-md p-3 mt-5"
-                  >
-                    Print Bukti Pengembalian
-                  </a>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };

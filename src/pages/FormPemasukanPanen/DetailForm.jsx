@@ -15,7 +15,6 @@ export const DetailForm = () => {
   const params = useParams();
   const formik = useFormik({
     initialValues: {
-      tanggal: '',
       nama_petugas: '',
       tujuan: '',
       photo: '',
@@ -81,32 +80,9 @@ export const DetailForm = () => {
       <div>
         <h1 className="text-2xl font-bold mb-5">Form Pemasukan/Panen</h1>
         <div className="bg-investa-netral-30 rounded-lg p-5">
-          <div className="flex justify-end">
-            <Button
-              fit
-              linkTo={`/proyek/${params.id}/form-transaksi`}
-              label={'Tracking Proyek'}
-            />
-          </div>
           <div className="grid grid-cols-1 md:grid-cols-3">
             <div>
               <form onSubmit={formik.handleSubmit}>
-                <div className="flex flex-col gap-2 mb-5">
-                  <label
-                    htmlFor="#"
-                    className=" col-span-2 text-md whitespace-nowrap font-bold "
-                  >
-                    Tanggal
-                  </label>
-                  <input
-                    required
-                    name="tanggal"
-                    onChange={formik.handleChange}
-                    placeholder="Masukan tanggal..."
-                    type="date"
-                    className="w-full  bg-white rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
-                  />
-                </div>
                 <div className="flex flex-col gap-2 mb-5">
                   <label
                     htmlFor="#"
@@ -130,14 +106,19 @@ export const DetailForm = () => {
                   >
                     Jumlah
                   </label>
-                  <input
-                    required
-                    placeholder="Masukan jumlah..."
-                    onChange={formik.handleChange}
-                    name="jumlah"
-                    type="text"
-                    className="w-full capitalize bg-white rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
-                  />
+                  <div className="flex gap-3">
+                    <input
+                      required
+                      placeholder="Masukan jumlah..."
+                      onChange={formik.handleChange}
+                      name="jumlah"
+                      type="text"
+                      className="w-full capitalize bg-white rounded md:col-span-10 border-1 border-investa-primary-50 placeholder:italic"
+                    />
+                    <div className="bg-white w-[50px] border border-investa-primary-50 font-bold flex items-center justify-center">
+                      Kg
+                    </div>
+                  </div>
                 </div>
                 <div className="flex flex-col gap-2 mb-5">
                   <label
@@ -160,7 +141,7 @@ export const DetailForm = () => {
                     to={`/proyek/${params.id}/form-transaksi`}
                     className="px-4  rounded-lg py-1 text-investa-primary-50 border border-investa-primary-50 bg-white"
                   >
-                    Batal
+                    Kembali
                   </Link>
                   <button
                     type={formik.isSubmitting ? 'button' : 'submit'}
@@ -218,7 +199,7 @@ export const DetailForm = () => {
                                 {dateFormatInvesta(item.tanggal)}
                               </th>
                               <td className="px-6 py-4">{item.nama_produk}</td>
-                              <td className="px-6 py-4">{item.jumlah}</td>
+                              <td className="px-6 py-4">{item.jumlah} Kg</td>
                               <td className="px-6 py-4 text-end">
                                 {toRupiahInvesta(item.harga)}
                               </td>
@@ -239,7 +220,7 @@ export const DetailForm = () => {
                         </th>
 
                         <th scope="col" className="px-6 py-3 text-lg">
-                          {jumlahTotal}
+
                         </th>
                         <th scope="col" className="px-6 py-3 text-end text-lg">
                           {toRupiahInvesta(hargaTotal)}
@@ -250,13 +231,6 @@ export const DetailForm = () => {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="flex justify-start mt-5">
-            <Button
-              fit
-              linkTo={`/proyek/${params.id}/form-transaksi`}
-              label={'Kembali'}
-            />
           </div>
         </div>
       </div>

@@ -89,14 +89,7 @@ export const Login = () => {
               />
               <div className="flex justify-between items-center mb-6">
                 <Checkbox label={'Ingat Saya'} name={'remember'} value="" />
-                <div>
-                  <Link
-                    to="/forgot"
-                    className="text-investa-netral-70 font-normal"
-                  >
-                    Lupa password
-                  </Link>
-                </div>
+              
               </div>
 
               <Button
