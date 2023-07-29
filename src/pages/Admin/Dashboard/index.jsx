@@ -5,6 +5,7 @@ import { Sidebar } from '../../../component/molecules/Admin/Sidebar';
 import Money from './assets/money.png';
 import Farmer from './assets/farmer.png';
 import Investor from './assets/investor.png';
+import Revenue from './assets/revenue.png';
 import { LineChartAdmin } from '../../../component/molecules/Admin/LineChartAdmin';
 import { CardProyek } from '../../../component/molecules/Admin/CardProyek';
 import axios from 'axios';
@@ -40,6 +41,7 @@ export const AdminDashboard = () => {
 
   const [dataDashboard, setDataDashboard] = useState({
     total_dana: '',
+    total_revenue: '',
     total_petani: '',
     total_investor: '',
   });
@@ -51,6 +53,10 @@ export const AdminDashboard = () => {
 
         const result = await axios.get(
           API_URL + `/dashboard/totalDana`,
+          getTokenInvesta(token())
+        );
+        const revenue = await axios.get(
+          API_URL + `/dashboard/totalRevenue`,
           getTokenInvesta(token())
         );
         const getPetani = await axios.get(
@@ -71,6 +77,7 @@ export const AdminDashboard = () => {
         );
         setDataDashboard({
           total_dana: result.data.total_dana,
+          total_revenue: revenue.data.total_revenue,
           total_petani: getPetani.data.total_petani,
           total_investor: getInvestor.data.total_investor,
         });
@@ -93,11 +100,16 @@ export const AdminDashboard = () => {
       <Sidebar>
         <Container>
           <div className="grid gap-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 ">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3 ">
               <CardDashboard
                 label="Total Dana"
                 value={toRupiahInvesta(dataDashboard.total_dana)}
                 image={Money}
+              />
+              <CardDashboard
+                label="Total Revenue"
+                value={toRupiahInvesta(dataDashboard.total_revenue)}
+                image={Revenue}
               />
               <CardDashboard
                 label="Jumlah Petani"
